@@ -1,0 +1,34 @@
+.login{
+    height: 100vh;
+    /* background: var(--primary-gradient),
+    url('../../assets/images/login-bg.jpg') no-repeat center center /cover; */
+    /* background-size: 300%; */
+    /* animation: bg-animation 50s infinite alternate; */
+}
+
+.imageCard{
+    width: 100%;
+}
+.formCard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.topItem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* @keyframes bg-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+} */

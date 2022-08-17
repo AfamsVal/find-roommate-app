@@ -1,0 +1,11 @@
+.circleIcon{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid rgb(52, 1, 52);
+}
+.lineIcon{
+
+background: var(--text-gradient);
+margin-left: 5px;
+}

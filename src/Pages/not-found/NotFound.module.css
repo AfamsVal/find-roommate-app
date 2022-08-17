@@ -1,0 +1,28 @@
+.notFound {
+  height: 100vh;
+  background: var(--primary-gradient);
+}
+.contentItems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fontIcon {
+  color: var(--primary-color-100);
+}
+.errorType {
+  font-size: 6rem;
+  color: var(--text-default);
+  font-weight: 700;
+}
+.text {
+  font-size: 20px;
+  color: var(--text-default);
+  font-weight: 500;
+}
+.textSpan {
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 20px;
+  font-size: 20px;
+}

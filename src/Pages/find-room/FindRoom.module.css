@@ -1,0 +1,87 @@
+*{
+box-sizing: border-box;
+}
+.topImage{
+    height: 400px;
+    margin-left: 5px;
+    position: relative;
+    background: white;
+    border: 0.1px solid rgb(238, 238, 238);
+    border-left: none;
+}
+
+.bottomImage{
+    height: 150px;
+    width: 200px;
+    margin-left: 5px;
+    position: relative;
+    background: white;
+    border: 2px solid black;
+}
+.bage{
+    position: absolute;
+    height: 40px;
+    /* width: 50px; */
+    top: 5px;
+    margin-left: 4px;
+    background: rgb(5, 207, 5);
+    color: white;
+}
+.leftTopContainer{
+    height: 400px;
+    margin-left: 10px;
+    border-bottom: 1px solid rgb(183, 181, 181);
+    
+}
+.leftBottomCon{
+    /* height: 100px; */
+    /* width: 200px; */
+    margin-left: 5px;
+
+}
+.items{
+    font-weight: bold;
+    /* font-size: 20px; */
+}
+.borderTop{
+    border-top: 1px  solid rgb(164, 163, 163);
+    /* align-items: center; */
+    /* padding-bottom: 5px; */
+    /* height: 50px; */
+    /* background-color: red; */
+    display: flex;
+    margin: 15px;
+    padding: 15px 0 10px 0;
+}
+.incrementBox{
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding: 8px 18px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    /* margin-right: ; */
+}
+.incrementBox1{
+    border: 1px solid gray;
+    padding: 8px 10px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    /* margin-right: ; */
+}
+.socailIcons{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid gray;
+    text-align: center;
+    padding-top: 8px;
+    margin-right: 5px;
+}
+.wishlistBtn{
+    border: none;
+    padding: 5px 10px;
+    background: none;
+    font-weight: bold;
+}

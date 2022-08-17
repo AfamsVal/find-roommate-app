@@ -1,0 +1,19 @@
+.bageRight{
+    position: absolute;
+    height: 40px;
+    /* width: 50px; */
+    top: -40px;
+    right: 0px;
+   padding-left: 30px;
+}
+.triangleRight {
+    position: absolute;
+    top: 0px;
+    left: -20px;
+	width: 40px;
+	height: 40px;
+	border: 1px solid transparent;
+	transform: rotate(50deg);
+    background: #fff;
+    float:left;
+}

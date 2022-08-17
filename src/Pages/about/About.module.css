@@ -1,0 +1,22 @@
+.imageDiv {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.lineBorder {
+  width: 100px;
+  height: 5px;
+  margin: 20px 0;
+}
+.cardFooter {
+  width: 100%;
+  height: 80px;
+  margin: 0;
+  background: var(--primary-color-100);
+  color: var(--text-default);
+  text-align: center;
+}
+
+.cardFooter > h5 {
+  margin-top: 10px;
+}

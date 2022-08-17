@@ -1,0 +1,96 @@
+#sidenav {
+  position: relative;
+  width: var(--sidenav-width);
+  height: 100vh;
+  background-color: var(--white);
+  overflow-y: auto;
+  border-right: var(--light) 2px solid;
+}
+
+#sidenav .nav-link {
+  font-weight: 700;
+  color: var(--gray-one) !important ;
+  /* margin-bottom: 50px; */
+  font-size: 0.8em;
+}
+
+#sidenav .nav-link.active {
+  color: var(--primary-blue) !important;
+}
+.sub-links {
+  position: relative;
+  margin-left: 15px;
+}
+
+.sub-links::before {
+  content: "\2022";
+  position: absolute;
+  color: var(--gray-one);
+  font-weight: bold;
+  display: inline-block;
+  bottom: 3px;
+  font-size: 20px;
+  left: -15px;
+}
+
+.sub-links.active::before {
+  font-weight: bold;
+  color: var(--primary-blue) !important;
+}
+
+#navbar a {
+  color: black;
+}
+
+#navbar ul li {
+  transition: all 0.5s ease-in-out;
+}
+
+/* #sidenav-content {
+    margin-top: 100px;
+  } */
+
+@media (min-width: 769px) {
+  #main-area {
+    width: calc(100vw - var(--sidenav-width));
+    height: 100vh;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 991px) {
+  .toggled-overlay {
+    z-index: 1000;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  }
+
+  #sidenav-content {
+    margin-top: 0px;
+  }
+
+  #sidenav {
+    width: 0;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    margin-left: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  #main-area {
+    width: 100%;
+  }
+
+  .toggled {
+    width: var(--sidenav-width) !important;
+  }
+}

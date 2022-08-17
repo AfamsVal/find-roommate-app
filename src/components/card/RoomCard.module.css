@@ -1,0 +1,47 @@
+.topImage {
+  height: 190px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 6px 6px 0 0;
+}
+
+.topBorderRadius {
+  border-radius: 6px 6px 0 0;
+  border: 1px solid var(--primary-color-100);
+  transition: all 0.4s ease-in-out;
+  box-shadow: none;
+}
+
+.topBorderRadius:hover {
+  box-shadow: 4px 4px 6px 4px lightgray;
+}
+
+.cardDate {
+  /* font-style: italic; */
+  color: gray;
+  font-size: 14px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Verified {
+  background-color: var(--primary-color-100);
+  display: inline-block;
+  color: whitesmoke;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: 1px solid;
+  font-size: 12px;
+  box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.cardDetails i {
+  color: var(--primary-color-100);
+}
+
+.desc {
+  height: 58px;
+  font-weight: 600;
+}
