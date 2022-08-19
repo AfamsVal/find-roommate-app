@@ -1,26 +1,10 @@
-import React from "react";
-import { useQuery } from "react-query";
 import type { ColumnsType } from "antd/es/table";
 import AdminTable from "../../../components/admin-users/AdminTable";
 import { DataType } from "../../../utils/types";
+import UserModal from "./UserModal";
 
 const Users = () => {
-  // const userLogin = async () => {
-  //   const data = await fetch("https://jsonplaceholder.typicode.com/users");
-  //   return await data.json();
-  // };
-
-  // const { data, status } = useQuery("login", userLogin);
-
-  // if (status === "loading") {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (status === "error") {
-  //   return <div>Error...</div>;
-  // }
-
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<DataType> | any = [
     {
       title: "Name",
       dataIndex: "name",
@@ -37,17 +21,35 @@ const Users = () => {
       title: "Gender",
       dataIndex: "gender",
     },
+    {
+      title: "State",
+      dataIndex: "state",
+    },
+    {
+      title: <span className="font-bold capitalize">Action</span>,
+      datakey: "AFAMS VAL",
+      key: "name",
+      render: (data: any) => {
+        return (
+          <UserModal type="approve" data={data}>
+            <i className="fas fa-pencil mr-2" />
+            View More
+          </UserModal>
+        );
+      },
+    },
   ];
 
   const data: DataType[] = [];
 
-  for (let i = 0; i < 46; i++) {
+  for (let i = 0; i < 26; i++) {
     data.push({
       key: i,
       name: `Edward King ${i}`,
-      email: "progfams",
+      email: "progfams@gmail.com",
       phone: "09045673445",
       gender: "Male",
+      state: "Imo State",
     });
   }
 

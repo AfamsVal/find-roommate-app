@@ -62,14 +62,14 @@ const AdminTable: React.FC<ITable> = (props) => {
     <div className="row px-3">
       <div className="col-12" style={{ marginBottom: 16 }}>
         <motion.div
-          initial={{ x: -1000, opacity: 0 }}
+          initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{
             type: "tween",
             duration: 1,
             // delay: 0.3,
           }}
-          className="col-12 col-md-9 box-shadow-2 px-0"
+          className="col-12 box-shadow-2 px-0"
         >
           <input
             type="text"

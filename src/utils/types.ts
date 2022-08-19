@@ -153,7 +153,7 @@ export interface IProfileInfo {
   email: string;
   phone: string;
   password: string;
-  confirmPwd: string;
+  newPassword: string;
 }
 
 export interface DataType {
@@ -164,6 +164,8 @@ export interface DataType {
   subject?: string;
   message?: string;
   gender?: string;
+  details?: string;
+  state?: string;
 }
 export interface IAdminUsers {
   key: React.Key;
@@ -172,4 +174,5 @@ export interface IAdminUsers {
   type?: string;
   phone?: string;
   agentName?: string;
+  datakey?: string;
 }

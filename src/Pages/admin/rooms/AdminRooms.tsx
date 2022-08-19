@@ -1,25 +1,10 @@
-import { ColumnsType } from "antd/lib/table";
-import React from "react";
-import { useQuery } from "react-query";
 import AdminTable from "../../../components/admin-users/AdminTable";
-import { IAdminUsers } from "../../../utils/types";
+import "antd/dist/antd.css";
+import RoomModal from "./RoomModal";
 
 const AdminRooms = () => {
-  // const userLogin = async () => {
-  //   const data = await fetch("https://jsonplaceholder.typicode.com/users");
-  //   return await data.json();
-  // };
-
-  // const { data, status } = useQuery("login", userLogin);
-
-  // if (status === "loading") {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (status === "error") {
-  //   return <div>Error...</div>;
-  // }
-  const columns: ColumnsType<IAdminUsers> = [
+  // const columns: ColumnsType<IAdminUsers> = [
+  const columns: any = [
     {
       title: "Name",
       dataIndex: "name",
@@ -40,17 +25,44 @@ const AdminRooms = () => {
       title: "Agent Name",
       dataIndex: "agentName",
     },
+    {
+      title: <span className="font-bold capitalize">Action</span>,
+      datakey: "AFAMS VAL",
+      key: "name",
+      render: (data: any) => {
+        return (
+          <RoomModal type="approve" data={data}>
+            <i className="fas fa-pencil mr-2" />
+            View More
+          </RoomModal>
+        );
+      },
+    },
   ];
 
-  const data: IAdminUsers[] = [];
+  // const data: IAdminUsers[] = [];
+  const data: any = [];
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i,
-      name: `Edward King ${i}`,
+      name: "Main Top Hostel",
       amount: "10000",
       type: `London, Park Lane no. ${i}`,
       phone: `London, Park Lane no. ${i}`,
       agentName: `London, Park Lane no. ${i}`,
+      email: "progfams@gmail.com",
+      rentAmount: "250000",
+      roomType: "1 Bedroom",
+      noOfBathroom: 2,
+      noOfToilet: 3,
+      university: "Imo State University",
+      state: "Imo State",
+      location: "No 2 imsu extention gate",
+      houseType: "Story Building",
+      hasWater: "Yes",
+      hasLight: "Yes",
+      moreInfo:
+        "I am sure you will love the appartment if you see it and it is highly secured",
     });
   }
 

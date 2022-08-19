@@ -12,7 +12,7 @@ const PersonalInfo = () => {
     email: "",
     phone: "",
     password: "",
-    confirmPwd: "",
+    newPassword: "",
   });
 
   const handleChange = (e: any) => {
@@ -88,14 +88,14 @@ const PersonalInfo = () => {
               <div className="w-100 mx-1 my-form">
                 <input
                   type="password"
-                  name="subject"
+                  name="password"
                   onChange={handleChange}
                   value={form.password}
                   className="form-control"
                   placeholder=" "
                 />
                 <label htmlFor="subject" className="form-label">
-                  Password:
+                  Old Password:
                 </label>
               </div>
             </div>
@@ -104,14 +104,14 @@ const PersonalInfo = () => {
               <div className="w-100 mx-1 my-form">
                 <input
                   type="password"
-                  name="subject"
+                  name="newPassword"
                   onChange={handleChange}
-                  value={form.confirmPwd}
+                  value={form.newPassword}
                   className="form-control"
                   placeholder=" "
                 />
                 <label htmlFor="subject" className="form-label">
-                  Confirm Password:
+                  New Password:
                 </label>
               </div>
             </div>
