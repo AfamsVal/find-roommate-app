@@ -4,7 +4,7 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once '../../models/Room.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
@@ -24,10 +24,10 @@ $database = new Database();
 $db = $database->connection();
 
 //Instantiate blog post object
-$post = new Post($db);
+$post = new Room($db);
 
 //Blog post query
-$result = $post->read();
+$result = $post->all_rooms();
 
 //Check if any post
 if ($result[0] > 0) {
@@ -38,11 +38,24 @@ if ($result[0] > 0) {
         extract($row);
         $post_item = array(
             'id' => $id,
-            'title' => $title,
-            'body' => html_entity_decode($body),
-            'author' => $author,
-            'category_id' => $category_id,
-            // 'category_name' => $category_name,
+            'address' => $address,
+            'applicantName' => $applicantName,
+            'bathRoomNo' => $bathRoomNo,
+            'category' => $category,
+            'createdAt' => $createdAt,
+            'descriptions' => $descriptions,
+            'email' => $email,
+            'hasWater' => $hasWater,
+            'hostelName' => $hostelName,
+            'isVerified' => $isVerified,
+            'phone' => $phone,
+            'rentPerYear' => $rentPerYear,
+            'roomType' => $roomType,
+            'state' => $state,
+            'updatedAt' => $updatedAt,
+            'toiletNo' => $toiletNo,
+            'uid' => $uid,
+            'university' => $university
         );
         //Push to data
         array_push($posts_arr['data'], $post_item);
@@ -56,7 +69,7 @@ if ($result[0] > 0) {
     echo json_encode(
         array(
             'status' => false,
-            'message' => 'No post found!' . $db->error
+            'message' => 'No room found!' . $db->error
         )
     );
 }

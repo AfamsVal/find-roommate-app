@@ -6,7 +6,7 @@ header('Access-Control-Allow-Methods: DELETE');
 header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once '../../models/Room.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
     http_response_code(503);
@@ -25,20 +25,20 @@ $database = new Database();
 $db = $database->connection();
 
 //Instantiate blog post object
-$post = new Post($db);
+$post = new Room($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
 $post->id = $data->id;
 
 //Check if post is DELETED
-$result = $post->delete_post();
+$result = $post->delete_room();
 if ($result === true) {
     http_response_code(200);
     //Turn to JSON and output
     echo json_encode(array(
         'status' => true,
-        'message' => 'Post Deleted Successful!'
+        'message' => 'Room Deleted Successful!'
     ));
 } else if ($result === false) {
     http_response_code(500);
