@@ -4,7 +4,7 @@
 class Database
 {
     private $host = 'localhost';
-    private $db_name = 'myblog';
+    private $db_name = 'find-roommate';
     private $user = 'root';
     private $passwd = '';
     private $connect;
