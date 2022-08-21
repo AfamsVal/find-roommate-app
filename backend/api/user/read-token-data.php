@@ -11,7 +11,7 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/Users.php';
+include_once '../../models/User.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(503);
@@ -30,7 +30,7 @@ $database = new Database();
 $db = $database->connection();
 
 //Instantiate blog post object
-$user = new Users($db);
+$user = new User($db);
 
 $all_headers = getallheaders();
 

@@ -33,7 +33,7 @@ class Room
     }
 
 
-    //Get Posts
+    //Get Room
     public function all_rooms()
     {
         $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt DESC';
@@ -44,7 +44,7 @@ class Room
     }
 
 
-    //Get Single Posts
+    //Get Single Room
     public function read_single()
     {
         $sql = "SELECT * FROM " . $this->table . " WHERE id = '$this->id'";
@@ -56,7 +56,7 @@ class Room
     }
 
 
-    //Create Posts
+    //Create Room
     public function create_room()
     {
         $sql = "INSERT INTO " . $this->table . " (
@@ -111,7 +111,7 @@ class Room
     }
 
 
-    //Update Posts
+    //Update Room
     public function update_room()
     {
         $sql = "UPDATE " . $this->table . " SET address = ?,
@@ -165,7 +165,7 @@ class Room
     }
 
 
-    //Delete Post
+    //Delete Room
     public function delete_room()
     {
         $sql = "DELETE FROM " . $this->table . " WHERE id = ?";
