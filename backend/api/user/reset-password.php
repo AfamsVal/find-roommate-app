@@ -1,4 +1,5 @@
 <?php
+
 //Header
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -6,11 +7,10 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/Users.php';
+include_once '../../models/User.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(503);
-    //No post
     echo json_encode(
         array(
             'status' => false,
@@ -24,56 +24,53 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $database = new Database();
 $db = $database->connection();
 
-//Instantiate blog post object
-$user = new Users($db);
+//Instantiate user object
+$user = new User($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
-$user->name = htmlspecialchars(strip_tags($data->name));
-$user->email = htmlspecialchars(strip_tags($data->email));
-$user->password = htmlspecialchars(strip_tags(password_hash($data->password, PASSWORD_DEFAULT)));
-
-if (empty(trim($data->name)) || empty(trim($data->email)) || empty(trim($data->password))) {
+if (empty(trim($data->email))) {
     http_response_code(200);
-    //No post
+    //No email
     echo json_encode(
         array(
             'status' => false,
-            'message' => 'Please fill all feild'
+            'message' => 'Email is required!'
         )
     );
     exit();
 }
 
-//Check if post created
-$result = $user->create_user();
-
-if ($result === 0) {
+if (empty(trim($data->password))) {
     http_response_code(200);
-    //No post
+    //No password
     echo json_encode(
         array(
             'status' => false,
-            'message' => 'Email or password already exist'
+            'message' => 'New password is required!'
         )
     );
+    exit();
 }
 
-if ($result === 1) {
+$user->email = htmlspecialchars(strip_tags($data->email));
+$user->password = htmlspecialchars(strip_tags(password_hash($data->password, PASSWORD_DEFAULT)));
+
+//Check if password is reseted
+if ($user->reset_password()) {
     http_response_code(200);
     //Turn to JSON and output
     echo json_encode(array(
         'status' => true,
-        'message' => 'User created successfully!'
+        'message' => 'Password reset successful!'
     ));
-}
-
-if ($result === 2) {
-    http_response_code(503);
+} else {
+    http_response_code(500);
+    //No user
     echo json_encode(
         array(
             'status' => false,
-            'message' => 'User not created!' . $db->error
+            'message' => 'Reset failed!' . $db->error
         )
     );
 }

@@ -10,7 +10,7 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/Users.php';
+include_once '../../models/User.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(503);
@@ -29,7 +29,7 @@ $database = new Database();
 $db = $database->connection();
 
 //Instantiate blog post object
-$user = new Users($db);
+$user = new User($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
@@ -50,11 +50,15 @@ $user->password = htmlspecialchars(strip_tags($data->password));
 
 
 //Check if post created
-$user_data = $user->check_is_user_login();
+$user_data = $user->check_login();
 
 if (!empty($user_data)) {
-    $name = $user_data['name'];
+    $firstName = $user_data['firstName'];
+    $lastName = $user_data['lastName'];
     $email = $user_data['email'];
+    $phone = $user_data['phone'];
+    $state = $user_data['state'];
+    $gender = $user_data['gender'];
     $password = $user_data['password'];
 
     if (password_verify($data->password, $password)) {
@@ -68,9 +72,12 @@ if (!empty($user_data)) {
             "exp" => $iat + 60 * 10, //1min  * 10 = 10mins
             "aud" => 'myusers',
             "data" => array(
-                "id" => $user_data['id'],
-                "name" => $user_data['name'],
-                "email" => $user_data['email']
+                "firstName" => $user_data['firstName'],
+                "lastName" => $user_data['lastName'],
+                "email" => $user_data['email'],
+                "phone" => $user_data['phone'],
+                "state" => $user_data['state'],
+                "gender" => $user_data['gender']
             )
         );
 
