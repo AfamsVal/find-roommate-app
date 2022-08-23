@@ -1,4 +1,6 @@
 <?php
+require '../../controllers/core.php';
+
 //Header
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -9,14 +11,7 @@ include_once '../../config/Database.php';
 include_once '../../models/Room.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(503);
-    //No post
-    echo json_encode(
-        array(
-            'status' => false,
-            'message' => 'Access Denied!'
-        )
-    );
+    response(false, 503, 'Access Denied!');
     exit();
 }
 
@@ -51,19 +46,7 @@ $post->university = htmlspecialchars(strip_tags($data->university));
 
 //Check if post created
 if ($post->create_room()) {
-    http_response_code(200);
-    //Turn to JSON and output
-    echo json_encode(array(
-        'status' => true,
-        'message' => 'Room created successfully!'
-    ));
+    response(true, 200, 'Room created successfully!');
 } else {
-    http_response_code(500);
-    //No post
-    echo json_encode(
-        array(
-            'status' => false,
-            'message' => 'Room not created!' . $db->error
-        )
-    );
+    response(false, 500, 'Request failed!' . $db->error);
 }

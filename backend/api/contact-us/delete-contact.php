@@ -1,6 +1,5 @@
 <?php
 require '../../controllers/core.php';
-
 //Header
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -8,10 +7,17 @@ header('Access-Control-Allow-Methods: DELETE');
 header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/Room.php';
+include_once '../../models/Contact.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
-    response(false, 503, 'Access Denied!');
+    http_response_code(503);
+    //No contact
+    echo json_encode(
+        array(
+            'status' => false,
+            'message' => 'Access Denied!'
+        )
+    );
     exit();
 }
 
@@ -19,19 +25,25 @@ if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
 $database = new Database();
 $db = $database->connection();
 
-//Instantiate room object
-$room = new Room($db);
+//Instantiate blog post object
+$contact = new Contact($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
-$room->id = $data->id;
+$contact->id = $data->id;
 
-//Check if room is DELETED
-$result = $room->delete_room();
+//Check if contact is DELETED
+$result = $contact->delete_contact_us();
 if ($result === true) {
-    response(false, 200, 'Room Deleted Successful!');
+    http_response_code(200);
+    //Turn to JSON and output
+    echo json_encode(array(
+        'status' => true,
+        'message' => 'Deleted Successful!'
+    ));
+    response(true, 500, 'Error deleting record!');
 } else if ($result === false) {
     response(false, 500, 'Error deleting record!');
 } else {
-    response(false, 400, 'No record found!');
+    response(false, 404, 'No record found!');
 }

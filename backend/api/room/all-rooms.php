@@ -1,4 +1,5 @@
 <?php
+require '../../controllers/core.php';
 //Header
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -8,14 +9,7 @@ include_once '../../models/Room.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    http_response_code(503);
-    //No post
-    echo json_encode(
-        array(
-            'status' => false,
-            'message' => 'Access Denied!'
-        )
-    );
+    response(false, 503, 'Access Denied!');
     exit();
 }
 
@@ -23,20 +17,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 $database = new Database();
 $db = $database->connection();
 
-//Instantiate blog post object
-$post = new Room($db);
+//Instantiate room object
+$room = new Room($db);
 
-//Blog post query
-$result = $post->all_rooms();
+//Room query
+$result = $room->all_rooms();
 
-//Check if any post
+//Check if any room
 if ($result[0] > 0) {
-    $posts_arr = array();
-    $posts_arr['status'] = true;
-    $posts_arr['data'] = array();
+    $rooms_arr = array();
+    $rooms_arr['data'] = array();
     while ($row = mysqli_fetch_assoc($result[1])) {
         extract($row);
-        $post_item = array(
+        $room_item = array(
             'id' => $id,
             'address' => $address,
             'applicantName' => $applicantName,
@@ -58,18 +51,9 @@ if ($result[0] > 0) {
             'university' => $university
         );
         //Push to data
-        array_push($posts_arr['data'], $post_item);
+        array_push($rooms_arr['data'], $room_item);
     }
-    http_response_code(200);
-    //Turn to JSON and output
-    echo json_encode($posts_arr);
+    response(true, 200, 'success', $rooms_arr);
 } else {
-    http_response_code(404);
-    //No post
-    echo json_encode(
-        array(
-            'status' => false,
-            'message' => 'No room found!' . $db->error
-        )
-    );
+    response(false, 404, 'No record found!');
 }

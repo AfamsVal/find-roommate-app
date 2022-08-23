@@ -4,13 +4,13 @@ require '../../controllers/core.php';
 //Header
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: PUT');
 header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once '../../config/Database.php';
 include_once '../../models/User.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
     response(false, 503, 'Access Denied!');
     exit();
 }
@@ -24,22 +24,18 @@ $user = new User($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
-if (empty(trim($data->email))) {
-    response(false, 200, 'Email is required!');
-    exit();
-}
 
-if (empty(trim($data->password))) {
-    response(false, 200, 'New password is required!');
-    exit();
-}
+$user->id = htmlspecialchars(strip_tags($data->id));
+$user->firstName = htmlspecialchars(strip_tags($data->firstName));
+$user->lastName = htmlspecialchars(strip_tags($data->lastName));
+$user->phone = htmlspecialchars(strip_tags($data->phone));
 
-$user->email = htmlspecialchars(strip_tags($data->email));
-$user->password = htmlspecialchars(strip_tags(password_hash($data->password, PASSWORD_DEFAULT)));
-
-//Check if password is reseted
-if ($user->reset_password()) {
-    response(true, 200, 'Password reset successful!');
+//Check if user is updated
+$res = $user->update_user_profile();
+if ($res === true) {
+    response(true, 200, 'Profile updated successful!');
+} else if ($res === false) {
+    response(false, 500, 'Request failed!' . $db->error);
 } else {
-    response(false, 500, 'Reset failed!' . $db->error);
+    response(false, 200, 'Nothing to update!');
 }

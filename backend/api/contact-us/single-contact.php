@@ -1,6 +1,5 @@
 <?php
 require '../../controllers/core.php';
-
 //Header
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -53,5 +52,6 @@ if ($result[0] > 0) {
 
     response(true, 200, 'success', $room_item);
 } else {
-    response(false, 404, 'No room found!');
+    // $db->error
+    response(false, 404, 'No record found!');
 }
