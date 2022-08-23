@@ -1,6 +1,5 @@
 <?php
 require '../../controllers/core.php';
-
 //Header
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -8,7 +7,7 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Contact.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     response(false, 503, 'Access Denied!');
@@ -19,27 +18,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $database = new Database();
 $db = $database->connection();
 
-//Instantiate user object
-$user = new User($db);
+//Instantiate blog contact object
+$contact = new Contact($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
-if (empty(trim($data->email))) {
-    response(false, 200, 'Email is required!');
-    exit();
-}
+$contact->name = htmlspecialchars(strip_tags($data->name));
+$contact->email = htmlspecialchars(strip_tags($data->email));
+$contact->subject = htmlspecialchars(strip_tags($data->subject));
+$contact->message = htmlspecialchars(strip_tags($data->message));
 
-if (empty(trim($data->password))) {
-    response(false, 200, 'New password is required!');
-    exit();
-}
-
-$user->email = htmlspecialchars(strip_tags($data->email));
-$user->password = htmlspecialchars(strip_tags(password_hash($data->password, PASSWORD_DEFAULT)));
-
-//Check if password is reseted
-if ($user->reset_password()) {
-    response(true, 200, 'Password reset successful!');
+//Check if contact created
+if ($contact->create_contact_us()) {
+    response(true, 200, 'Posted successfully!');
 } else {
-    response(false, 500, 'Reset failed!' . $db->error);
+    response(false, 500, 'Request failed!');
 }

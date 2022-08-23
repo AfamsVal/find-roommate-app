@@ -65,6 +65,28 @@ class User
         return 2;
     }
 
+    //Update User Profile
+    public function update_user_profile()
+    {
+        $sql = "UPDATE " . $this->users_table . " SET firstName = ?, lastName = ?, phone = ? WHERE id = ?";
+        $query = $this->conn->prepare($sql);
+        $query->bind_param(
+            'sssi',
+            $this->firstName,
+            $this->lastName,
+            $this->phone,
+            $this->id,
+        );
+        if ($query->execute()) {
+            if ($query->affected_rows) {
+                return true;
+            }
+            return 0;
+        }
+
+        return false;
+    }
+
     //Reset Password
     public function reset_password()
     {

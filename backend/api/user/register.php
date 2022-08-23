@@ -1,4 +1,6 @@
 <?php
+require '../../controllers/core.php';
+
 //Header
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -9,14 +11,7 @@ include_once '../../config/Database.php';
 include_once '../../models/User.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(503);
-    //No post
-    echo json_encode(
-        array(
-            'status' => false,
-            'message' => 'Access Denied!'
-        )
-    );
+    response(false, 503, 'Access Denied!');
     exit();
 }
 
@@ -24,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $database = new Database();
 $db = $database->connection();
 
-//Instantiate blog post object
+//Instantiate user object
 $user = new User($db);
 
 $data = json_decode(file_get_contents('php://input'));
@@ -47,46 +42,21 @@ if (
     empty(trim($data->gender)) ||
     empty(trim($data->password))
 ) {
-    http_response_code(200);
-    //No post
-    echo json_encode(
-        array(
-            'status' => false,
-            'message' => 'Please fill all feild'
-        )
-    );
+    response(false, 200, 'Please fill all feild!');
     exit();
 }
 
-//Check if post created
+//Check if user created
 $result = $user->create_user();
 
 if ($result === 0) {
-    http_response_code(200);
-    //No post
-    echo json_encode(
-        array(
-            'status' => false,
-            'message' => 'Email or password already exist'
-        )
-    );
+    response(false, 200, 'Email or password already exist!');
 }
 
 if ($result === 1) {
-    http_response_code(200);
-    //Turn to JSON and output
-    echo json_encode(array(
-        'status' => true,
-        'message' => 'User created successfully!'
-    ));
+    response(true, 200, 'User created successfully!');
 }
 
 if ($result === 2) {
-    http_response_code(503);
-    echo json_encode(
-        array(
-            'status' => false,
-            'message' => 'User not created!' . $db->error
-        )
-    );
+    response(false, 503, 'User not created!');
 }
