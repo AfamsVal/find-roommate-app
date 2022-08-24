@@ -5,53 +5,38 @@ $all_headers = getallheaders();
 
 $token = isset($all_headers['Authorization']) ? $all_headers['Authorization']  : '';
 
-if (!empty($token)) {
-  try {
+function isAuth()
+{
+  if (!empty($token)) {
     $decoded = decodeToken($token);
-    $user_id = $decoded->data->id;
-    $isAdmin = $decoded->data->admin;
+    if ($decoded['status'] === true) {
+      return array(
+        'status' => true,
+        'message' => 'Token Found',
+        'data' => $decoded['data'],
+
+      );
+    } else {
+      return array(
+        'status' => false,
+        'message' => 'token not valid!'
+      );
+    }
+  } else {
     return array(
-      'code' => 200,
-      'status' => true,
-      'message' => 'Token Found',
-      'data' => $decoded,
-      'userId' => $user_id,
-      'isAdmin' => $isAdmin
-    );
-  } catch (Exception $ex) {
-    return array(
-      'code' => 500,
       'status' => false,
-      'message' => $ex->getMessage()
+      'message' => 'Token not found!'
     );
   }
-} else {
-  return array(
-    'code' => 404,
-    'status' => false,
-    'message' => 'Token not found!'
-  );
 }
 
 
-// function hasAccess() => {
-//   let token;
-
-  
-//   }
-
-//   if (!token) {
-//     //unAuthorized
-//     res.status(401);
-//     throw new Error("Not Authorized, token not found");
-//   }
-// });
-
-// const isAdmin = (req, res, next) => {
-//   if (req.user && req.user.isAdmin) {
-//     next();
-//   } else {
-//     res.status(401);
-//     throw new Error("User not authorized!");
-//   }
-// };
+function isAdmin($token)
+{
+  $info = isAuth($token);
+  if ($info['status'] === true) {
+    return $info['data']->isAdmin ? true : false;
+    exit();
+  }
+  return false;
+};

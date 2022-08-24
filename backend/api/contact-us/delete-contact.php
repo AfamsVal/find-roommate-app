@@ -1,25 +1,9 @@
 <?php
 require '../../controllers/core.php';
-//Header
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: DELETE');
-header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
-
 include_once '../../config/Database.php';
 include_once '../../models/Contact.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
-    http_response_code(503);
-    //No contact
-    echo json_encode(
-        array(
-            'status' => false,
-            'message' => 'Access Denied!'
-        )
-    );
-    exit();
-}
+if (!hasAccessControl('DELETE')) exit();
 
 //Instantiate DB $ Connect
 $database = new Database();

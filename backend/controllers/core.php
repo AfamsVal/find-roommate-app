@@ -56,3 +56,26 @@ function response($status, $statusCode, $msg = '', $data = '')
         )
     );
 }
+
+function hasAccessControl($type)
+{
+
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json');
+
+    if ($type === 'POST' or $type === 'DELETE'  or $type === 'PUT') {
+        header('Access-Control-Allow-Methods: ' . $type);
+        header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $type === 'POST') return true;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $type === 'GET') return true;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && $type === 'DELETE') return true;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'PUT' && $type === 'PUT') return true;
+
+    response(false, 503, 'Access Denied!');
+    return false;
+}
