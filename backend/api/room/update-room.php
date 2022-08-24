@@ -37,8 +37,11 @@ $room->university = htmlspecialchars(strip_tags($data->university));
 
 
 //Check if room is updated
-if ($room->update_room()) {
+$res = $room->update_room();
+if ($res === true) {
     response(true, 200, 'Room updated successful!');
+} else if ($res === false) {
+    response(false, 500, 'Request failed!' . $db->error);
 } else {
-    response(false, 500, 'Update failed!' . $db->error);
+    response(false, 200, 'Nothing to update!');
 }

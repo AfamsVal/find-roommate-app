@@ -158,7 +158,10 @@ class Room
             $this->id
         );
         if ($query->execute()) {
-            return true;
+            if ($query->affected_rows) {
+                return true;
+            }
+            return 0;
         }
 
         return false;
