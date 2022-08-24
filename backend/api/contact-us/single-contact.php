@@ -1,16 +1,9 @@
 <?php
 require '../../controllers/core.php';
-//Header
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-
 include_once '../../config/Database.php';
 include_once '../../models/Room.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    response(false, 503, 'Access Denied!');
-    exit();
-}
+if (!hasAccessControl('GET')) exit();
 
 //Instantiate DB $ Connect
 $database = new Database();

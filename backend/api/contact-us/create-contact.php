@@ -1,18 +1,9 @@
 <?php
 require '../../controllers/core.php';
-//Header
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
-
 include_once '../../config/Database.php';
 include_once '../../models/Contact.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    response(false, 503, 'Access Denied!');
-    exit();
-}
+if (!hasAccessControl('POST')) exit();
 
 //Instantiate DB $ Connect
 $database = new Database();
