@@ -79,3 +79,55 @@ function hasAccessControl($type)
     response(false, 503, 'Access Denied!');
     return false;
 }
+
+function get_url($custom = false)
+{
+    if ($custom) {
+        $url = "http://" . $_SERVER['HTTP_HOST'] . $custom;
+        return str_replace("&", "&amp;", $url);
+    }
+
+    $url      = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $validURL = str_replace("&", "&amp;", $url);
+    return $validURL;
+}
+
+
+function compress_image($location, $quality)
+{
+    $info = getimagesize($location);
+    //ini_set('memory_limit','16M');
+    ini_set('memory_limit', '-1');
+    if ($info['mime'] == 'image/jpeg') {
+        $image = imagecreatefromjpeg($location);
+    } elseif ($info['mime'] == 'image/gif') {
+        $image = imagecreatefromgif($location);
+    } elseif ($info['mime'] == 'image/png') {
+        $image = imagecreatefrompng($location);
+    }
+    imagejpeg($image, $location, $quality);
+    //return $location;
+}
+
+
+function image_uploader($new_img_name, $size, $tmp)
+{
+    $url = get_url("/findRoomy/backend/uploaded/" . $new_img_name);
+    $location = '../../uploaded/' . $new_img_name;
+
+    if ($tmp) {
+        if (move_uploaded_file($tmp, $location)) {
+
+            if ($size > 1048576) { //1MB
+                compress_image($location, 40);
+            } else {
+                compress_image($location, 50);
+            }
+            return $url;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
