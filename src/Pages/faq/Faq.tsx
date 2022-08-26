@@ -1,9 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import ButtomLine from "../../components/buttom-border/ButtomLine";
 import { containerVariants } from "../about/About";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 const Faq = () => {
+  interface IUpload {
+    lastModified: string | number;
+    lastModifiedDate: any;
+    name: "";
+    size: 0;
+    type: "";
+  }
+  const [file, setFile] = useState<any>({
+    lastModified: "",
+    lastModifiedDate: "",
+    name: "",
+    size: 0,
+    type: "",
+  });
+
+  const onChange = (e: any) => {
+    setFile(e?.target?.files[0]);
+  };
+
+  const uploadHandler = () => {
+    const fd = new FormData();
+    fd.append("avartar", file, file.name);
+    // fd.append("type", "pdf");
+    // fd.append("user", "afams Val");
+
+    axios
+      .post("http://localhost/findRoomy/backend/api/upload/image-upload", fd, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+
+        // onDownloadProgress(progressEvent) {
+
+        // },
+        onUploadProgress: (progressEvent) => {
+          console.log(
+            123
+            // "progress: " +
+            //   Math.round((progressEvent.loaded / progressEvent.total) * 100) +
+            //   "%"
+          );
+        },
+      })
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log("err:", err.response.data));
+  };
+
+  // onUploadProgress: progressEvent => {
+  //   let percentComplete = progressEvent.loaded / progressEvent.total
+  //   percentComplete = parseInt(percentComplete * 100);
+  //   console.log(percentComplete);
+  //   updateProgress(percentComplete);
+  // }
+
   return (
     <motion.div
       variants={containerVariants}
@@ -28,6 +83,14 @@ const Faq = () => {
               </p>
             </div>
 
+            <div className="col-md-12 my-5 d-none">
+              <input type="file" onChange={onChange} />
+              <div className="mt-3">
+                <button onClick={uploadHandler} className="btn btn-primary">
+                  Upload Image
+                </button>
+              </div>
+            </div>
             <div className="col-md-12 mt-3">
               <div id="accordion">
                 <div className="card">

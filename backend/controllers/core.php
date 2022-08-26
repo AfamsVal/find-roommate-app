@@ -62,10 +62,13 @@ function hasAccessControl($type)
 
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
+    header("Access-Control-Max-Age", "3600");
+    header("Access-Control-Allow-Credentials", "true");
 
     if ($type === 'POST' or $type === 'DELETE'  or $type === 'PUT') {
-        header('Access-Control-Allow-Methods: ' . $type);
-        header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
+        header('Access-Control-Allow-Methods: ' . $type . ', OPTIONS');
+        // header("Access-Control-Allow-Headers: *");
+        header('Access-Control-Allow-Headers: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $type === 'POST') return true;

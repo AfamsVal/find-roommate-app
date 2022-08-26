@@ -6,6 +6,11 @@ if (!hasAccessControl('POST')) exit();
 
 $data = json_decode(file_get_contents('php://input'));
 
+if (!isset($_FILES['avartar'])) {
+    response(false, 404, 'File not set!');
+    exit();
+}
+
 $file_to_upload = $_FILES['avartar'];
 
 
