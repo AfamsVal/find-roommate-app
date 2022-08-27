@@ -75,7 +75,7 @@ class User
             $this->firstName,
             $this->lastName,
             $this->phone,
-            $this->id,
+            $this->id
         );
         if ($query->execute()) {
             if ($query->affected_rows) {
@@ -95,7 +95,7 @@ class User
         $query->bind_param(
             'ss',
             $this->password,
-            $this->email,
+            $this->email
         );
         if ($query->execute()) {
             return true;

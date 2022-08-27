@@ -7,6 +7,7 @@ import {
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { NavigateFunction } from "react-router-dom";
 import { auth, db } from "../../firebase";
+import { httpRequest } from "../../https/http";
 import { IAction, ILogin, ILoginPayload, IRegister } from "../../utils/types";
 import * as types from "../types";
 
@@ -19,11 +20,28 @@ export const loginAction = async (
 ) => {
   try {
     dispatch({ type: types.AUTH_REQUEST });
-    await signInWithEmailAndPassword(auth, user.email, user.password);
-    dispatch({
-      type: types.LOGIN,
-      payload: { email: user.email },
+    const result = await httpRequest({
+      url: "user/login",
+      method: "POST",
+      body: user,
     });
+
+    // method: 'post',
+    // url: '/user/12345',
+    // data: {
+    //   firstName: 'Fred',
+    //   lastName: 'Flintstone'
+    // },
+    // headers: {'Authorization': 'Bearer ...'}
+
+    console.log("res::", result);
+    if (result.status === true) {
+      sessionStorage.setItem("i-token", result.data.token);
+      dispatch({
+        type: types.LOGIN,
+        payload: { email: user.email },
+      });
+    }
   } catch (error: any) {
     dispatch({
       type: types.AUTH_ERROR,

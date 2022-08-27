@@ -40,12 +40,12 @@ const Faq = () => {
 
         // },
         onUploadProgress: (progressEvent) => {
-          console.log(
-            123
+          console
+            .log
             // "progress: " +
             //   Math.round((progressEvent.loaded / progressEvent.total) * 100) +
             //   "%"
-          );
+            ();
         },
       })
       .then((res) => console.log(res.data))

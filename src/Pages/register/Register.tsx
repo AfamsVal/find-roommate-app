@@ -7,7 +7,7 @@ import {
 } from "../../context/actions/AuthAction";
 import { useAppSelector } from "../../context/GlobalState";
 import { validateForm } from "../../utils/formValidator";
-import { STATES } from "../../utils/states";
+import { STATE } from "../../utils/state";
 import { IRegisterForm } from "../../utils/types";
 import style from "./Register.module.css";
 
@@ -133,7 +133,7 @@ const Register: React.FC = () => {
                     className="form-select"
                   >
                     <option value="">Select State</option>
-                    {STATES.map((state, i) => (
+                    {STATE.map((state, i) => (
                       <option value={state} key={i}>
                         {state}
                       </option>
