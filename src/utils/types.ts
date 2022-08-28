@@ -2,7 +2,7 @@ export interface IRegisterForm {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNo: string;
+  phone: string;
   state: string;
   gender: string;
   password: string;
@@ -37,14 +37,14 @@ export interface IAuth {
   authLoading: boolean;
   isPwdReset: boolean;
   userDetails: {
-    uid: string;
-    emailVerified: boolean;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNo: string;
-    state: string;
-    gender: string;
+    aud: string;
+    data: {};
+    exp: number;
+    iat: number;
+    isAdmin: number;
+    iss: string;
+    nbf: number;
+    userId: number;
   };
 }
 export interface IGlobalState {
@@ -61,7 +61,7 @@ export interface IRegister {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNo: string;
+  phone: string;
   state: string;
   gender: string;
   password: string;
@@ -114,7 +114,7 @@ export interface IRoomDetails {
   toiletNo: string;
   timeStamp?: any;
   createdAt?: any;
-  uid?: string;
+  uid?: number;
   university: string;
   applicantName: string;
   category?: string;

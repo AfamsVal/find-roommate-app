@@ -1,17 +1,21 @@
-import {
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { sendPasswordResetEmail, signOut } from "firebase/auth";
 import { NavigateFunction } from "react-router-dom";
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
+import { httpRequest, HTTPResponse } from "../../https/http";
 import { IAction, ILogin, ILoginPayload, IRegister } from "../../utils/types";
 import * as types from "../types";
+import jwt_decode from "jwt-decode";
 
-const timeStamp = serverTimestamp();
-const createdAt = new Date().toISOString();
+interface IResponse extends ILoginPayload {
+  aud: string;
+  data: {};
+  exp: number;
+  iat: number;
+  isAdmin: number;
+  iss: string;
+  nbf: number;
+  userId: number;
+}
 
 export const loginAction = async (
   dispatch: ({ type, payload }: IAction<ILoginPayload>) => void,
@@ -19,11 +23,20 @@ export const loginAction = async (
 ) => {
   try {
     dispatch({ type: types.AUTH_REQUEST });
-    await signInWithEmailAndPassword(auth, user.email, user.password);
-    dispatch({
-      type: types.LOGIN,
-      payload: { email: user.email },
+    const result: HTTPResponse<{ token: string }> = await httpRequest({
+      url: "user/login",
+      method: "POST",
+      body: user,
     });
+
+    if (result.status === true) {
+      sessionStorage.setItem("i-token", result.data.token);
+      var decoded: IResponse = jwt_decode(result.data.token);
+      dispatch({
+        type: types.LOGIN,
+        payload: decoded,
+      });
+    }
   } catch (error: any) {
     dispatch({
       type: types.AUTH_ERROR,
@@ -33,31 +46,26 @@ export const loginAction = async (
 };
 
 export const registerAction = async (
-  dispatch: ({ type, payload }: IAction<IRegister>) => void,
+  dispatch: ({ type, payload }: IAction<string>) => void,
   user: IRegister
 ) => {
   try {
     dispatch({ type: types.AUTH_REQUEST });
-    const res = await createUserWithEmailAndPassword(
-      auth,
-      user.email,
-      user.password
-    );
-
-    const { password, confirmPwd, ...userDetails } = user;
-    await setDoc(doc(db, "users", res?.user?.uid), {
-      ...userDetails,
-      timeStamp,
-      createdAt,
+    const { confirmPwd, ...userDetails } = user;
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "user/register",
+      method: "POST",
+      body: userDetails,
     });
-
-    await signOut(auth);
-
-    dispatch({
-      type: "REGISTER",
-    });
+    if (res.status === true) {
+      dispatch({
+        type: "REGISTER",
+      });
+    } else {
+      dispatch({ type: types.AUTH_ERROR, payload: res.message });
+    }
   } catch (error: any) {
-    dispatch({ type: types.AUTH_ERROR, payload: error.code });
+    dispatch({ type: types.AUTH_ERROR, payload: error });
   }
 };
 

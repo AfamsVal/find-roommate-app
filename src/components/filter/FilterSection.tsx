@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { ISearch } from "../../utils/types";
 import useDebounce from "../../hooks/useDebounce";
-import { checkSearchDetails } from "../../utils/search";
 import { PRICE, UNIVERSITIES } from "../../utils/state";
 import { formatCurrency } from "../../utils/formValidator";
 import useToast from "../../hooks/toast/useToast";

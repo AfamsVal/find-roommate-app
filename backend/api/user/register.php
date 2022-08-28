@@ -14,13 +14,13 @@ $user = new User($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
-$user->firstName = htmlspecialchars(strip_tags($data->firstName));
-$user->lastName = htmlspecialchars(strip_tags($data->lastName));
-$user->email = htmlspecialchars(strip_tags($data->email));
-$user->phone = htmlspecialchars(strip_tags($data->phone));
-$user->state = htmlspecialchars(strip_tags($data->state));
-$user->gender = htmlspecialchars(strip_tags($data->gender));
-$user->password = htmlspecialchars(strip_tags(password_hash($data->password, PASSWORD_DEFAULT)));
+$user->firstName = clean_input_and_strip_tags($data->firstName, $db);
+$user->lastName = clean_input_and_strip_tags($data->lastName, $db);
+$user->email = clean_input_and_strip_tags($data->email, $db);
+$user->phone = clean_input_and_strip_tags($data->phone, $db);
+$user->state = clean_input_and_strip_tags($data->state, $db);
+$user->gender = clean_input_and_strip_tags($data->gender, $db);
+$user->password = clean_input_and_strip_tags(password_hash($data->password, PASSWORD_DEFAULT), $db);
 
 
 if (

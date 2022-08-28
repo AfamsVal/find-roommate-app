@@ -19,7 +19,7 @@ if (empty(trim($data->email))) {
     exit();
 }
 
-$user->email = htmlspecialchars(strip_tags($data->email));
+$user->email = clean_input_and_strip_tags($data->email, $db);
 
 //Check forgot password
 $res = $user->forgot_password();

@@ -4,6 +4,7 @@ require '../../controllers/core.php';
 include_once '../../config/Database.php';
 include_once '../../models/Contact.php';
 
+
 if (!hasAccessControl('GET')) exit();
 
 //Instantiate DB $ Connect

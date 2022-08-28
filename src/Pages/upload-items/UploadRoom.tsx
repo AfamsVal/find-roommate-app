@@ -62,7 +62,7 @@ const UploadRoom = () => {
       return false;
     }
 
-    if (!auth?.isAuth && !auth?.userDetails.uid.length) {
+    if (!auth?.isAuth && !auth?.userDetails.userId) {
       openNotification(
         "Authentication Failed",
         "Kindly login to proceed with this submission",
@@ -76,7 +76,7 @@ const UploadRoom = () => {
       images: [...fileList],
       isVerified: false,
       category: "room",
-      uid: auth.userDetails.uid,
+      uid: auth.userDetails.userId,
     };
 
     uploadRoomAction(dispatch, newObj, openNotification);

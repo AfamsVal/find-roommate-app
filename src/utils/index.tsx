@@ -19,11 +19,11 @@ export const beforeUpload = (
 ) => {
   let res = { isValid: true, title: "", msg: "" };
 
-  if (count > 5) {
+  if (count > 6) {
     res = {
       isValid: false,
       title: "Upload Failed:",
-      msg: "Maximum of 5 images is allowed!",
+      msg: "Maximum of 6 images is allowed!",
     };
   }
 
@@ -35,11 +35,11 @@ export const beforeUpload = (
     };
   }
 
-  if (file.size / 1024 / 1024 > 10) {
+  if (file.size / 1024 / 1024 > 5) {
     res = {
       isValid: false,
       title: "Upload Failed:",
-      msg: `${file.name} size is more than the required 10mb`,
+      msg: `${file.name} size is more than the required 5mb`,
     };
   }
 

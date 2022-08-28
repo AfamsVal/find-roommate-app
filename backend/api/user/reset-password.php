@@ -24,8 +24,8 @@ if (empty(trim($data->password))) {
     exit();
 }
 
-$user->email = htmlspecialchars(strip_tags($data->email));
-$user->password = htmlspecialchars(strip_tags(password_hash($data->password, PASSWORD_DEFAULT)));
+$user->email = clean_input_and_strip_tags($data->email, $db);
+$user->password = clean_input_and_strip_tags(password_hash($data->password, PASSWORD_DEFAULT), $db);
 
 //Check if password is reseted
 if ($user->reset_password()) {

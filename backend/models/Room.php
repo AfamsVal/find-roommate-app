@@ -4,6 +4,7 @@ class Room
     // DB stuff
     private $conn;
     private $table = 'rooms';
+    private $table_images = 'room_images';
     // Post Properties
 
     public $id;
@@ -33,7 +34,7 @@ class Room
     }
 
 
-    //Get Room
+    //Get Rooms
     public function all_rooms()
     {
         $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt DESC';
@@ -55,6 +56,14 @@ class Room
         return array($count, $query);
     }
 
+    public function add_room_images($roomID, $url, $uploadID)
+    {
+        $user_query = 'INSERT INTO ' . $this->table_images . ' SET roomID = ?, url = ?, uploadID = ?';
+        $query = $this->conn->prepare($user_query);
+        $query->bind_param('iss', $roomID, $url, $uploadID);
+        $query->execute();
+    }
+
 
     //Create Room
     public function create_room()
@@ -74,15 +83,16 @@ class Room
         phone,
         rentPerYear,
         roomType,
+        image,
         state,
         updatedAt,
         toiletNo,
         uid,
         university
-        ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $query = $this->conn->prepare($sql);
         $query->bind_param(
-            'sssssssssssssssssss',
+            'ssssssssssssssssssss',
             $this->address,
             $this->applicantName,
             $this->bathRoomNo,
@@ -97,6 +107,7 @@ class Room
             $this->phone,
             $this->rentPerYear,
             $this->roomType,
+            $this->images[0]->url,
             $this->state,
             $this->updatedAt,
             $this->toiletNo,
@@ -104,7 +115,19 @@ class Room
             $this->university
         );
         if ($query->execute()) {
-            return true;
+            $query->store_result();
+            if ($this->conn->affected_rows) {
+                if (count($this->images) > 1) {
+                    foreach ($this->images as $value) {
+
+                        $this->add_room_images($query->insert_id, $value->url, $value->id);
+                    }
+                    return true;
+                }
+
+                return true;
+            }
+            return false;
         }
 
         return false;

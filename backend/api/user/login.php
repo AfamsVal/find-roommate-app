@@ -20,8 +20,8 @@ if (empty(trim($data->email)) || empty(trim($data->password))) {
     exit();
 }
 
-$user->email = htmlspecialchars(strip_tags($data->email));
-$user->password = htmlspecialchars(strip_tags($data->password));
+$user->email = clean_input_and_strip_tags($data->email, $db);
+$user->password = clean_input_and_strip_tags($data->password, $db);
 
 
 //Check if login successful
@@ -50,7 +50,7 @@ if (!empty($user_data)) {
 
         $jwt = generateToken($data, $uid, $isAdmin);
 
-        response(true, 200, 'User logged in successfully', $jwt);
+        response(true, 200, 'User logged in successfully', array('token' => $jwt));
     } else {
         response(false, 200, 'Invalid Credentials!');
     }

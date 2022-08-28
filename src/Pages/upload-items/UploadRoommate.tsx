@@ -63,7 +63,7 @@ const UploadRoommate = () => {
       return false;
     }
 
-    if (!auth?.isAuth && !auth?.userDetails.uid.length) {
+    if (!auth?.isAuth && !auth?.userDetails.userId) {
       openNotification(
         "Authentication Failed",
         "Kindly login to proceed with this submission",
@@ -77,7 +77,7 @@ const UploadRoommate = () => {
       images: [...fileList],
       isVerified: false,
       category: "roommate",
-      uid: auth.userDetails.uid,
+      uid: auth.userDetails.userId,
     };
 
     uploadRoomAction(dispatch, newObj, openNotification);

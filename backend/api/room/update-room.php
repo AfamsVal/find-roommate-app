@@ -14,26 +14,26 @@ $room = new Room($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
-$room->id = htmlspecialchars(strip_tags($data->id));
-$room->address = htmlspecialchars(strip_tags($data->address));
-$room->applicantName = htmlspecialchars(strip_tags($data->applicantName));
-$room->bathRoomNo = htmlspecialchars(strip_tags($data->bathRoomNo));
-$room->category = htmlspecialchars(strip_tags($data->category));
-$room->descriptions = htmlspecialchars(strip_tags($data->descriptions));
-$room->email = htmlspecialchars(strip_tags($data->email));
-$room->hasTiles = htmlspecialchars(strip_tags($data->hasTiles));
-$room->hasWater = htmlspecialchars(strip_tags($data->hasWater));
-$room->hostelName = htmlspecialchars(strip_tags($data->hostelName));
-$room->houseType = htmlspecialchars(strip_tags($data->houseType));
-$room->isVerified = htmlspecialchars(strip_tags($data->isVerified));
-$room->phone = htmlspecialchars(strip_tags($data->phone));
-$room->rentPerYear = htmlspecialchars(strip_tags($data->rentPerYear));
-$room->roomType = htmlspecialchars(strip_tags($data->roomType));
-$room->state = htmlspecialchars(strip_tags($data->state));
+$room->id = clean_input_and_strip_tags($data->id, $db);
+$room->address = clean_input_and_strip_tags($data->address, $db);
+$room->applicantName = clean_input_and_strip_tags($data->applicantName, $db);
+$room->bathRoomNo = clean_input_and_strip_tags($data->bathRoomNo, $db);
+$room->category = clean_input_and_strip_tags($data->category, $db);
+$room->descriptions = clean_input_and_strip_tags($data->descriptions, $db);
+$room->email = clean_input_and_strip_tags($data->email, $db);
+$room->hasTiles = clean_input_and_strip_tags($data->hasTiles, $db);
+$room->hasWater = clean_input_and_strip_tags($data->hasWater, $db);
+$room->hostelName = clean_input_and_strip_tags($data->hostelName, $db);
+$room->houseType = clean_input_and_strip_tags($data->houseType, $db);
+$room->isVerified = clean_input_and_strip_tags($data->isVerified, $db);
+$room->phone = clean_input_and_strip_tags($data->phone, $db);
+$room->rentPerYear = clean_input_and_strip_tags($data->rentPerYear, $db);
+$room->roomType = clean_input_and_strip_tags($data->roomType, $db);
+$room->state = clean_input_and_strip_tags($data->state, $db);
 $room->updatedAt = time();
-$room->toiletNo = htmlspecialchars(strip_tags($data->toiletNo));
-$room->uid = htmlspecialchars(strip_tags($data->uid));
-$room->university = htmlspecialchars(strip_tags($data->university));
+$room->toiletNo = clean_input_and_strip_tags($data->toiletNo, $db);
+$room->uid = clean_input_and_strip_tags($data->uid, $db);
+$room->university = clean_input_and_strip_tags($data->university, $db);
 
 
 //Check if room is updated

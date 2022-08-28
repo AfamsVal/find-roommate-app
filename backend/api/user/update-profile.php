@@ -15,10 +15,10 @@ $user = new User($db);
 $data = json_decode(file_get_contents('php://input'));
 
 
-$user->id = htmlspecialchars(strip_tags($data->id));
-$user->firstName = htmlspecialchars(strip_tags($data->firstName));
-$user->lastName = htmlspecialchars(strip_tags($data->lastName));
-$user->phone = htmlspecialchars(strip_tags($data->phone));
+$user->id = clean_input_and_strip_tags($data->id, $db);
+$user->firstName = clean_input_and_strip_tags($data->firstName, $db);
+$user->lastName = clean_input_and_strip_tags($data->lastName, $db);
+$user->phone = clean_input_and_strip_tags($data->phone, $db);
 
 //Check if user is updated
 $res = $user->update_user_profile();

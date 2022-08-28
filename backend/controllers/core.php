@@ -1,5 +1,27 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: *");
+header('Content-Type: application/json');
+header("Access-Control-Max-Age", "86400");
+header("Access-Control-Allow-Credentials", "true");
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
+
+
+function hasAccessControl($type)
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $type === 'POST') return true;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $type === 'GET') return true;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && $type === 'DELETE') return true;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'PUT' && $type === 'PUT') return true;
+
+    response(false, 200, 'Access Denied!');
+    return false;
+}
+
 use \Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -21,6 +43,16 @@ function generateToken($data, $uid, $isAdmin = 0)
     );
 
     return JWT::encode($payload_info,  $GLOBALS['secret_key'], 'HS512');
+}
+
+function clean_input_and_strip_tags($input, $db)
+{
+    return mysqli_real_escape_string($db, htmlspecialchars(strip_tags($input)));
+}
+
+function clean_only_input($input, $db)
+{
+    return mysqli_real_escape_string($db, $input);
 }
 
 
@@ -57,28 +89,6 @@ function response($status, $statusCode, $msg = '', $data = '')
     );
 }
 
-function hasAccessControl($type)
-{
-
-    header('Access-Control-Allow-Origin: *');
-    header('Content-Type: application/json');
-
-    if ($type === 'POST' or $type === 'DELETE'  or $type === 'PUT') {
-        header('Access-Control-Allow-Methods: ' . $type);
-        header('Access-Control-Allow-Heasders: Access-Control-Allow-Methods, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $type === 'POST') return true;
-
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $type === 'GET') return true;
-
-    if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && $type === 'DELETE') return true;
-
-    if ($_SERVER['REQUEST_METHOD'] === 'PUT' && $type === 'PUT') return true;
-
-    response(false, 503, 'Access Denied!');
-    return false;
-}
 
 function get_url($custom = false)
 {

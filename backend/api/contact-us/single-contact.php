@@ -12,7 +12,7 @@ $db = $database->connection();
 //Instantiate room object
 $room = new Room($db);
 
-$room->id = isset($_GET['id']) ? intval($_GET['id']) : die();
+$room->id = isset($_GET['id']) ? intval(clean_input_and_strip_tags($_GET['id'], $db)) : die();
 
 //Room query
 $result = $room->read_single();

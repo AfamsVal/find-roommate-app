@@ -18,8 +18,6 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
     setDetails(null);
   };
 
-  console.log("details", details);
-
   return (
     <>
       {items.length > 0 &&

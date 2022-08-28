@@ -15,19 +15,30 @@ class User
 
 
     private $conn;
-    private $users_table;
+    private $table;
 
 
     public function __construct($db)
     {
         $this->conn = $db;
-        $this->users_table = 'users';
+        $this->table = 'users';
+    }
+
+
+    //Get Users
+    public function all_users()
+    {
+        $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt DESC';
+        $query = mysqli_query($this->conn, $sql);
+        $count = mysqli_num_rows($query);
+
+        return array($count, $query);
     }
 
 
     public function create_user()
     {
-        $sql = 'SELECT * FROM ' . $this->users_table . ' WHERE email = ?';
+        $sql = 'SELECT * FROM ' . $this->table . ' WHERE email = ?';
 
         $query = $this->conn->prepare($sql);
         $query->bind_param('s', $this->email);
@@ -39,7 +50,7 @@ class User
         }
 
 
-        $user_query = 'INSERT INTO ' . $this->users_table . ' SET  
+        $user_query = 'INSERT INTO ' . $this->table . ' SET  
         firstName = ?,
         lastName = ?,
         email = ?,
@@ -68,14 +79,14 @@ class User
     //Update User Profile
     public function update_user_profile()
     {
-        $sql = "UPDATE " . $this->users_table . " SET firstName = ?, lastName = ?, phone = ? WHERE id = ?";
+        $sql = "UPDATE " . $this->table . " SET firstName = ?, lastName = ?, phone = ? WHERE id = ?";
         $query = $this->conn->prepare($sql);
         $query->bind_param(
             'sssi',
             $this->firstName,
             $this->lastName,
             $this->phone,
-            $this->id,
+            $this->id
         );
         if ($query->execute()) {
             if ($query->affected_rows) {
@@ -90,12 +101,12 @@ class User
     //Reset Password
     public function reset_password()
     {
-        $sql = "UPDATE " . $this->users_table . " SET password = ? WHERE email = ?";
+        $sql = "UPDATE " . $this->table . " SET password = ? WHERE email = ?";
         $query = $this->conn->prepare($sql);
         $query->bind_param(
             'ss',
             $this->password,
-            $this->email,
+            $this->email
         );
         if ($query->execute()) {
             return true;

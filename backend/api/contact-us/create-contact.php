@@ -14,10 +14,10 @@ $contact = new Contact($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
-$contact->name = htmlspecialchars(strip_tags($data->name));
-$contact->email = htmlspecialchars(strip_tags($data->email));
-$contact->subject = htmlspecialchars(strip_tags($data->subject));
-$contact->message = htmlspecialchars(strip_tags($data->message));
+$contact->name = clean_input_and_strip_tags($data->name, $db);
+$contact->email = clean_input_and_strip_tags($data->email, $db);
+$contact->subject = clean_input_and_strip_tags($data->subject, $db);
+$contact->message = clean_input_and_strip_tags($data->message, $db);
 
 //Check if contact created
 if ($contact->create_contact_us()) {
