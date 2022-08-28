@@ -1,6 +1,4 @@
-import { onAuthStateChanged } from "firebase/auth";
 import { useContext, createContext, useReducer, useEffect } from "react";
-import { auth } from "../firebase";
 import { allReducer } from "./allReducer";
 import { initialState } from "./initialState";
 import * as types from "./types";
@@ -17,35 +15,16 @@ const GlobalState = ({ children }: any) => {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const unsub = onAuthStateChanged(auth, (data) => {
-          if (data) {
-            if (
-              state.auth.isAuth === false &&
-              state.auth.isRegister === false
-            ) {
-              return dispatch({
-                type: types.LOGIN,
-                payload: {
-                  uid: data.uid,
-                  emailVerified: data.emailVerified,
-                  refreshToken: data.refreshToken,
-                  photoURL: data.photoURL,
-                },
-              });
-            }
-          } else {
-            dispatch({ type: types.LOGOUT });
-          }
-        });
-        return () => {
-          unsub();
-        };
+        if (1) {
+        } else {
+          dispatch({ type: types.LOGOUT });
+        }
       } catch (error) {
         dispatch({ type: types.AUTH_ERROR, payload: "Something went wrong!" });
       }
     };
     checkUser();
-  }, [state.auth.isAuth, state.auth.isRegister]);
+  }, [state.auth.isAuth]);
 
   return (
     <GlobalContext.Provider

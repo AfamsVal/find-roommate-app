@@ -7,7 +7,7 @@ if (!hasAccessControl('POST')) exit();
 $data = json_decode(file_get_contents('php://input'));
 
 if (!isset($_FILES['avartar'])) {
-    response(false, 404, 'File not set!');
+    response(false, 200, 'File not set!');
     exit();
 }
 
@@ -31,8 +31,8 @@ $filetype = $file_to_upload['type'];
 
 
 //Validate file size
-if ($size > 1048576 * 4) { //4MB
-    response(false, 200, 'File size is above 4Mb!');
+if ($size > 1048576 * 5) { //5MB
+    response(false, 200, 'File size is above 5Mb!');
     exit();
 }
 
@@ -63,4 +63,4 @@ if ($url === false) {
     exit();
 }
 
-response(true, 200, 'success', $url);
+response(true, 200, 'success', array('id' => time(), 'url' => $url));

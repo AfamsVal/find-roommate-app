@@ -14,7 +14,7 @@ $contact = new Contact($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
-$contact->id = $data->id;
+$contact->id = clean_input_and_strip_tags($data->id, $db);
 
 //Check if contact is DELETED
 $result = $contact->delete_contact_us();

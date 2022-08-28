@@ -1,3 +1,4 @@
+import { httpRequest, HTTPResponse } from "./../../https/http";
 import {
   addDoc,
   collection,
@@ -14,8 +15,6 @@ import { db } from "../../firebase";
 import { IAction, IRoomDetails, ISearchQuery } from "../../utils/types";
 import * as types from "../types";
 
-const timeStamp = serverTimestamp();
-const createdAt = new Date().toISOString();
 const collectionRef = collection(db, "rooms");
 
 export const uploadRoomAction = async (
@@ -30,11 +29,13 @@ export const uploadRoomAction = async (
 ) => {
   dispatch({ type: types.ADDING_NEW_ROOM });
 
-  const res = await addDoc(collectionRef, { ...form, timeStamp, createdAt });
+  const res: HTTPResponse<string> = await httpRequest({
+    url: "room/create-room",
+    method: "POST",
+    body: form,
+  });
 
-  if (res?.id) {
-    const data = doc(db, "rooms", res.id);
-    await updateDoc(data, { id: data.id });
+  if (res.status === true) {
     dispatch({ type: types.ADD_NEW_ROOM_COMPLETED });
     openNotification(
       "Submission Successful",

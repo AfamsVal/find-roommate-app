@@ -24,7 +24,6 @@ const AdminTable: React.FC<ITable> = (props) => {
   //   };
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 

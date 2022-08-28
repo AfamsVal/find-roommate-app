@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal } from "antd";
 import style from "./SearchModalDetails.module.css";
 import { IRoomDetails } from "../../utils/types";
@@ -24,7 +24,6 @@ const SearchModalDetails: React.FC<IProps> = ({ itemId, children }) => {
   const showModal = () => {
     setVisible(true);
     setLoading(true);
-    console.log("itemId", itemId);
   };
 
   return (

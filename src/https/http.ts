@@ -1,4 +1,4 @@
-import { BASE_URL } from "../utils/environment";
+import { DEV_URL } from "../utils/environment";
 
 interface HTTPParams {
   method?: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
@@ -25,7 +25,7 @@ export const httpRequest = async (
     const options: any = {
       method: method || "GET",
       redirect: "follow",
-      mode: "cors", // no-cors, *cors, same-origin
+      // mode: "cors", // no-cors, *cors, same-origin
       // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
       // credentials: "same-origin", // include, *same-origin, omit
       // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -43,7 +43,7 @@ export const httpRequest = async (
       options.body = isFormData ? body : JSON.stringify(body);
     }
 
-    const res = await fetch(`${BASE_URL}${url}`, options);
+    const res = await fetch(`${DEV_URL}${url}`, options);
     const responseData: any = await res.json();
     return responseData;
   } catch (error) {

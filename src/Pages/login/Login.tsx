@@ -49,9 +49,9 @@ const Login: React.FC = () => {
     <div className={`${style.login} container-fluid`}>
       <div className="row h-100 align-content-center px-3 px-md-0">
         <motion.div
-          initial={{ x: "100vw" }}
-          animate={{ x: 0 }}
-          transition={{ type: "spring", delay: 0.5 }}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", delay: 0.3 }}
           className={`px-3 px-md-5 col-sm-10 col-md-6 col-lg-5 col-xl-4 mx-auto authCard`}
         >
           <motion.h2

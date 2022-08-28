@@ -14,25 +14,27 @@ $post = new Room($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
-$post->address = htmlspecialchars(strip_tags($data->address));
-$post->applicantName = htmlspecialchars(strip_tags($data->applicantName));
-$post->bathRoomNo = htmlspecialchars(strip_tags($data->bathRoomNo));
-$post->category = htmlspecialchars(strip_tags($data->category));
-$post->descriptions = htmlspecialchars(strip_tags($data->descriptions));
-$post->email = htmlspecialchars(strip_tags($data->email));
-$post->hasTiles = htmlspecialchars(strip_tags($data->hasTiles));
-$post->hasWater = htmlspecialchars(strip_tags($data->hasWater));
-$post->hostelName = htmlspecialchars(strip_tags($data->hostelName));
-$post->houseType = htmlspecialchars(strip_tags($data->houseType));
-$post->isVerified = htmlspecialchars(strip_tags($data->isVerified));
-$post->phone = htmlspecialchars(strip_tags($data->phone));
-$post->rentPerYear = htmlspecialchars(strip_tags($data->rentPerYear));
-$post->roomType = htmlspecialchars(strip_tags($data->roomType));
-$post->state = htmlspecialchars(strip_tags($data->state));
+$post->address = clean_input_and_strip_tags($data->address, $db);
+$post->applicantName = clean_input_and_strip_tags($data->applicantName, $db);
+$post->bathRoomNo = clean_input_and_strip_tags($data->bathRoomNo, $db);
+$post->category = clean_input_and_strip_tags($data->category, $db);
+$post->descriptions = clean_input_and_strip_tags($data->descriptions, $db);
+$post->email = clean_input_and_strip_tags($data->email, $db);
+$post->hasTiles = clean_input_and_strip_tags($data->hasTiles, $db);
+$post->hasWater = clean_input_and_strip_tags($data->hasWater, $db);
+$post->hostelName = clean_input_and_strip_tags($data->hostelName, $db);
+$post->houseType = clean_input_and_strip_tags($data->houseType, $db);
+$post->images = $data->images;
+$post->isVerified = clean_input_and_strip_tags($data->isVerified, $db);
+$post->phone = clean_input_and_strip_tags($data->phone, $db);
+$post->rentPerYear = clean_input_and_strip_tags($data->rentPerYear, $db);
+$post->roomType = clean_input_and_strip_tags($data->roomType, $db);
+$post->state = clean_input_and_strip_tags($data->state, $db);
 $post->updatedAt = time();
-$post->toiletNo = htmlspecialchars(strip_tags($data->toiletNo));
-$post->uid = htmlspecialchars(strip_tags($data->uid));
-$post->university = htmlspecialchars(strip_tags($data->university));
+$post->toiletNo = clean_input_and_strip_tags($data->toiletNo, $db);
+$post->uid = clean_input_and_strip_tags($data->uid, $db);
+$post->university = clean_input_and_strip_tags($data->university, $db);
+
 
 //Check if post created
 if ($post->create_room()) {

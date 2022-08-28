@@ -3,7 +3,6 @@ import { Modal } from "antd";
 import PropTypes from "prop-types";
 
 const AdminApprovedLoansModal = ({ type, children, data, disabled }: any) => {
-  console.log("data::", data);
   const declinedLoading = false;
   const approveLoading = false;
   const isAdminModalTask = false;

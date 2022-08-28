@@ -10,6 +10,7 @@ import { validateForm } from "../../utils/formValidator";
 import { STATE } from "../../utils/state";
 import { IRegisterForm } from "../../utils/types";
 import style from "./Register.module.css";
+import { motion } from "framer-motion";
 
 const Register: React.FC = () => {
   const [openNotification] = useToast();
@@ -36,7 +37,7 @@ const Register: React.FC = () => {
     firstName: "",
     lastName: "",
     email: "",
-    phoneNo: "",
+    phone: "",
     state: "",
     gender: "",
     password: "",
@@ -60,7 +61,10 @@ const Register: React.FC = () => {
   return (
     <div className={`${style.login} container-fluid`}>
       <div className="row h-100 align-content-center">
-        <div
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", delay: 0.3 }}
           className={`px-3 px-md-5 col-sm-10 col-md-7 col-lg-7 col-xl-5 mx-auto authCard`}
         >
           <h2 className="gradient-text auth-text">Find A Roomate</h2>
@@ -113,9 +117,9 @@ const Register: React.FC = () => {
                 <div className="mx-1 w-100 mt-4 mt-md-0 my-form">
                   <input
                     type="text"
-                    name="phoneNo"
+                    name="phone"
                     onChange={handleChange}
-                    value={form.phoneNo}
+                    value={form.phone}
                     className="form-control"
                     placeholder=" "
                   />
@@ -212,7 +216,7 @@ const Register: React.FC = () => {
               </button>
             </form>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

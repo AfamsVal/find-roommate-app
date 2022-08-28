@@ -459,23 +459,20 @@ form .form-control:focus {
 
 .upload-delete-btn {
   position: absolute;
-  top: 0px;
-  right: 5px;
+  top: -7px;
+  right: -1px;
+  text-align: center;
   cursor: pointer;
-  opacity: 0;
   color: red;
   transition: opacity 1s ease-in-out;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 0 5px 5px 5px;
-  border-radius: 40%;
+  padding: 0 2px 2px 2px;
+  border-radius: 10px;
+  display: inline-block;
+  font-size: 17px;
 }
 
 .upload-img-preview:hover {
   border: 2px solid red;
-}
-
-.upload-img-preview:hover > .upload-delete-btn {
-  opacity: 1;
 }
 
 .upload-title {

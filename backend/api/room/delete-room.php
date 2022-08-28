@@ -14,7 +14,7 @@ $room = new Room($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
-$room->id = $data->id;
+$room->id = clean_input_and_strip_tags($data->id, $db);
 
 //Check if room is DELETED
 $result = $room->delete_room();
