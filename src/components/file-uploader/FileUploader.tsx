@@ -80,7 +80,8 @@ const FileUploader: React.FC<IProps> = ({
 
   return (
     <>
-      <div className="row mt-2">
+      <div className="row">
+        <span className="mx-3 mb-3">You can upload up to 5 images</span>
         <div
           onClick={() => fileRef.current.click()}
           className="col-6 col-md-6 offset-md-1 upload-box text-info"

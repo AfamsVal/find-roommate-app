@@ -12,6 +12,8 @@ class User
     public $blocked;
     public $createdAt;
     public $status;
+    public $start;
+    public $limit;
 
 
     private $conn;
@@ -28,10 +30,10 @@ class User
     //Get Users
     public function all_users()
     {
-        $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt DESC';
+        $sql = "SELECT * FROM " . $this->table . " ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
+
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
-
         return array($count, $query);
     }
 
@@ -149,6 +151,6 @@ class User
             return $data->fetch_assoc();
         }
 
-        return array();
+        return '';
     }
 }

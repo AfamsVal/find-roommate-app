@@ -15,11 +15,12 @@ $room = new Room($db);
 
 $data = json_decode(file_get_contents('php://input'));
 
+$room->selectedType = clean_input_and_strip_tags($data->selectedType, $db);
 $room->start = clean_input_and_strip_tags($data->start, $db);
 $room->limit = clean_input_and_strip_tags($data->limit, $db);
 
 //Room query
-$result = $room->all_rooms();
+$result = $room->all_rooms_by_category();
 
 //Check if any room
 if ($result[0] > 0) {

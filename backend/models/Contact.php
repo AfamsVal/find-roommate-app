@@ -13,6 +13,8 @@ class Contact
     public $message;
     public $createdAt;
     public $treated;
+    public $start;
+    public $limit;
 
     // Constructor with DB
     public function __construct($db)
@@ -24,7 +26,8 @@ class Contact
     //Get Room
     public function all_contact_us()
     {
-        $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt DESC';
+        $sql = "SELECT * FROM " . $this->table . " ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
+
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
 
@@ -33,14 +36,19 @@ class Contact
 
 
     //Get Single Room
-    public function read_single()
+    public function read_single_contact()
     {
-        $sql = "SELECT * FROM " . $this->table . " WHERE id = '$this->id'";
-
-        $query = mysqli_query($this->conn, $sql);
-        $count = mysqli_num_rows($query);
-
-        return array($count, $query);
+        $sql = "SELECT * FROM " . $this->table . " WHERE id = ? ";
+        $query = $this->conn->prepare($sql);
+        $query->bind_param('s', $this->id);
+        $query->execute();
+        $data = $query->get_result();
+        $count = $data->num_rows;
+        if ($count) {
+            $result = $data->fetch_assoc();
+            return array($count, $result);
+        }
+        return array($count, 'No result found!..');
     }
 
 

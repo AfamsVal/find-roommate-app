@@ -19,7 +19,7 @@ $result = $room->read_single();
 
 //Check if any room
 if ($result[0] > 0) {
-    $row = mysqli_fetch_assoc($result[1]);
+    $row = $result[1];
     extract($row);
     $room_item = array(
         'id' => $id,
@@ -45,5 +45,5 @@ if ($result[0] > 0) {
 
     response(true, 200, 'success', $room_item);
 } else {
-    response(false, 404, 'No room found!');
+    response(false, 404, $result[1]);
 }
