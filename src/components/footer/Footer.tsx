@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import style from "../../components/footer/Footer.module.css";
 const Footer: React.FC = () => {
   return (
-    <div className={` ${style.container} container-fluid position-relative`}>
+    <div
+      className={` ${style.container} container-fluid position-relative text-white`}
+    >
       <div
         className={` ${style.maine}   row position-absolute`}
         style={{ marginTop: "-30px" }}
@@ -31,7 +33,7 @@ const Footer: React.FC = () => {
             through just to find an accommodation.
           </p>
         </div>
-        <div className={` ${style.col1} col-md-3 `}>
+        <div className={` ${style.col1} col-md-3 text-warning`}>
           <h3>CONTACT INFO</h3>
           <h6>ADDRESS</h6>
           <p>Owerri, Imo State</p>

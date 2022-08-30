@@ -26,6 +26,9 @@ class Room
     public $toiletNo;
     public $uid;
     public $university;
+    public $selectedType;
+    public $start;
+    public $limit;
 
     // Constructor with DB
     public function __construct($db)
@@ -37,7 +40,7 @@ class Room
     //Get Rooms
     public function all_rooms()
     {
-        $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt DESC';
+        $sql = "SELECT * FROM " . $this->table . " ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
 
@@ -45,15 +48,41 @@ class Room
     }
 
 
+    //Get Rooms By Category
+    public function all_rooms_by_category()
+    {
+        $sql = "SELECT * FROM " . $this->table . " WHERE category = '$this->selectedType' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
+
+        // $query = $this->conn->prepare($sql);
+        // $query->bind_param('sii', $this->selectedType, $this->start, $this->limit);
+        // $query->execute();
+        // $data = $query->get_result();
+        // $count = $data->num_rows;
+        // if ($count) {
+        //     $result = $data->fetch_assoc();
+        //     return array($count, $result);
+        // }
+        // return array($count, 'No result found!..');
+        $query = mysqli_query($this->conn, $sql);
+        $count = mysqli_num_rows($query);
+        return array($count, $query);
+    }
+
+
     //Get Single Room
     public function read_single()
     {
-        $sql = "SELECT * FROM " . $this->table . " WHERE id = '$this->id'";
-
-        $query = mysqli_query($this->conn, $sql);
-        $count = mysqli_num_rows($query);
-
-        return array($count, $query);
+        $sql = "SELECT * FROM " . $this->table . " WHERE id = ?";
+        $query = $this->conn->prepare($sql);
+        $query->bind_param('s', $this->id);
+        $query->execute();
+        $data = $query->get_result();
+        $count = $data->num_rows;
+        if ($count) {
+            $result = $data->fetch_assoc();
+            return array($count, $result);
+        }
+        return array($count, 'No result found!..');
     }
 
     public function add_room_images($roomID, $url, $uploadID)

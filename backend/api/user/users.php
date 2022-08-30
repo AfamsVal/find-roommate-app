@@ -4,7 +4,7 @@ include_once '../../config/Database.php';
 include_once '../../models/User.php';
 
 
-if (!hasAccessControl('GET')) exit();
+if (!hasAccessControl('POST')) exit();
 
 //Instantiate DB $ Connect
 $database = new Database();
@@ -12,6 +12,10 @@ $db = $database->connection();
 
 //Instantiate user object
 $user = new User($db);
+
+$data = json_decode(file_get_contents('php://input'));
+$user->start = clean_input_and_strip_tags($data->start, $db);
+$user->limit = clean_input_and_strip_tags($data->limit, $db);
 
 //User query
 $result = $user->all_users();
