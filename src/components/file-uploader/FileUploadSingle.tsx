@@ -1,12 +1,10 @@
 import React, { useRef, useState } from "react";
 import { CloudUploadOutlined, DeleteOutlined } from "@ant-design/icons";
 import useToast from "../../hooks/toast/useToast";
-import { storage } from "../../firebase";
-import { v4 as uuidv4 } from "uuid";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { IUpload } from "../../utils/types";
 import { beforeUpload } from "../../utils";
 import { useAppSelector } from "../../context/GlobalState";
+import { httpRequest, HTTPResponse } from "../../https/http";
 
 interface IProps {
   fileList: IUpload[];
@@ -21,10 +19,10 @@ const FileUploadSingle: React.FC<IProps> = ({
 }) => {
   const [openNotification] = useToast();
   const [percentage, setPercentage] = useState(0);
-  const { dispatch, auth } = useAppSelector();
+  const { auth } = useAppSelector();
   const fileRef = useRef<any>(null);
 
-  const handleFileChange = (files: any) => {
+  const handleFileChange = async (files: any) => {
     if (!auth.isAuth) {
       openNotification(
         "Authentication Failed",
@@ -34,59 +32,43 @@ const FileUploadSingle: React.FC<IProps> = ({
       return false;
     }
 
-    for (let i = 0; i < files.length; i++) {
-      const isValid: boolean = beforeUpload(
-        files[i],
-        files.length,
-        fileList.length,
-        openNotification
-      );
+    try {
+      for (let i = 0; i < files.length; i++) {
+        const isValid: boolean = beforeUpload(
+          files[i],
+          files.length,
+          fileList.length,
+          openNotification
+        );
 
-      if (!isValid) break;
+        if (!isValid) break;
 
-      setUploading(true);
+        setUploading(true);
 
-      const imageRef = ref(storage, `images/${Math.random() + files[i].name}`);
-      const uploadTask = uploadBytesResumable(imageRef, files[i]);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
+        const fd = new FormData();
+        fd.append("avartar", files[i], files[i].name);
+        // fd.append("type", "pdf");
+        // fd.append("user", "afams Val");
 
-          setPercentage(progress);
-        },
-        (error) => {
-          dispatch({
-            type: "AUTH_ERROR",
-            payload: "Image Upload Error",
+        const res: HTTPResponse<{ id: string; url: string }> =
+          await httpRequest({
+            url: "upload/image-upload",
+            method: "POST",
+            isFormData: true,
+            body: fd,
           });
-        },
-        () => {
-          getDownloadURL(imageRef)
-            .then((url) => {
-              if (i + 1 === files.length) {
-                setTimeout(() => setUploading(false), 1000);
-              }
 
-              setFileList((list: IUpload[]) => [
-                {
-                  id: uuidv4(),
-                  url: url,
-                },
-                ...list,
-              ]);
-              setTimeout(() => setPercentage(0), 1000);
-            })
-            .catch((err) => {
-              dispatch({
-                type: "AUTH_ERROR",
-                payload: "Image Upload Error",
-              });
-            });
+        if (res.status === true) {
+          setFileList([...fileList, res.data]);
+          setUploading(false);
+        } else {
+          openNotification("File Upload Failed", res.message, "error");
+          setUploading(false);
         }
-      );
+      }
+    } catch (error: any) {
+      openNotification("File Upload Failed", error, "error");
+      setUploading(false);
     }
   };
 
@@ -98,7 +80,8 @@ const FileUploadSingle: React.FC<IProps> = ({
 
   return (
     <>
-      <div className="row mt-2">
+      <div className="row">
+        <span className="mx-3 mb-3">You can upload up to 5 images</span>
         <div
           onClick={() => fileRef.current.click()}
           className="col-6 col-md-6 offset-md-1 upload-box text-info"
@@ -110,7 +93,7 @@ const FileUploadSingle: React.FC<IProps> = ({
           <h6>{percentage ? `${percentage}%` : ""}</h6>
         </div>
         <input
-          multiple
+          // multiple
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleFileChange(e.target.files)
           }

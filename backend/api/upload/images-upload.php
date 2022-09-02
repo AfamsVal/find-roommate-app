@@ -4,21 +4,18 @@ require '../../controllers/core.php';
 
 if (!hasAccessControl('POST')) exit();
 
-$data = json_decode(file_get_contents('php://input'));
+// $data = json_decode(file_get_contents('php://input'));
 
 
-if (!isset($_FILES['avartar'])) {
-    response(false, 200, 'File not set!');
+if (!isset($_FILES['avartar']['name'])) {
+    response(false, 200, 'File not selected!');
     exit();
 }
 
-$fileNames = array_filter($_FILES['avartar']['name']);
-if (!empty($fileNames)) {
-    response(false, 200, 'checking');
-    exit();
-}
 
-$fileCount = count($_FILES["avartar"]['name']);
+$fileCount = count($_FILES['avartar']['name']);
+$imageArray = array();
+$imageArray['data'] = array();
 
 for ($i = 0; $i < $fileCount; $i++) {
 
@@ -71,6 +68,7 @@ for ($i = 0; $i < $fileCount; $i++) {
         response(false, 200, 'Image upload failed. kindly refresh and try again!');
         exit();
     }
-
-    response(true, 200, 'success', array('id' => time(), 'url' => $url));
+    array_push($imageArray['data'], array('id' => rand(111, 9999) . '-' . $i, 'url' => $url));
 }
+
+response(true, 200, 'success', $imageArray['data']);

@@ -38,7 +38,6 @@ const FileUploader: React.FC<IProps> = ({
     };
 
     prevImgs.forEach((image: any, i: number) => {
-      console.log("first", image);
       newImageUrls.push({
         lastModified: image.lastModified,
         url: URL.createObjectURL(image),
@@ -54,74 +53,55 @@ const FileUploader: React.FC<IProps> = ({
     setPrevImags([]);
   }, [prevImgs, imageURLS, openNotification]);
 
+  //File change HANDLER///////////////////////
+  ///////////////////////////////////////////////
   function handleFileChange(e: any) {
     setImages([...e.target.files]);
     setPrevImags([...e.target.files]);
   }
 
-  // const handleFileUpload = async (files: any) => {
-  //   if (!auth.isAuth) {
-  //     openNotification(
-  //       "Authentication Failed",
-  //       "Kindly login to proceed with this submission",
-  //       "error"
-  //     );
-  //     return false;
-  //   }
+  const handleFileUpload = async (files: any) => {
+    if (!auth.isAuth) {
+      openNotification(
+        "Authentication Failed",
+        "Kindly login to proceed with this submission",
+        "error"
+      );
+      return false;
+    }
 
-  //   try {
-  //     let isValid: boolean = true;
-  //     const fDatas = new FormData();
+    try {
+      setUploading(true);
 
-  //     for (let i = 0; i < files.length; i++) {
-  //       isValid = beforeUpload(
-  //         files[i],
-  //         files.length,
-  //         fileList.length,
-  //         openNotification
-  //       );
-  //       fDatas.append("avartar", files[i], files[i].name);
-  //       // fDatas.append("accepted", "images");
-  //     }
+      const fd = new FormData();
+      images.forEach((image: any) => {
+        fd.append("avartar[]", image);
+        // fd.append("accepted", "pdf");
+        // fd.append("user", "afams Val");
+      });
 
-  //     if (!isValid) return false;
+      const res: HTTPResponse<{ id: string; url: string }[]> =
+        await httpRequest({
+          url: "upload/images-upload",
+          method: "POST",
+          isFormData: true,
+          body: fd,
+        });
 
-  //     setUploading(true);
-
-  //     // const fd = new FormData();
-  //     // fd.append("avartar", files[i], files[i].name);
-  //     // fd.append("accepted", "pdf");
-  //     // fd.append("user", "afams Val");
-
-  //     // fd.append("avartar", files[i], files[i].name);
-
-  //     const res: HTTPResponse<{ id: string; url: string }[]> =
-  //       await httpRequest({
-  //         url: "upload/images-upload",
-  //         method: "POST",
-  //         isFormData: true,
-  //         body: fDatas,
-  //       });
-
-  //     console.log("images::", res);
-  //     return;
-
-  //     if (res.status === true) {
-  //       setFileList([...fileList, ...res.data]);
-  //       setUploading(false);
-  //     } else {
-  //       openNotification("File Upload Failed", res.message, "error");
-  //       setUploading(false);
-  //     }
-  //   } catch (error: any) {
-  //     openNotification("File Upload Failed", error, "error");
-  //     setUploading(false);
-  //   }
-  // };
-
-  useEffect(() => {
-    console.log("images", images);
-  }, [images]);
+      if (res.status === true) {
+        setFileList([...fileList, ...res.data]);
+        setUploading(false);
+      } else {
+        openNotification("File Upload Failed", res.message, "error");
+        setUploading(false);
+      }
+      setPrevImags([]);
+      setImageURLs([]);
+    } catch (error: any) {
+      openNotification("File Upload Failed", error, "error");
+      setUploading(false);
+    }
+  };
 
   ////DELETE IMAGES//////////
   const onRemove = async (id: string, uploaded: boolean) => {
@@ -143,7 +123,7 @@ const FileUploader: React.FC<IProps> = ({
   return (
     <>
       <div className="row">
-        <span className="mx-3 mb-3">You can upload up to 5 images</span>
+        <span className="mx-3 mb-3">You can upload up to 6 images</span>
         <div
           onClick={() => fileRef.current.click()}
           className="col-6 col-md-6 offset-md-1 upload-box text-info"
@@ -174,11 +154,24 @@ const FileUploader: React.FC<IProps> = ({
               />
             </div>
           ))}
+          {images.length > 0 && (
+            <p>
+              <button
+                className="btn btn-sm btn-primary mt-3"
+                onClick={handleFileUpload}
+              >
+                <i className="fas fa-file-upload"></i> Upload Image
+              </button>
+            </p>
+          )}
         </div>
       )}
 
       {fileList?.length > 0 && (
         <div className="row mt-3 mx-auto">
+          <span className="mb-3 bg-success text-white py-1">
+            Uploaded images
+          </span>
           {fileList.map((image) => (
             <div className="col-4 mb-2" key={image.id}>
               <ImageUploadCard
