@@ -43,8 +43,28 @@ class Room
         $sql = "SELECT * FROM " . $this->table . " ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
-
         return array($count, $query);
+    }
+
+    public function fetch_more_images($roomID)
+    {
+        $sql = "SELECT * FROM " . $this->table_images . " WHERE roomID = '$roomID'";
+        $query = mysqli_query($this->conn, $sql);
+        $rooms_arr['images'] = array();
+        if (mysqli_num_rows($query) > 0) {
+            while ($row = mysqli_fetch_assoc($query)) {
+                extract($row);
+                $room_item = array(
+                    'id' => $id,
+                    'url' => $url,
+                    // 'roomID' => $roomID,
+                    // 'createdAt' => $createdAt,
+                );
+                array_push($rooms_arr['images'], $room_item);
+            }
+        }
+
+        return $rooms_arr['images'];
     }
 
 
@@ -52,17 +72,6 @@ class Room
     public function all_rooms_by_category()
     {
         $sql = "SELECT * FROM " . $this->table . " WHERE category = '$this->selectedType' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
-
-        // $query = $this->conn->prepare($sql);
-        // $query->bind_param('sii', $this->selectedType, $this->start, $this->limit);
-        // $query->execute();
-        // $data = $query->get_result();
-        // $count = $data->num_rows;
-        // if ($count) {
-        //     $result = $data->fetch_assoc();
-        //     return array($count, $result);
-        // }
-        // return array($count, 'No result found!..');
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
         return array($count, $query);
@@ -80,8 +89,15 @@ class Room
         $count = $data->num_rows;
         if ($count) {
             $result = $data->fetch_assoc();
+            /* free results */
+            $query->free_result();
+
+            /* close statement */
+            $query->close();
             return array($count, $result);
         }
+
+
         return array($count, 'No result found!..');
     }
 

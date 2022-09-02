@@ -55,45 +55,29 @@ export const uploadRoomAction = async (
   }
 };
 
+interface IFetchData {
+  data: {};
+}
+
 export const getAllListing = async (
-  dispatch: ({ type, payload }: IAction) => void
+  dispatch: ({ type, payload }: IAction) => void,
+  range: any
 ) => {
   try {
     dispatch({ type: types.FETCHING_ALL_LISTING });
 
-    //1. Query
-    // const q = query(
-    //   collectionRef,
-    //   where("email", "!=", "amanda@gmail.com"),
-    //   orderBy("hostelName", "desc")
-    // );
-
-    const q = query(collectionRef, orderBy("createdAt", "desc"), limit(28));
-    // const unSubDocs =
-    onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      dispatch({
-        type: types.FETCHED_ALL_LISTING,
-        payload: data.length ? data : [],
-      });
+    const res: HTTPResponse<any> = await httpRequest({
+      url: "room/all-rooms",
+      method: "POST",
+      body: range,
     });
 
-    // unSubDocs();
-
-    //Method 2: using getDocs to fetch data
-    // const snapshot = await getDocs(collectionRef);
-    // const data = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    // if (data.length) {
-    //   dispatch({ type: types.FETCHED_LISTING, payload: data });
-    // }
-
-    //Method 3: Using snapshort withoug query
-    // onSnapshot(collectionRef, (snapshot) => {
-    //   const data = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    //   if (data.length) {
-    //     dispatch({ type: types.FETCHED_LISTING, payload: data });
-    //   }
-    // });
+    if (res.status) {
+      dispatch({
+        type: types.FETCHED_ALL_LISTING,
+        payload: res?.data?.data,
+      });
+    }
   } catch (err) {
     console.log(err);
   }

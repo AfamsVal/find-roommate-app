@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
-import { CloudUploadOutlined, DeleteOutlined } from "@ant-design/icons";
+import React, { useEffect, useRef, useState } from "react";
+import { CloudUploadOutlined } from "@ant-design/icons";
 import useToast from "../../hooks/toast/useToast";
 import { IUpload } from "../../utils/types";
-import { beforeUpload } from "../../utils";
+import { beforeFileUpload, beforeUpload } from "../../utils";
 import { useAppSelector } from "../../context/GlobalState";
 import { httpRequest, HTTPResponse } from "../../https/http";
+import ImageUploadCard from "./ImageUploadCard";
 
 interface IProps {
   fileList: IUpload[];
@@ -17,12 +18,49 @@ const FileUploader: React.FC<IProps> = ({
   setFileList,
   setUploading,
 }) => {
+  const [images, setImages] = useState([] as any);
+  const [prevImgs, setPrevImags] = useState([] as any);
+  const [imageURLS, setImageURLs] = useState<
+    { lastModified: string; url: string }[]
+  >([]);
   const [openNotification] = useToast();
   const [percentage, setPercentage] = useState(0);
   const { auth } = useAppSelector();
   const fileRef = useRef<any>(null);
 
-  const handleFileChange = async (files: any) => {
+  useEffect(() => {
+    if (prevImgs.length < 1) return;
+    const newImageUrls: any = [];
+
+    let checkValid: { isValid: boolean; error: string } = {
+      isValid: true,
+      error: "",
+    };
+
+    prevImgs.forEach((image: any, i: number) => {
+      newImageUrls.push({
+        lastModified: image.lastModified,
+        url: URL.createObjectURL(image),
+      });
+      checkValid = beforeFileUpload(image, prevImgs.length);
+    });
+
+    if (checkValid.isValid) {
+      setImageURLs(newImageUrls);
+    } else {
+      openNotification("File Upload Error", checkValid.error, "error");
+    }
+    setPrevImags([]);
+  }, [prevImgs, imageURLS, openNotification]);
+
+  //File change HANDLER///////////////////////
+  ///////////////////////////////////////////////
+  function handleFileChange(e: any) {
+    setImages([...e.target.files]);
+    setPrevImags([...e.target.files]);
+  }
+
+  const handleFileUpload = async (files: any) => {
     if (!auth.isAuth) {
       openNotification(
         "Authentication Failed",
@@ -33,55 +71,59 @@ const FileUploader: React.FC<IProps> = ({
     }
 
     try {
-      for (let i = 0; i < files.length; i++) {
-        const isValid: boolean = beforeUpload(
-          files[i],
-          files.length,
-          fileList.length,
-          openNotification
-        );
+      setUploading(true);
 
-        if (!isValid) break;
-
-        setUploading(true);
-
-        const fd = new FormData();
-        fd.append("avartar", files[i], files[i].name);
-        // fd.append("type", "pdf");
+      const fd = new FormData();
+      images.forEach((image: any) => {
+        fd.append("avartar[]", image);
+        // fd.append("accepted", "pdf");
         // fd.append("user", "afams Val");
+      });
 
-        const res: HTTPResponse<{ id: string; url: string }> =
-          await httpRequest({
-            url: "upload/image-upload",
-            method: "POST",
-            isFormData: true,
-            body: fd,
-          });
+      const res: HTTPResponse<{ id: string; url: string }[]> =
+        await httpRequest({
+          url: "upload/images-upload",
+          method: "POST",
+          isFormData: true,
+          body: fd,
+        });
 
-        if (res.status === true) {
-          setFileList([...fileList, res.data]);
-          setUploading(false);
-        } else {
-          openNotification("File Upload Failed", res.message, "error");
-          setUploading(false);
-        }
+      if (res.status === true) {
+        setFileList([...fileList, ...res.data]);
+        setUploading(false);
+      } else {
+        openNotification("File Upload Failed", res.message, "error");
+        setUploading(false);
       }
+      setPrevImags([]);
+      setImageURLs([]);
     } catch (error: any) {
       openNotification("File Upload Failed", error, "error");
       setUploading(false);
     }
   };
 
-  const onRemove = async (id: string) => {
-    const newFileList = fileList.filter((file) => file.id !== id);
-
-    setFileList(newFileList);
+  ////DELETE IMAGES//////////
+  const onRemove = async (id: string, uploaded: boolean) => {
+    if (uploaded) {
+      const newFileList = fileList.filter((file) => file.id !== id);
+      setFileList(newFileList);
+    } else {
+      //REMOVE PREVIEW
+      const newFileList = imageURLS.filter((file) => file.lastModified !== id);
+      setImageURLs(newFileList);
+      //REMOVE FROM SELECTED FILES
+      const selectedFileList = images.filter(
+        (file: any) => file.lastModified !== id
+      );
+      setImages(selectedFileList);
+    }
   };
 
   return (
     <>
       <div className="row">
-        <span className="mx-3 mb-3">You can upload up to 5 images</span>
+        <span className="mx-3 mb-3">You can upload up to 6 images</span>
         <div
           onClick={() => fileRef.current.click()}
           className="col-6 col-md-6 offset-md-1 upload-box text-info"
@@ -93,40 +135,50 @@ const FileUploader: React.FC<IProps> = ({
           <h6>{percentage ? `${percentage}%` : ""}</h6>
         </div>
         <input
-          // multiple
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            handleFileChange(e.target.files)
-          }
+          multiple
+          onChange={handleFileChange}
           ref={fileRef}
           type="file"
           className="d-none"
           accept="image/*"
         />
       </div>
+      {imageURLS?.length > 0 && (
+        <div className="row mt-3 mx-auto">
+          {imageURLS.map((imageSrc) => (
+            <div className="col-4 mb-2" key={imageSrc.lastModified}>
+              <ImageUploadCard
+                url={imageSrc.url}
+                id={imageSrc.lastModified}
+                onRemove={(id: string) => onRemove(id, false)}
+              />
+            </div>
+          ))}
+          {images.length > 0 && (
+            <p>
+              <button
+                className="btn btn-sm btn-primary mt-3"
+                onClick={handleFileUpload}
+              >
+                <i className="fas fa-file-upload"></i> Upload Image
+              </button>
+            </p>
+          )}
+        </div>
+      )}
+
       {fileList?.length > 0 && (
         <div className="row mt-3 mx-auto">
+          <span className="mb-3 bg-success text-white py-1">
+            Uploaded images
+          </span>
           {fileList.map((image) => (
             <div className="col-4 mb-2" key={image.id}>
-              <div className="row">
-                <div className="col-11 mx-auto upload-img-preview">
-                  <span
-                    className="upload-delete-btn"
-                    onClick={() => onRemove(image.id)}
-                  >
-                    <DeleteOutlined />
-                  </span>
-                  <img
-                    src={image.url}
-                    className="mx-auto d-block"
-                    style={{
-                      maxWidth: "95%",
-                      maxHeight: "95%",
-                      borderRadius: "5px",
-                    }}
-                    alt="rooms for rent"
-                  />
-                </div>
-              </div>
+              <ImageUploadCard
+                url={image.url}
+                id={image.id}
+                onRemove={(id: string) => onRemove(id, true)}
+              />
             </div>
           ))}
         </div>

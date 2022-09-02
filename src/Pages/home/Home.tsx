@@ -16,7 +16,7 @@ const Home = () => {
     if (firstRenderRef.current) {
       window.scrollTo(0, 0);
 
-      getAllListing(dispatch);
+      getAllListing(dispatch, { start: 0, limit: 30 });
 
       firstRenderRef.current = false;
     }

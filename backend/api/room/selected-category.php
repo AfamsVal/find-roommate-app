@@ -41,6 +41,7 @@ if ($result[0] > 0) {
             'hostelName' => $hostelName,
             'isVerified' => $isVerified,
             'phone' => $phone,
+            'image' => $image,
             'rentPerYear' => $rentPerYear,
             'roomType' => $roomType,
             'state' => $state,

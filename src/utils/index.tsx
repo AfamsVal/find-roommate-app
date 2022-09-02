@@ -27,11 +27,11 @@ export const beforeUpload = (
     };
   }
 
-  if (arrCount + count > 5) {
+  if (arrCount + count > 6) {
     res = {
       isValid: false,
       title: "Upload Failed:",
-      msg: "Maximum of 5 images is allowed!",
+      msg: "Maximum of 6 images is allowed!",
     };
   }
 
@@ -57,4 +57,23 @@ export const beforeUpload = (
   }
 
   return true;
+};
+
+export const beforeFileUpload = (file: any, count: number) => {
+  if (count > 6) {
+    return { isValid: false, error: "Maximum of 6 images is allowed!" };
+  }
+
+  if (file.size / 1024 / 1024 > 5) {
+    return {
+      isValid: false,
+      error: `${file.name} size is more than the required 5mb`,
+    };
+  }
+
+  if (!count) {
+    return { isValid: false, error: "Please select a valid file!" };
+  }
+
+  return { isValid: true, error: "" };
 };
