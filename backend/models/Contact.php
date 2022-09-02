@@ -45,9 +45,15 @@ class Contact
         $data = $query->get_result();
         $count = $data->num_rows;
         if ($count) {
+            /* free results */
+            $query->free_result();
+
+            /* close statement */
+            $query->close();
             $result = $data->fetch_assoc();
             return array($count, $result);
         }
+
         return array($count, 'No result found!..');
     }
 

@@ -27,6 +27,7 @@ if ($result[0] > 0) {
     $rooms_arr['data'] = array();
     while ($row = mysqli_fetch_assoc($result[1])) {
         extract($row);
+        $images = $room->fetch_more_images($id);
         $room_item = array(
             'id' => $id,
             'address' => $address,
@@ -40,6 +41,8 @@ if ($result[0] > 0) {
             'hostelName' => $hostelName,
             'isVerified' => $isVerified,
             'phone' => $phone,
+            'image' => $image,
+            'images' => $images,
             'rentPerYear' => $rentPerYear,
             'roomType' => $roomType,
             'state' => $state,

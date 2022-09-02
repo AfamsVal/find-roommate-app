@@ -16,6 +16,7 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
   const handleClose = () => {
     setVisible(false);
     setDetails(null);
+    setImg("");
   };
 
   return (
@@ -48,7 +49,7 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
             <div className="col-md-6 col-12">
               <div className={`${style.topImage} `}>
                 <img
-                  src={img || details?.images[0].url}
+                  src={img || details?.image}
                   style={{ width: "90%" }}
                   alt={details?.hostelName}
                 />
@@ -57,31 +58,33 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                   {details?.isVerified ? "Verified" : "Not Verified"}
                 </div>
               </div>
-              <div className="row">
-                <div className="col-12">
-                  <div className="more-images d-flex flex-wrap mb-3">
-                    {details?.images.map(
-                      (item: { url: string; id: string }, i: number) => (
-                        <div
-                          key={i}
-                          onClick={() => setImg(item.url)}
-                          className={`${style.bottomImage}  mt-3 p-2 cursor-pointer `}
-                          style={{
-                            width: "100px",
-                            height: "80px",
-                          }}
-                        >
-                          <img
-                            src={item.url}
-                            className="w-100 h-100"
-                            alt="not found"
-                          />
-                        </div>
-                      )
-                    )}
+              {details?.images.length > 0 && (
+                <div className="row">
+                  <div className="col-12">
+                    <div className="more-images d-flex flex-wrap mb-3">
+                      {details?.images.map(
+                        (item: { url: string; id: string }, i: number) => (
+                          <div
+                            key={i}
+                            onClick={() => setImg(item?.url)}
+                            className={`${style.bottomImage}  mt-3 p-2 cursor-pointer `}
+                            style={{
+                              width: "100px",
+                              height: "80px",
+                            }}
+                          >
+                            <img
+                              src={item?.url}
+                              className="w-100 h-100"
+                              alt="not found"
+                            />
+                          </div>
+                        )
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="col-md-6 col-12">

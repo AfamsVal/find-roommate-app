@@ -104,6 +104,7 @@ export interface IRoomDetails {
   hostelName: string;
   houseType: string;
   id?: string;
+  image?: string;
   images?: any;
   isVerified?: boolean;
   phone: string;

@@ -157,7 +157,7 @@ const FilterSection = () => {
             animate={{ scale: 1.1 }}
             transition={{ yoyo: Infinity, duration: 1 }}
             className="font-bold cursor-pointer text-base inline text-secondary"
-            onClick={() => getAllListing(dispatch)}
+            onClick={() => getAllListing(dispatch, { start: 0, limit: 30 })}
           >
             <i className="fas fa-sync-alt"></i> Reset All
           </motion.div>

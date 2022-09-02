@@ -27,6 +27,7 @@ export const loginAction = async (
       url: "user/login",
       method: "POST",
       body: user,
+      sanitize: false,
     });
 
     if (result.status === true) {
@@ -56,6 +57,7 @@ export const registerAction = async (
       url: "user/register",
       method: "POST",
       body: userDetails,
+      sanitize: false,
     });
     if (res.status === true) {
       dispatch({
