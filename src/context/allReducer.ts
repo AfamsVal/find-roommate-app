@@ -1,6 +1,10 @@
-import { IAction } from "./../utils/types";
+import { IAction, IGlobalState } from "./../utils/types";
 import { initialState, logoutState } from "./initialState";
 import * as types from "./types";
+
+const save = (data: IGlobalState) => {
+  localStorage.setItem("find-roommate", JSON.stringify(data));
+};
 
 export const allReducer = (state = initialState, action: IAction) => {
   let data = null;
@@ -41,7 +45,7 @@ export const allReducer = (state = initialState, action: IAction) => {
           userDetails: { ...state.auth.userDetails, ...action.payload },
         },
       };
-      localStorage.setItem("find-roommate", JSON.stringify(data));
+      save(data);
       return data;
     case types.REGISTER:
       return {
@@ -122,12 +126,11 @@ export const allReducer = (state = initialState, action: IAction) => {
           loading: true,
         },
       };
-
-      localStorage.setItem("find-roommate", JSON.stringify(data));
+      save(data);
       return data;
 
     case types.FETCHED_ALL_LISTING:
-      const data2 = {
+      data = {
         ...state,
         listing: {
           ...state.listing,
@@ -135,9 +138,8 @@ export const allReducer = (state = initialState, action: IAction) => {
           loading: false,
         },
       };
-
-      localStorage.setItem("find-roommate", JSON.stringify(data2));
-      return data2;
+      save(data);
+      return data;
 
     case types.FETCHING_ROOM_LISTING:
       data = {
@@ -147,7 +149,7 @@ export const allReducer = (state = initialState, action: IAction) => {
           loading: true,
         },
       };
-      localStorage.setItem("find-roommate", JSON.stringify(data));
+      save(data);
       return data;
 
     case types.FETCHED_ROOM_LISTING:
@@ -159,8 +161,8 @@ export const allReducer = (state = initialState, action: IAction) => {
           loading: false,
         },
       };
-
-      localStorage.setItem("find-roommate", JSON.stringify(data));
+      console.log("dataReduc", data);
+      save(data);
       return data;
 
     case types.FETCHING_ROOMMATE_LISTING:
@@ -171,7 +173,7 @@ export const allReducer = (state = initialState, action: IAction) => {
           loading: true,
         },
       };
-      localStorage.setItem("find-roommate", JSON.stringify(data));
+      save(data);
       return data;
 
     case types.FETCHED_ROOMMATE_LISTING:
@@ -184,7 +186,7 @@ export const allReducer = (state = initialState, action: IAction) => {
         },
       };
 
-      localStorage.setItem("find-roommate", JSON.stringify(data));
+      save(data);
       return data;
 
     default:

@@ -51,7 +51,7 @@ const Login: React.FC = () => {
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ type: "spring", delay: 0.3 }}
+          transition={{ type: "spring", stiffness: 75, delay: 0.2 }}
           className={`px-3 px-md-5 col-sm-10 col-md-6 col-lg-5 col-xl-4 mx-auto authCard`}
         >
           <motion.h2

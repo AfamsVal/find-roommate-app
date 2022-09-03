@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import ButtomLine from "../../components/buttom-border/ButtomLine";
 import FilterSection from "../../components/filter/FilterSection";
 import EmptyState from "../../components/loader/EmptyState";
@@ -9,13 +9,16 @@ import { useAppSelector } from "../../context/GlobalState";
 import useToast from "../../hooks/toast/useToast";
 
 const FindRoom: React.FC = () => {
-  const [rooms, setRooms] = useState<any>([]);
   const { dispatch, listing } = useAppSelector();
   const [openNotification] = useToast();
 
   const firstRenderRef = useRef(true);
 
   const { roomListing, loading } = listing;
+
+  useEffect(() => {
+    console.log("feedback::", { roomListing, loading });
+  }, [roomListing, loading]);
 
   useEffect(() => {
     if (firstRenderRef.current) {
@@ -27,9 +30,6 @@ const FindRoom: React.FC = () => {
     }
   }, [dispatch, openNotification]);
 
-  useEffect(() => {
-    setRooms(roomListing);
-  }, [roomListing, listing]);
   return (
     <div className="container-fluid fix-offset">
       <div className="row">
@@ -43,15 +43,15 @@ const FindRoom: React.FC = () => {
       </div>
       <FilterSection />
       <div className="row" style={{ marginBottom: "100px" }}>
-        {loading && (
+        {loading ? (
           <div className="col-md-12 mt-5 pt-2">
             <div className="row">{loading && <Loader />}</div>
           </div>
+        ) : !loading && roomListing.length ? (
+          <CardWithModalDetails items={roomListing} />
+        ) : (
+          !loading && !roomListing.length && <EmptyState />
         )}
-
-        {!loading && rooms.length && <CardWithModalDetails items={rooms} />}
-
-        {!loading && !rooms.length && <EmptyState />}
       </div>
     </div>
   );
