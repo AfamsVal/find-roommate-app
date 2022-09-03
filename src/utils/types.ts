@@ -126,7 +126,7 @@ export interface IListingState {
   type: string;
   loading?: boolean;
   roomListing: IRoomDetails[];
-  roommateListing?: IRoomDetails[];
+  roommateListing: IRoomDetails[];
 }
 
 export interface ISearch {

@@ -24,7 +24,6 @@ $result = $contact->all_contact_us();
 //Check if any contact
 if ($result[0] > 0) {
     $contacts_arr = array();
-    $contacts_arr['data'] = array();
     while ($row = mysqli_fetch_assoc($result[1])) {
         extract($row);
         $contact_item = array(
@@ -37,10 +36,10 @@ if ($result[0] > 0) {
             'treated' => $treated
         );
         //Push to data
-        array_push($contacts_arr['data'], $contact_item);
+        array_push($contacts_arr, $contact_item);
     }
 
     response(true, 200, '', $contacts_arr);
 } else {
-    response(false, 404, 'No room found!');
+    response(true, 200, 'No room found!', array());
 }

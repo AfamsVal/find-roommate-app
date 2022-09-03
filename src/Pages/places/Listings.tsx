@@ -21,17 +21,15 @@ const Listings = () => {
       <FilterSection />
       <div className="col-md-12">
         <div className="row" style={{ marginBottom: "100px" }}>
-          {loading && (
+          {loading ? (
             <div className="col-md-12 mt-5 pt-2">
               <div className="row">{loading && <Loader />}</div>
             </div>
-          )}
-
-          {!loading && allListing.length && (
+          ) : !loading && allListing.length ? (
             <CardWithModalDetails items={allListing} />
+          ) : (
+            !loading && !allListing.length && <EmptyState />
           )}
-
-          {!loading && !allListing.length && <EmptyState />}
         </div>
       </div>
     </div>

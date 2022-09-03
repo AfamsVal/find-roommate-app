@@ -15,7 +15,6 @@ if (!isset($_FILES['avartar']['name'])) {
 
 $fileCount = count($_FILES['avartar']['name']);
 $imageArray = array();
-$imageArray['data'] = array();
 
 for ($i = 0; $i < $fileCount; $i++) {
 
@@ -68,7 +67,7 @@ for ($i = 0; $i < $fileCount; $i++) {
         response(false, 200, 'Image upload failed. kindly refresh and try again!');
         exit();
     }
-    array_push($imageArray['data'], array('id' => rand(111, 9999) . '-' . $i, 'url' => $url));
+    array_push($imageArray, array('id' => rand(111, 9999) . '-' . $i, 'url' => $url));
 }
 
-response(true, 200, 'success', $imageArray['data']);
+response(true, 200, 'success', $imageArray);

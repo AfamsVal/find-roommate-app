@@ -4,6 +4,7 @@ header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: *");
 header('Content-Type: application/json');
 header("Access-Control-Max-Age", "86400");
+header("X-XSS-Protection: 1; mode=block");
 header("Access-Control-Allow-Credentials", "true");
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
 
@@ -37,7 +38,7 @@ function generateToken($data, $uid, $isAdmin = 0)
         "nbf" => $iat + 10, //10 sec
         "exp" => $iat + 60 * 60 * 24 * 10, //10days
         "aud" => 'myusers',
-        "data" => $data,
+        "userInfo" => $data,
         "isAdmin" => $isAdmin,
         "userId" => $uid
     );

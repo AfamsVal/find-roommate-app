@@ -7,14 +7,14 @@ import CardWithModalDetails from "../../components/modal/CardWithModalDetails";
 import { getAllRoommatesAction } from "../../context/actions/roomsAction";
 import { useAppSelector } from "../../context/GlobalState";
 import useToast from "../../hooks/toast/useToast";
+import { IRoomDetails } from "../../utils/types";
 const FindRoommate = () => {
-  const [roommates, setRoommates] = useState<any>([]);
   const { dispatch, listing } = useAppSelector();
   const [openNotification] = useToast();
 
   const firstRenderRef = useRef(true);
 
-  const { roommateListing, loading } = listing;
+  const { loading, roommateListing } = listing;
 
   useEffect(() => {
     if (firstRenderRef.current) {
@@ -25,10 +25,6 @@ const FindRoommate = () => {
       firstRenderRef.current = false;
     }
   }, [dispatch, openNotification]);
-
-  useEffect(() => {
-    setRoommates(roommateListing);
-  }, [roommateListing, listing]);
 
   return (
     <div className="container-fluid fix-offset">
@@ -43,17 +39,15 @@ const FindRoommate = () => {
       </div>
       <FilterSection />
       <div className="row" style={{ marginBottom: "100px" }}>
-        {loading && (
+        {loading ? (
           <div className="col-md-12 mt-5 pt-2">
             <div className="row">{loading && <Loader />}</div>
           </div>
+        ) : !loading && roommateListing.length ? (
+          <CardWithModalDetails items={roommateListing} />
+        ) : (
+          !loading && !roommateListing.length && <EmptyState />
         )}
-
-        {!loading && roommates.length && (
-          <CardWithModalDetails items={roommates} />
-        )}
-
-        {!loading && !roommates.length && <EmptyState />}
       </div>
     </div>
   );

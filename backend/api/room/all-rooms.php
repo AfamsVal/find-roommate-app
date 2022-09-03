@@ -24,7 +24,6 @@ $result = $room->all_rooms();
 //Check if any room
 if ($result[0] > 0) {
     $rooms_arr = array();
-    $rooms_arr['data'] = array();
     while ($row = mysqli_fetch_assoc($result[1])) {
         extract($row);
         $images = $room->fetch_more_images($id);
@@ -52,9 +51,9 @@ if ($result[0] > 0) {
             'university' => $university
         );
         //Push to data
-        array_push($rooms_arr['data'], $room_item);
+        array_push($rooms_arr, $room_item);
     }
     response(true, 200, 'success', $rooms_arr);
 } else {
-    response(false, 404, 'No record found!');
+    response(true, 200, 'No record found!', array());
 }

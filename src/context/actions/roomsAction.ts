@@ -55,10 +55,6 @@ export const uploadRoomAction = async (
   }
 };
 
-interface IFetchData {
-  data: {};
-}
-
 export const getAllListing = async (
   dispatch: ({ type, payload }: IAction) => void,
   range: any
@@ -75,7 +71,7 @@ export const getAllListing = async (
     if (res.status) {
       dispatch({
         type: types.FETCHED_ALL_LISTING,
-        payload: res?.data?.data,
+        payload: res?.data,
       });
     }
   } catch (err) {
@@ -87,23 +83,26 @@ export const getAllRoomsAction = async (
   dispatch: any,
   openNotification: any
 ) => {
+  const body = {
+    selectedType: "room",
+    start: 0,
+    limit: 30,
+  };
   try {
     dispatch({ type: types.FETCHING_ROOM_LISTING });
 
-    const q = query(
-      collectionRef,
-      orderBy("createdAt", "desc"),
-      where("category", "==", "room"),
-      limit(30)
-    );
-    // const unSubDocs =
-    onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    const res: HTTPResponse<{}[]> = await httpRequest({
+      url: "room/selected-category",
+      method: "POST",
+      body,
+    });
+    console.log("actionsRoom:", res);
+    if (res.status === true) {
       dispatch({
         type: types.FETCHED_ROOM_LISTING,
-        payload: data.length ? data : [],
+        payload: res.data,
       });
-    });
+    }
   } catch (error: any) {
     openNotification(
       "Request Failed",
@@ -117,23 +116,25 @@ export const getAllRoommatesAction = async (
   dispatch: any,
   openNotification: any
 ) => {
+  const body = {
+    selectedType: "roommate",
+    start: 0,
+    limit: 30,
+  };
   try {
     dispatch({ type: types.FETCHING_ROOMMATE_LISTING });
+    const res: HTTPResponse<{}[]> = await httpRequest({
+      url: "room/selected-category",
+      method: "POST",
+      body,
+    });
 
-    const q = query(
-      collectionRef,
-      orderBy("createdAt", "desc"),
-      where("category", "==", "roommate"),
-      limit(30)
-    );
-    // const unSubDocs =
-    onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    if (res.status === true) {
       dispatch({
         type: types.FETCHED_ROOMMATE_LISTING,
-        payload: data.length ? data : [],
+        payload: res.data,
       });
-    });
+    }
   } catch (error: any) {
     openNotification(
       "Request Failed",
@@ -181,8 +182,6 @@ export const searchRoomListing = async (
 ) => {
   try {
     // dispatch({ type: types.FETCHING_ALL_LISTING });
-
-    console.log("action");
     const q = query(
       collectionRef,
       where("rentPerYear", "<=", input.max),

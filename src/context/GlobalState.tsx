@@ -1,7 +1,6 @@
-import { useContext, createContext, useReducer, useEffect } from "react";
+import { useContext, createContext, useReducer } from "react";
 import { allReducer } from "./allReducer";
 import { initialState } from "./initialState";
-import * as types from "./types";
 
 const GlobalContext = createContext(initialState);
 
@@ -11,20 +10,6 @@ export const useAppSelector = () => {
 
 const GlobalState = ({ children }: any) => {
   const [state, dispatch] = useReducer(allReducer, initialState);
-
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        if (1) {
-        } else {
-          dispatch({ type: types.LOGOUT });
-        }
-      } catch (error) {
-        dispatch({ type: types.AUTH_ERROR, payload: "Something went wrong!" });
-      }
-    };
-    checkUser();
-  }, [state.auth.isAuth]);
 
   return (
     <GlobalContext.Provider
