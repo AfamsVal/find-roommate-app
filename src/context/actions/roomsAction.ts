@@ -27,25 +27,24 @@ export const uploadRoomAction = async (
     duration?: number
   ) => void
 ) => {
-  dispatch({ type: types.ADDING_NEW_ROOM });
-
-  const res: HTTPResponse<string> = await httpRequest({
-    url: "room/create-room",
-    method: "POST",
-    body: form,
-  });
-
-  if (res.status === true) {
-    dispatch({ type: types.ADD_NEW_ROOM_COMPLETED });
-    openNotification(
-      "Submission Successful",
-      "Thank you for the submission. Admin will review this within 48 hours for approval",
-      "success",
-      10
-    );
-  }
-
   try {
+    dispatch({ type: types.ADDING_NEW_ROOM });
+
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "room/create-room",
+      method: "POST",
+      body: form,
+    });
+
+    if (res.status === true) {
+      dispatch({ type: types.ADD_NEW_ROOM_COMPLETED });
+      openNotification(
+        "Submission Successful",
+        "Thank you for the submission. Admin will review this within 48 hours for approval",
+        "success",
+        10
+      );
+    }
   } catch (error: any) {
     openNotification(
       "Request Failed",

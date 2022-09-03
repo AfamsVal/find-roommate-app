@@ -14,7 +14,7 @@ import Overview from "./Pages/admin/overview/Overview";
 import FindRoom from "./Pages/find-room/FindRoom";
 import FindRoommate from "./Pages/find-roommate/FindRoommate";
 import GlobalState from "./context/GlobalState";
-import UploadItems from "./Pages/upload-items/UploadItems";
+import UploadTab from "./Pages/upload-items/UploadTab";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import AdminRoute from "./components/admin-route/AdminRoute";
@@ -90,7 +90,7 @@ function App() {
               path="/upload-items"
               element={
                 <ProtectedRoute auth={true}>
-                  <UploadItems />
+                  <UploadTab />
                 </ProtectedRoute>
               }
             />

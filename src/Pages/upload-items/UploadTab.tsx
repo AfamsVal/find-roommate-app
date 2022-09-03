@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import UploadRoom from "./UploadRoom";
 import UploadRoommate from "./UploadRoommate";
 
-const UploadItems = () => {
+const UploadTab = () => {
   const navigate = useNavigate();
   const [tab, setTab] = React.useState<string>("room");
   return (
@@ -47,4 +47,4 @@ const UploadItems = () => {
   );
 };
 
-export default UploadItems;
+export default UploadTab;

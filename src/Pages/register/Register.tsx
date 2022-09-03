@@ -49,7 +49,7 @@ const Register: React.FC = () => {
   };
 
   const handleRegister = () => {
-    const { isValid, error } = validateForm(form);
+    const { isValid, error } = validateForm(form, true);
     if (!isValid) {
       openNotification(error.title, error.value, "error");
       return false;

@@ -30,6 +30,9 @@ class Room
     public $start;
     public $limit;
 
+    public $min;
+    public $max;
+
     // Constructor with DB
     public function __construct($db)
     {
@@ -70,6 +73,16 @@ class Room
 
     //Get Rooms By Category
     public function all_rooms_by_category()
+    {
+        $sql = "SELECT * FROM " . $this->table . " WHERE category = '$this->selectedType' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
+        $query = mysqli_query($this->conn, $sql);
+        $count = mysqli_num_rows($query);
+        return array($count, $query);
+    }
+
+
+    //Get Rooms By Category
+    public function search_room()
     {
         $sql = "SELECT * FROM " . $this->table . " WHERE category = '$this->selectedType' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
         $query = mysqli_query($this->conn, $sql);
