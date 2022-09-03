@@ -276,10 +276,6 @@ form .form-control:focus {
   font-size: 1.125rem !important; /* 18px */
   line-height: 1.75rem;
 } /* 28px */
-.text-xl {
-  font-size: 1.25rem; /* 20px */
-  line-height: 1.75rem;
-} /* 28px */
 .text-2xl {
   font-size: 1.5rem !important; /* 24px */
   line-height: 2rem;

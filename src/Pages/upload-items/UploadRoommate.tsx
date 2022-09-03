@@ -322,6 +322,7 @@ const UploadRoommate = () => {
           </div>
           <div className="col-11 mx-auto col-md-4 my-1">
             <FileUploader
+              uploading={uploading}
               setUploading={setUploading}
               fileList={fileList}
               setFileList={(item) => setFileList(item)}

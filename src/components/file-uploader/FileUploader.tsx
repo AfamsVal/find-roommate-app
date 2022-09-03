@@ -9,6 +9,7 @@ import ImageUploadCard from "./ImageUploadCard";
 
 interface IProps {
   fileList: IUpload[];
+  uploading: boolean;
   setUploading: React.Dispatch<React.SetStateAction<boolean>>;
   setFileList: React.Dispatch<React.SetStateAction<IUpload[]>>;
 }
@@ -16,6 +17,7 @@ interface IProps {
 const FileUploader: React.FC<IProps> = ({
   fileList,
   setFileList,
+  uploading,
   setUploading,
 }) => {
   const [images, setImages] = useState([] as any);
@@ -160,7 +162,15 @@ const FileUploader: React.FC<IProps> = ({
                 className="btn btn-sm btn-primary mt-3"
                 onClick={handleFileUpload}
               >
-                <i className="fas fa-file-upload"></i> Upload Image
+                <i className="fas fa-file-upload"></i>{" "}
+                {uploading ? (
+                  <span>
+                    Uploading...{" "}
+                    <span className="spinner-border spinner-border-sm"></span>
+                  </span>
+                ) : (
+                  <span>Upload Image</span>
+                )}
               </button>
             </p>
           )}

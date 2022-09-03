@@ -8,6 +8,7 @@ import { httpRequest, HTTPResponse } from "../../https/http";
 
 interface IProps {
   fileList: IUpload[];
+  uploading: boolean;
   setUploading: React.Dispatch<React.SetStateAction<boolean>>;
   setFileList: React.Dispatch<React.SetStateAction<IUpload[]>>;
 }
@@ -15,6 +16,7 @@ interface IProps {
 const FileUploadSingle: React.FC<IProps> = ({
   fileList,
   setFileList,
+  uploading,
   setUploading,
 }) => {
   const [openNotification] = useToast();
@@ -89,8 +91,16 @@ const FileUploadSingle: React.FC<IProps> = ({
           <div className="text-main">
             <CloudUploadOutlined style={{ fontSize: "30px" }} />
           </div>
+
           <h5 className="d-inline text-center text-main">Upload Image</h5>
-          <h6>{percentage ? `${percentage}%` : ""}</h6>
+
+          {percentage > 0 && <h6>{percentage ? `${percentage}%` : ""}</h6>}
+
+          {uploading && (
+            <h6>
+              <span className="spinner-border spinner-border-sm text-2xl text-main"></span>
+            </h6>
+          )}
         </div>
         <input
           // multiple

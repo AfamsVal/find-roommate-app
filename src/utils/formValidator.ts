@@ -1,4 +1,5 @@
 import { changeCase } from "../utils";
+import { WEAK_PASSWORD } from "./data";
 interface IFormValidator {
   firstName?: string;
   lastName?: string;
@@ -12,7 +13,7 @@ interface IFormValidator {
   zipCode?: string;
   country?: string;
 }
-export const validateForm = (obj: IFormValidator) => {
+export const validateForm = (obj: IFormValidator, checkWeakPWD = false) => {
   let error: { title: string; value: string } = { title: "", value: "" };
   let isValid = true;
   for (let [key, value] of Object.entries(obj)) {
@@ -39,6 +40,24 @@ export const validateForm = (obj: IFormValidator) => {
       };
       isValid = false;
       break;
+    }
+
+    //validate weak password
+    ///////////////////////////
+    if (key === "password" && checkWeakPWD === true) {
+      const isIncluded = WEAK_PASSWORD.some((d) =>
+        value.toLowerCase().includes(d)
+      );
+
+      if (isIncluded) {
+        error = {
+          ...error,
+          title: "Weak Password:",
+          value: "Please use a stronger password!",
+        };
+        isValid = false;
+        break;
+      }
     }
 
     //validate confirm password

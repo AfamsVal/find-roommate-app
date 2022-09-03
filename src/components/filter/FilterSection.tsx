@@ -49,16 +49,21 @@ const FilterSection = () => {
   // }, [debounceValue]);
 
   const handleFilter = () => {
-    if (!university) {
-      openNotification("Invalid Input:", "Please pick a University!", "error");
-      return false;
-    }
-    if (Number(maxAmount) && Number(maxAmount) < Number(minAmount)) {
+    if (!university && !maxAmount && !minAmount) {
       openNotification(
         "Invalid Input:",
-        "Minimum amount is greater than maximum amount!",
+        "Please select and item to search!",
         "error"
       );
+      return false;
+    }
+    if (Number(minAmount) && Number(maxAmount)) {
+      Number(minAmount) > Number(maxAmount) &&
+        openNotification(
+          "Invalid Input:",
+          "Minimum amount is greater than maximum amount!",
+          "error"
+        );
       return false;
     }
     setLoadingSearch(true);
@@ -67,9 +72,10 @@ const FilterSection = () => {
       university,
       min: minAmount || "0",
       max: maxAmount || "0",
+      selectedType: "all",
     };
 
-    searchRoomListing(dispatch, filtered);
+    // searchRoomListing(dispatch, filtered);
     console.log("filterData", filtered);
   };
 
