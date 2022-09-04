@@ -1,21 +1,6 @@
 import { httpRequest, HTTPResponse } from "./../../https/http";
-import {
-  addDoc,
-  collection,
-  doc,
-  limit,
-  onSnapshot,
-  orderBy,
-  query,
-  serverTimestamp,
-  updateDoc,
-  where,
-} from "firebase/firestore";
-import { db } from "../../firebase";
 import { IAction, IRoomDetails, ISearchQuery } from "../../utils/types";
 import * as types from "../types";
-
-const collectionRef = collection(db, "rooms");
 
 export const uploadRoomAction = async (
   dispatch: ({ type, payload }: IAction<IRoomDetails>) => void,
@@ -95,7 +80,7 @@ export const getAllRoomsAction = async (
       method: "POST",
       body,
     });
-    console.log("actionsRoom:", res);
+
     if (res.status === true) {
       dispatch({
         type: types.FETCHED_ROOM_LISTING,
@@ -155,17 +140,14 @@ export const getSingleListing = async (
 ) => {
   try {
     dispatch({ type: types.FETCHING_LISTING });
-    const collRef = doc(db, "rooms", id);
 
-    onSnapshot(collRef, (snapshot) => {
-      const data = { ...snapshot.data(), id: snapshot.id };
-      dispatch({ type: types.FETCHED_LISTING, payload: data });
+    const res: HTTPResponse<{}[]> = await httpRequest({
+      url: `room/single-room?id=${id}`,
     });
 
-    // Method 2
-    // const snapshot = await getDoc(collRef);
-    // const data = { ...snapshot.data(), id: snapshot.id };
-    // dispatch({ type: types.FETCHED_ITEM, payload: data });
+    if (res.status === true) {
+      dispatch({ type: types.FETCHED_LISTING, payload: res.data });
+    }
   } catch (err) {
     openNotification(
       "Request Failed",
@@ -177,27 +159,28 @@ export const getSingleListing = async (
 
 export const searchRoomListing = async (
   dispatch: ({ type, payload }: IAction) => void,
-  input: ISearchQuery
+  body: ISearchQuery
 ) => {
   try {
-    // dispatch({ type: types.FETCHING_ALL_LISTING });
-    const q = query(
-      collectionRef,
-      where("rentPerYear", "<=", input.max),
-      // where("rentPerYear", ">=", input.min),
-      where("university", "==", input.university)
-    );
-    // const unSubDocs =
-    onSnapshot(q, (snapshot) => {
-      const res = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      const data = res.filter(
-        (item: any) => Number(item.rentPerYear) >= Number(input.min)
-      );
-      dispatch({
-        type: types.FETCHED_ALL_LISTING,
-        payload: data.length ? data : [],
-      });
+    dispatch({ type: types.SEARCHING_ROOM, payload: true });
+    const res: HTTPResponse<{}[]> = await httpRequest({
+      url: "room/search-room",
+      method: "POST",
+      body,
     });
+
+    if (res.status === true) {
+      dispatch({
+        type:
+          body.selectedType === "room"
+            ? types.FETCHED_ROOM_LISTING
+            : body.selectedType === "roommate"
+            ? types.FETCHED_ROOMMATE_LISTING
+            : types.FETCHED_ALL_LISTING,
+        payload: res.data,
+      });
+      dispatch({ type: types.SEARCHING_ROOM, payload: false });
+    }
   } catch (err) {
     console.log(err);
   }

@@ -19,9 +19,11 @@ $room->university = clean_input_and_strip_tags($data->university, $db);
 $room->min = clean_input_and_strip_tags($data->min, $db);
 $room->max = clean_input_and_strip_tags($data->max, $db);
 $room->selectedType = clean_input_and_strip_tags($data->selectedType, $db);
+$room->start = clean_input_and_strip_tags($data->start, $db);
+$room->limit = clean_input_and_strip_tags($data->limit, $db);
 
 //Room query
-$result = $room->all_rooms_by_category();
+$result = $room->search_room();
 
 //Check if any room
 if ($result[0] > 0) {

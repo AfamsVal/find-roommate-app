@@ -104,6 +104,12 @@ export const allReducer = (state = initialState, action: IAction) => {
     case types.ROOM_ERROR:
       return { ...state, error: action.payload };
 
+    case types.SEARCHING_ROOM:
+      return {
+        ...state,
+        listing: { ...state.listing, searching: action.payload },
+      };
+
     case types.ADDING_NEW_ROOM:
       return {
         ...state,
@@ -161,7 +167,6 @@ export const allReducer = (state = initialState, action: IAction) => {
           loading: false,
         },
       };
-      console.log("dataReduc", data);
       save(data);
       return data;
 

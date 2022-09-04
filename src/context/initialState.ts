@@ -35,6 +35,7 @@ const listingState: IListingState = {
   loading: false,
   roomListing: [],
   roommateListing: [],
+  searching: false,
 };
 const listingState2: IListingState = {
   allListing: [],
@@ -42,6 +43,7 @@ const listingState2: IListingState = {
   loading: false,
   roomListing: [],
   roommateListing: [],
+  searching: false,
 };
 
 export const logoutState: IGlobalState = {

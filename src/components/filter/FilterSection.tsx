@@ -1,7 +1,5 @@
-import { useMemo, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ISearch } from "../../utils/types";
-import useDebounce from "../../hooks/useDebounce";
 import { PRICE, UNIVERSITIES } from "../../utils/state";
 import { formatCurrency } from "../../utils/formValidator";
 import useToast from "../../hooks/toast/useToast";
@@ -10,6 +8,7 @@ import {
   searchRoomListing,
 } from "../../context/actions/roomsAction";
 import { useAppSelector } from "../../context/GlobalState";
+import { useLocation, useNavigate, useRoutes } from "react-router-dom";
 
 const FilterSection = () => {
   const [openNotification] = useToast();
@@ -17,10 +16,14 @@ const FilterSection = () => {
   const [university, setUniversity] = useState<string>("");
   const [minAmount, setMinAmount] = useState<string>("");
   const [maxAmount, setMaxAmount] = useState<string>("");
-  const [loadingSearch, setLoadingSearch] = useState<boolean>(false);
+  // const [loadingSearch, setLoadingSearch] = useState<boolean>(false);
   // const [searchedData, setSearchData] = useState<ISearch[]>([]);
 
-  const { dispatch } = useAppSelector();
+  const { dispatch, listing } = useAppSelector();
+
+  const { searching } = listing;
+
+  const { pathname } = useLocation();
 
   // const debounceValue = useDebounce(search, 500);
 
@@ -66,17 +69,24 @@ const FilterSection = () => {
         );
       return false;
     }
-    setLoadingSearch(true);
+
+    const selectedType =
+      pathname === "/find-room"
+        ? "room"
+        : pathname === "/find-roommate"
+        ? "roommate"
+        : "all";
 
     const filtered = {
       university,
-      min: minAmount || "0",
-      max: maxAmount || "0",
-      selectedType: "all",
+      min: Number(minAmount) || 0,
+      max: Number(maxAmount) || 0,
+      selectedType,
+      start: 0,
+      limit: 40,
     };
 
-    // searchRoomListing(dispatch, filtered);
-    console.log("filterData", filtered);
+    searchRoomListing(dispatch, filtered);
   };
 
   return (
@@ -149,7 +159,7 @@ const FilterSection = () => {
               className="custom-button text-center d-block mx-auto"
             >
               <i className="fas fa-search"></i> Search Now{" "}
-              {loadingSearch && (
+              {searching && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
             </motion.button>

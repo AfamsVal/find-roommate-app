@@ -1,5 +1,5 @@
 <?php
-class Room
+class Room extends Filter
 {
     // DB stuff
     private $conn;
@@ -84,7 +84,7 @@ class Room
     //Get Rooms By Category
     public function search_room()
     {
-        $sql = "SELECT * FROM " . $this->table . " WHERE category = '$this->selectedType' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
+        $sql = "SELECT * FROM " . $this->table . $this->filterOption() . " ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit;
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
         return array($count, $query);
@@ -272,5 +272,72 @@ class Room
         }
 
         return false;
+    }
+}
+
+
+
+////////////////////////////
+//////////////////
+///FILTER CLASS
+/////////////////
+///////////////////////////
+class Filter
+{
+
+    public function checkCategory()
+    {
+        if ($this->selectedType == 'room') {
+            return "AND category = 'room' ";
+        }
+        if ($this->selectedType == 'roommate') {
+            return "AND category = 'roommate' ";
+        }
+
+        return '';
+    }
+
+    public function filterOption()
+    {
+
+        // start checking for has university
+        if (!empty($this->university)) {
+            if ($this->min == 0 && $this->max == 0) {
+                return " WHERE university = '$this->university'" . $this->checkCategory();
+            }
+            if ($this->min > 0 && $this->max > $this->min) {
+                return " WHERE rentPerYear >= " . $this->min . " AND rentPerYear <= " . $this->max . " AND university = '$this->university'" . $this->checkCategory();
+            }
+            if ($this->min == 0 && $this->max > $this->min) {
+                return " WHERE rentPerYear <= " . $this->max . " AND university = '$this->university'" . $this->checkCategory();
+            }
+            if ($this->min > $this->max && $this->max == 0) {
+                return " WHERE rentPerYear >= " . $this->min . " AND university = '$this->university'" . $this->checkCategory();
+            }
+            // end of checking for has university
+        }
+        // else if(new query option){
+        //     code here....
+        //
+        //
+        //
+        // }
+        else {
+            // start checking for has no university ////
+            //////////////////////////////////////////////////
+
+            if ($this->min > 0 && $this->max > $this->min) {
+                return " WHERE rentPerYear >= " . $this->min . " AND rentPerYear <= " . $this->max . " " . $this->checkCategory();
+            }
+            if ($this->min == 0 && $this->max > $this->min) {
+                return " WHERE rentPerYear <= " . $this->max . " " . $this->checkCategory();
+            }
+            if ($this->min > $this->max && $this->max == 0) {
+                return " WHERE rentPerYear >= " . $this->min . " " . $this->checkCategory();
+            }
+
+            // start checking for has no university ////
+            //////////////////////////////////////////////////
+        }
     }
 }
