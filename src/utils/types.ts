@@ -127,6 +127,7 @@ export interface IListingState {
   loading?: boolean;
   roomListing: IRoomDetails[];
   roommateListing: IRoomDetails[];
+  searching: boolean;
 }
 
 export interface ISearch {
@@ -145,8 +146,11 @@ export interface ISearchStorage {
 export interface ISearchQuery {
   input?: string;
   university: string;
-  min?: string;
-  max?: string;
+  min?: number;
+  max?: number;
+  selectedType?: string;
+  start?: number;
+  limit?: number;
 }
 
 export interface IProfileInfo {
