@@ -14,25 +14,24 @@ export const allReducer = (state = initialState, action: IAction) => {
         ...state,
         loading: true,
       };
-    case types.STOP_LOADING:
+    case types.START_LOADING_TWO:
       return {
         ...state,
-        loading: false,
+        loadingTwo: true,
       };
     case types.SHOW_ERROR:
       return {
         ...state,
+        loading: false,
         error: action.payload,
       };
-    case types.RESET_SUCCESS:
-      return {
-        ...state,
-        success: false,
-      };
-    case types.CLEAR_ERROR:
+    case types.RESET_ALL:
       return {
         ...state,
         error: "",
+        success: false,
+        loading: false,
+        loadingTwo: false,
       };
     case types.LOGIN:
       data = {
@@ -96,6 +95,19 @@ export const allReducer = (state = initialState, action: IAction) => {
       return {
         ...state,
         contactUs: { ...state.contactUs, contactSuccess: false },
+      };
+
+    //UPDATE PROFILE///////////
+    ///////////////////////////////////////
+    case types.UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        auth: {
+          ...state.auth,
+          userDetails: { ...state.auth.userDetails, ...action.payload },
+        },
       };
 
     //ROOMS REDUCER///////////

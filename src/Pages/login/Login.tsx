@@ -24,7 +24,11 @@ const Login: React.FC = () => {
       openNotification("Notification:", "Login Successful!", "success");
       navigate("/");
     }
-  }, [auth.isAuth, navigate, openNotification]);
+    if (auth.authError) {
+      openNotification("Login Failed:", auth.authError, "error");
+      dispatch({ type: "CLEAR_AUTH_ERROR" });
+    }
+  }, [auth.isAuth, auth.authError, navigate, openNotification, dispatch]);
 
   const [form, setForm] = React.useState<ILogin>({
     email: "",

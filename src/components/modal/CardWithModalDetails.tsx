@@ -90,7 +90,9 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
             <div className="col-md-6 col-12">
               <div className={`${style.leftTopContainer} `}>
                 {details?.hostelName && (
-                  <h2 className={style.items}>{details?.hostelName}</h2>
+                  <h2 className={style.items}>
+                    {details?.hostelName.toUpperCase()}
+                  </h2>
                 )}
                 {details?.applicantName && (
                   <h2 className={style.items}>{details?.applicantName}</h2>
@@ -134,8 +136,6 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                   </span>
                   <span className="card-badge">{details?.toiletNo} Toilet</span>
                   <span className="card-badge">{details?.houseType}</span>
-                  <span className="card-badge">{details?.houseType}</span>
-                  <span className="card-badge">{details?.category}</span>
                   <span className="card-badge">
                     {" "}
                     Has Tiles ({details?.hasTiles})

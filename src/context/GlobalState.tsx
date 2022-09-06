@@ -16,6 +16,7 @@ const GlobalState = ({ children }: any) => {
       value={{
         auth: state.auth,
         loading: state.loading,
+        loadingTwo: state.loadingTwo,
         error: state.error,
         success: state.success,
         contactUs: state.contactUs,

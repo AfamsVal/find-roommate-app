@@ -142,3 +142,23 @@ function image_uploader($new_img_name, $size, $tmp)
         return false;
     }
 }
+
+
+function isValidEmail($email)
+{
+    $emailB = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+    if (!filter_var($emailB, FILTER_VALIDATE_EMAIL)) {
+        return false;
+    }
+    return true;
+}
+
+
+function isValidURL($url)
+{
+    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $url)) {
+        return false;
+    }
+    return true;
+}

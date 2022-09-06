@@ -18,7 +18,7 @@ interface IResponse extends ILoginPayload {
 }
 
 export const loginAction = async (
-  dispatch: ({ type, payload }: IAction<ILoginPayload>) => void,
+  dispatch: ({ type, payload }: IAction<ILoginPayload | string>) => void,
   user: ILogin
 ) => {
   try {
@@ -36,6 +36,11 @@ export const loginAction = async (
       dispatch({
         type: types.LOGIN,
         payload: decoded,
+      });
+    } else {
+      dispatch({
+        type: types.AUTH_ERROR,
+        payload: result.message,
       });
     }
   } catch (error: any) {
@@ -91,7 +96,7 @@ export const clearAuthError = (
 };
 
 export const clearError = (dispatch: ({ type, payload }: IAction) => void) => {
-  dispatch({ type: types.CLEAR_ERROR });
+  dispatch({ type: types.RESET_ALL });
 };
 
 export const logoutAction = async (

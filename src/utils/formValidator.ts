@@ -30,6 +30,18 @@ export const validateForm = (obj: IFormValidator, checkWeakPWD = false) => {
       break;
     }
 
+    //Minimum Rent///////////
+    //////////////////////////
+    if (key === "rentPerYear" && value < 20000) {
+      error = {
+        ...error,
+        title: "Amount Error:",
+        value: "Minimum rent amount is ₦20,000",
+      };
+      isValid = false;
+      break;
+    }
+
     //validate password
     ///////////////////////////
     if (key === "password" && value.length < 6) {

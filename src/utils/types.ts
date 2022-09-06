@@ -38,7 +38,7 @@ export interface IAuth {
   isPwdReset: boolean;
   userDetails: {
     aud: string;
-    data: {};
+    userInfo: {};
     exp: number;
     iat: number;
     isAdmin: number;
@@ -50,6 +50,7 @@ export interface IAuth {
 export interface IGlobalState {
   auth: IAuth;
   loading: boolean;
+  loadingTwo: boolean;
   error: string;
   success: boolean;
   contactUs: IContactState;
@@ -154,11 +155,16 @@ export interface ISearchQuery {
 }
 
 export interface IProfileInfo {
-  name: string;
-  email: string;
-  phone: string;
-  password: string;
-  newPassword: string;
+  id?: number;
+  userId?: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  gender?: string;
+  state?: string;
+  password?: string;
+  oldPassword?: string;
 }
 
 export interface DataType {

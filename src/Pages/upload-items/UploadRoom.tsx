@@ -53,6 +53,7 @@ const UploadRoom = () => {
       openNotification(error.title, error.value, "error");
       return false;
     }
+
     if (!fileList.length) {
       openNotification(
         "Image Required",
@@ -87,7 +88,7 @@ const UploadRoom = () => {
       setForm(formObj);
       setFileList([]);
 
-      dispatch({ type: types.RESET_SUCCESS });
+      dispatch({ type: types.RESET_ALL });
     }
   }, [formObj, dispatch, success]);
 

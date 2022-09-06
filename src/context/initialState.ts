@@ -13,7 +13,7 @@ const authState: IAuth = {
   authLoading: false,
   userDetails: {
     aud: "",
-    data: {},
+    userInfo: {},
     exp: 0,
     iat: 0,
     isAdmin: 0,
@@ -55,7 +55,7 @@ export const logoutState: IGlobalState = {
     authLoading: false,
     userDetails: {
       aud: "",
-      data: {},
+      userInfo: {},
       exp: 0,
       iat: 0,
       isAdmin: 0,
@@ -67,6 +67,7 @@ export const logoutState: IGlobalState = {
   contactUs: contactState,
   listing: listingState,
   loading: false,
+  loadingTwo: false,
   error: "",
   success: false,
 };
@@ -78,6 +79,7 @@ export const initialState: IGlobalState = window.localStorage?.getItem(
   : {
       auth: authState,
       loading: false,
+      loadingTwo: false,
       error: "",
       success: false,
       contactUs: contactState,

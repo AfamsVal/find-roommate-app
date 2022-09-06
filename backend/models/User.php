@@ -79,16 +79,17 @@ class User
     }
 
     //Update User Profile
-    public function update_user_profile()
+    public function update_user_profile($id, $firstName, $lastName, $email, $phone)
     {
-        $sql = "UPDATE " . $this->table . " SET firstName = ?, lastName = ?, phone = ? WHERE id = ?";
+        $sql = "UPDATE " . $this->table . " SET firstName = ?, lastName = ?, phone = ?, email = ? WHERE id = ?";
         $query = $this->conn->prepare($sql);
         $query->bind_param(
-            'sssi',
-            $this->firstName,
-            $this->lastName,
-            $this->phone,
-            $this->id
+            'ssssi',
+            $firstName,
+            $lastName,
+            $phone,
+            $email,
+            $id
         );
         if ($query->execute()) {
             if ($query->affected_rows) {
@@ -152,5 +153,49 @@ class User
         }
 
         return '';
+    }
+
+    public function get_user_by_id($uid)
+    {
+        $sql = "SELECT firstName,lastName,email,phone,password FROM users WHERE id = ? LIMIT 1";
+        $query = $this->conn->prepare($sql);
+        $query->bind_param('i', $uid);
+        $query->execute();
+        $query->store_result();
+        if ($query->num_rows) {
+            $query->bind_result($this->firstName, $this->lastName, $this->email, $this->phone, $this->password);
+            $query->fetch();
+            return array(
+                'count' => $query->num_rows,
+                'data' => array(
+                    'firstName' => $this->firstName,
+                    'lastName' => $this->lastName,
+                    'email' => $this->email,
+                    'phone' => $this->phone,
+                    'password' => $this->password
+
+                )
+            );
+        }
+
+        return array(
+            'count' => 0
+        );
+        /* free results */
+        $query->free_result();
+
+        /* close statement */
+        $query->close();
+
+        /* close connection */
+        $this->conn->close();
+    }
+
+    public function verify_password($pwd, $db_pwd)
+    {
+        if (password_verify($pwd, $db_pwd)) {
+            return true;
+        }
+        return false;
     }
 }

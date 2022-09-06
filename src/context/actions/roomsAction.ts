@@ -70,7 +70,7 @@ export const getAllRoomsAction = async (
   const body = {
     selectedType: "room",
     start: 0,
-    limit: 30,
+    limit: 50,
   };
   try {
     dispatch({ type: types.FETCHING_ROOM_LISTING });
@@ -103,7 +103,7 @@ export const getAllRoommatesAction = async (
   const body = {
     selectedType: "roommate",
     start: 0,
-    limit: 30,
+    limit: 50,
   };
   try {
     dispatch({ type: types.FETCHING_ROOMMATE_LISTING });
