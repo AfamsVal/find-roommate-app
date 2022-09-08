@@ -37,7 +37,7 @@ const ContactUs: React.FC = () => {
       );
 
       dispatch({ type: types.CONTACT_US_RESET });
-      dispatch({ type: types.STOP_LOADING });
+      dispatch({ type: types.RESET_ALL });
     }
   }, [contactUs.contactSuccess, error, dispatch, openNotification]);
 

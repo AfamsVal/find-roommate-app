@@ -1,5 +1,10 @@
 import { httpRequest } from "./../../https/http";
-import { IAction, IContact } from "./../../utils/types";
+import {
+  IAction,
+  IChangePwd,
+  IContact,
+  IProfileInfo,
+} from "./../../utils/types";
 import * as types from "../types";
 import { HTTPResponse } from "../../https/http";
 
@@ -20,5 +25,55 @@ export const contactUsAction = async (
     }
   } catch (error: any) {
     dispatch({ type: types.CONTACT_ERROR, payload: error?.code });
+  }
+};
+
+export const updateProfileAction = async (
+  dispatch: ({ type, payload }: IAction<IProfileInfo | string>) => void,
+  details: IProfileInfo
+) => {
+  try {
+    dispatch({ type: types.START_LOADING });
+
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "user/update-profile",
+      method: "PUT",
+      body: details,
+    });
+
+    if (res.status === true) {
+      dispatch({ type: types.UPDATE_PROFILE_SUCCESS, payload: res.data });
+    } else {
+      dispatch({ type: types.SHOW_ERROR, payload: res.message });
+    }
+  } catch (error: any) {
+    dispatch({ type: types.SHOW_ERROR, payload: error?.code });
+  }
+};
+
+/////////////////////////////////////
+////ADMIN CHANGE PASSWORD//////////
+export const adminPwdChangeAction = async (
+  dispatch: ({ type, payload }: IAction<IChangePwd | string>) => void,
+  details: IChangePwd
+) => {
+  try {
+    dispatch({ type: types.START_LOADING_TWO });
+
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "user/reset-password",
+      method: "POST",
+      body: details,
+    });
+
+    console.log("res", res);
+
+    if (res.status === true) {
+      dispatch({ type: types.UPDATE_PROFILE_SUCCESS, payload: res.data });
+    } else {
+      dispatch({ type: types.SHOW_ERROR, payload: res.message });
+    }
+  } catch (error: any) {
+    dispatch({ type: types.SHOW_ERROR, payload: error?.code });
   }
 };

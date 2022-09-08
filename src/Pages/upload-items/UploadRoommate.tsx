@@ -88,7 +88,7 @@ const UploadRoommate = () => {
       setForm(formObj);
       setFileList([]);
 
-      dispatch({ type: types.RESET_SUCCESS });
+      dispatch({ type: types.RESET_ALL });
     }
   }, [formObj, dispatch, success]);
 

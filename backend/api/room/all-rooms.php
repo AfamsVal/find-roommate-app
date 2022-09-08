@@ -37,6 +37,8 @@ if ($result[0] > 0) {
             'descriptions' => $descriptions,
             'email' => $email,
             'hasWater' => $hasWater,
+            'hasTiles' => $hasTiles,
+            'houseType' => $houseType,
             'hostelName' => $hostelName,
             'isVerified' => $isVerified,
             'phone' => $phone,

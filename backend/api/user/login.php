@@ -21,8 +21,8 @@ if (empty(trim($data->email)) || empty(trim($data->password))) {
 }
 
 $user->email = clean_input_and_strip_tags($data->email, $db);
-$user->password = clean_input_and_strip_tags($data->password, $db);
-
+$password = clean_input_and_strip_tags($data->password, $db);
+$user->password = $password;
 
 //Check if login successful
 $user_data = $user->check_login();
@@ -34,9 +34,9 @@ if (!empty($user_data)) {
     $phone = $user_data['phone'];
     $state = $user_data['state'];
     $gender = $user_data['gender'];
-    $password = $user_data['password'];
+    $db_password = $user_data['password'];
 
-    if (password_verify($data->password, $password)) {
+    if ($user->verify_password($password, $db_password)) {
         $data = array(
             "firstName" => $user_data['firstName'],
             "lastName" => $user_data['lastName'],

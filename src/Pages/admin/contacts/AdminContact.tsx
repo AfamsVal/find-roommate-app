@@ -30,7 +30,7 @@ const AdminContact = () => {
         return (
           <ContactModal type="approve" data={data}>
             <i className="fas fa-pencil mr-2" />
-            View More
+            View
           </ContactModal>
         );
       },
