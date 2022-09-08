@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@500&family=Nunito&family=Oswald:wght@500&family=Roboto:wght@700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@500&family=Nunito&family=Oswald:wght@500&family=Roboto:wght@700&family=Space+Grotesk&display=swap");
+
 /* 249, 155, 80  */
 
 :root {
@@ -548,8 +548,4 @@ form .form-control:focus {
 
 .box-shadow-2 {
   box-shadow: 0px 0px 10px rgb(var(--primary-100));
-}
-
-.special-font {
-  font-family: "Encode Sans SC";
 }
