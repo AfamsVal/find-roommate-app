@@ -15,7 +15,7 @@ $user = new User($db);
 $data = json_decode(file_get_contents('php://input'));
 
 
-$id = clean_input_and_strip_tags($data->id, $db);
+$uid = clean_input_and_strip_tags($data->id, $db);
 $firstName = clean_input_and_strip_tags($data->firstName, $db);
 $lastName = clean_input_and_strip_tags($data->lastName, $db);
 $email = clean_input_and_strip_tags($data->email, $db);
@@ -24,7 +24,7 @@ $password = clean_input_and_strip_tags($data->password, $db);
 //Check if user is updated
 
 
-$validUser = $user->get_user_by_id($id);
+$validUser = $user->get_user_by_field('id', $uid);
 
 
 if (!isValidEmail($email)) {
@@ -37,12 +37,13 @@ if (!$validUser['count']) {
     exit();
 }
 
-if (!$user->verify_password($password, $validUser['data']['password'])) {
-    response(false, 200, 'Wrong password! 1 of 4 attemps. Account will be blocked!');
+$checkPwd = $user->verify_password($password, $uid);
+if (!$checkPwd['isValid']) {
+    response(false, 200, $checkPwd['msg']);
     exit();
 }
 
-$res = $user->update_user_profile($id, $firstName, $lastName, $email, $phone);
+$res = $user->update_user_profile($uid, $firstName, $lastName, $email, $phone);
 
 if ($res === true) {
     $user_info = array(

@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
-import { updateProfileAction } from "../../context/actions/contactAction";
+import React, { useEffect, useState } from "react";
+import {
+  adminPwdChangeAction,
+  updateProfileAction,
+} from "../../context/actions/contactAction";
 import { useAppSelector } from "../../context/GlobalState";
 import useToast from "../../hooks/toast/useToast";
 import { validateForm } from "../../utils/formValidator";
-import { IProfileInfo } from "../../utils/types";
+import { IChangePwd, IProfileInfo } from "../../utils/types";
 import * as types from "../../context/types";
 
 const PersonalInfo = () => {
@@ -21,10 +24,20 @@ const PersonalInfo = () => {
     password: "",
   });
 
+  const [pwdForm, setPwdForm] = useState<IChangePwd>({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
   const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  ///////////////////////////
+  /////////////////////////
+  // CHANGE PROFILE
+  ////////////////////////////////
   const handleContact = () => {
     const { isValid, error } = validateForm(form);
     if (!isValid) {
@@ -32,6 +45,24 @@ const PersonalInfo = () => {
       return false;
     }
     updateProfileAction(dispatch, { id: userId, ...form });
+  };
+
+  ///////////////////////////
+  /////////////////////////
+  // SUBMIT PASSWORD CHANGE
+  ////////////////////////////////
+  const handlePasswordSubmit = () => {
+    const checkForm = {
+      oldPassword: pwdForm.oldPassword,
+      password: pwdForm.newPassword,
+      confirmPwd: pwdForm.confirmPassword,
+    };
+    const { isValid, error } = validateForm(checkForm, true);
+    if (!isValid) {
+      openNotification(error.title, error.value, "error");
+      return false;
+    }
+    adminPwdChangeAction(dispatch, { code: userId, isLogin: true, ...pwdForm });
   };
 
   useEffect(() => {
@@ -169,9 +200,10 @@ const PersonalInfo = () => {
                 <div className="w-100 mx-1 my-form">
                   <input
                     type="password"
-                    name="oldPassword"
-                    onChange={handleChange}
-                    value={form.oldPassword}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setPwdForm({ ...pwdForm, oldPassword: e.target.value })
+                    }
+                    value={pwdForm.oldPassword}
                     className="form-control"
                     placeholder=" "
                   />
@@ -185,9 +217,10 @@ const PersonalInfo = () => {
                 <div className="w-100 mx-1 my-form">
                   <input
                     type="password"
-                    name="password"
-                    onChange={handleChange}
-                    value={form.password}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setPwdForm({ ...pwdForm, newPassword: e.target.value })
+                    }
+                    value={pwdForm.newPassword}
                     className="form-control"
                     placeholder=" "
                   />
@@ -200,9 +233,13 @@ const PersonalInfo = () => {
                 <div className="w-100 mx-1 my-form">
                   <input
                     type="password"
-                    name="password"
-                    onChange={handleChange}
-                    value={form.password}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setPwdForm({
+                        ...pwdForm,
+                        confirmPassword: e.target.value,
+                      })
+                    }
+                    value={pwdForm.confirmPassword}
                     className="form-control"
                     placeholder=" "
                   />
@@ -214,7 +251,7 @@ const PersonalInfo = () => {
 
               <div className="px-1">
                 <button
-                  onClick={handleContact}
+                  onClick={handlePasswordSubmit}
                   type="button"
                   className="custom-button"
                 >

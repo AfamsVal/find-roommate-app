@@ -20,7 +20,7 @@ $user->email = clean_input_and_strip_tags($data->email, $db);
 $user->phone = clean_input_and_strip_tags($data->phone, $db);
 $user->state = clean_input_and_strip_tags($data->state, $db);
 $user->gender = clean_input_and_strip_tags($data->gender, $db);
-$user->password = clean_input_and_strip_tags(password_hash($data->password, PASSWORD_DEFAULT), $db);
+$user->password = password_hash($data->password, PASSWORD_DEFAULT);
 
 
 if (

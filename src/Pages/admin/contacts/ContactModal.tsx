@@ -42,19 +42,20 @@ const ContactModal = ({ type, children, data }: any) => {
         <div className="container">
           <div className="row mt-2">
             <div className="block w-full text-white">
-              <h1 className="text-black text-2xl mt-2 font-bold">
+              <h1 className="text-main text-2xl mt-2 font-bold">
                 Contact Details
               </h1>
               <p className="mt-2 text-black">
-                <strong> Name:</strong> {contact.name}
+                <strong className="text-main"> Name:</strong> {contact.name}
               </p>
               <p className="mt-2 text-black">
-                <strong> Email:</strong> {contact.email}
+                <strong className="text-main"> Email:</strong> {contact.email}
               </p>
               <p className="mt-2 text-black">
-                <strong> Subject:</strong> {contact.subject}
+                <strong className="text-main"> Subject:</strong>{" "}
+                {contact.subject}
               </p>
-              <p className="mt-2 text-black">{contact.details}</p>
+              <p className="mt-2 text-black special-font">{contact.details}</p>
             </div>
 
             <div className="mt-2">

@@ -167,6 +167,14 @@ export interface IProfileInfo {
   oldPassword?: string;
 }
 
+export interface IChangePwd {
+  code?: string;
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+  isLogin?: boolean;
+}
+
 export interface DataType {
   key: React.Key;
   name: string;
