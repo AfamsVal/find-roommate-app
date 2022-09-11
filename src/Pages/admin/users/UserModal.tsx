@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import { Modal } from "antd";
 import PropTypes from "prop-types";
+import profileImg from "../../../assets/images/profile.webp";
+import { useAppSelector } from "../../../context/GlobalState";
+import useToast from "../../../hooks/toast/useToast";
+import { blockUnblockAction } from "../../../context/actions/AuthAction";
 
 const UserModal = ({ type, children, data }: any) => {
+  const { dispatch } = useAppSelector();
+  const [openNotification] = useToast();
   const [loading, setLoading] = useState<boolean>(false);
   const [visible, setModal] = useState(false);
 
   const [contact, setContact] = useState({
     key: "",
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     gender: "",
@@ -25,11 +32,10 @@ const UserModal = ({ type, children, data }: any) => {
 
   const handleCancel = () => {
     setModal(false);
-    // dispatch.applications.setAdminModalTask(true)
   };
 
-  const submitFormHandle = () => {
-    // dispatch(contact)
+  const submitBtnHandle = (userId: string, type: string) => {
+    blockUnblockAction(dispatch, openNotification, { userId, type });
   };
 
   return (
@@ -44,9 +50,28 @@ const UserModal = ({ type, children, data }: any) => {
               <h1 className="text-black text-2xl mt-2 font-bold">
                 User Details
               </h1>
-              <p className="mt-2 text-black">
-                <strong> Name:</strong> {contact.name}
-              </p>
+              <div>
+                <img src={profileImg} width="120" alt="profile" />
+              </div>
+              <div>
+                <hr style={{ borderBottom: "1px solid #999" }} />
+              </div>
+              <div className="mt-2 mb-3">
+                <h2 className="ml-2 pl-1 text-main">
+                  {data.lastName} {data.firstName}
+                </h2>
+                <em className="text-lighter">
+                  <span>Created: </span>
+                  {new Date(data.createdAt).toLocaleString("en-US", {
+                    day: "numeric",
+                    month: "numeric",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                  })}
+                </em>
+              </div>
               <p className="mt-2 text-black">
                 <strong> Email:</strong> {contact.email}
               </p>
@@ -63,13 +88,20 @@ const UserModal = ({ type, children, data }: any) => {
 
             <div className="mt-2">
               <button
-                onClick={submitFormHandle}
-                className="btn btn-danger px-4"
+                onClick={() =>
+                  submitBtnHandle(
+                    data.key,
+                    data.isBlocked === "1" ? "unblocked" : "blocked"
+                  )
+                }
+                className={`btn px-4 ${
+                  data.isBlocked === "1" ? "btn-danger" : "btn-warning"
+                }`}
               >
+                {data.isBlocked === "1" ? "Unblock User" : "Block User"}{" "}
                 {loading && (
                   <i className="fa fa-spin fa-spinner mr-2 font-bold text-lg" />
                 )}
-                Block User
               </button>
             </div>
           </div>

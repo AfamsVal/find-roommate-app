@@ -79,12 +79,13 @@ export const adminPwdChangeAction = async (
 };
 
 /////////////////////////////////////
-////ADMIN CHANGE PASSWORD//////////
+////ADMIN FETCH ALL COTACTS//////////
 export const fetchAllContactAction = async (
-  dispatch: ({ type, payload }: IAction<IChangePwd | string>) => void,
+  dispatch: ({ type, payload }: IAction<string>) => void,
   details: IFilterSize
 ) => {
   try {
+    dispatch({ type: types.LIST_ITEMS_EMPTY });
     dispatch({ type: types.START_LOADING });
 
     const res: HTTPResponse<string> = await httpRequest({
@@ -106,7 +107,7 @@ export const fetchAllContactAction = async (
 /////////////////////////////////////
 ////ADMIN REPLY CONTACT//////////
 export const adminReplyContactAction = async (
-  dispatch: ({ type, payload }: IAction<IChangePwd | string>) => void,
+  dispatch: ({ type, payload }: IAction<string>) => void,
   openNotification: any,
   details: IAdminReply
 ) => {

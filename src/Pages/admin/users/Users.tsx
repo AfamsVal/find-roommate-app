@@ -1,13 +1,36 @@
 import type { ColumnsType } from "antd/es/table";
+import { useEffect, useState } from "react";
 import AdminTable from "../../../components/admin-users/AdminTable";
-import { DataType } from "../../../utils/types";
+import { fetchAllUserAction } from "../../../context/actions/AuthAction";
+import { useAppSelector } from "../../../context/GlobalState";
+import { DataType, IFilterSize } from "../../../utils/types";
 import UserModal from "./UserModal";
 
 const Users = () => {
+  const { dispatch, contactUs, loading } = useAppSelector();
+  const [filter, setFilter] = useState<IFilterSize>({
+    start: 0,
+    limit: 50,
+  });
+  const { result, moreData }: any = contactUs.contactList;
+
   const columns: ColumnsType<DataType> | any = [
     {
       title: "Name",
-      dataIndex: "name",
+      dataKey: "key",
+      key: "key",
+      render: (data: any) => {
+        return (
+          <span>
+            <span style={{ marginRight: "10px" }}>
+              <i className="fas fa-user mr-2" />
+            </span>
+            <span className="ml-2 pl-1">
+              {data.lastName} {data.firstName}
+            </span>
+          </span>
+        );
+      },
     },
     {
       title: "Email",
@@ -26,32 +49,35 @@ const Users = () => {
       dataIndex: "state",
     },
     {
+      title: "Blocked",
+      dataKey: "key",
+      key: "key",
+      render: (data: any) => {
+        return (
+          <span className="ml-2 pl-1">
+            {data.isBlocked === "1" ? "YES" : "NO"}
+          </span>
+        );
+      },
+    },
+    {
       title: <span className="font-bold capitalize">Action</span>,
-      datakey: "AFAMS VAL",
-      key: "name",
+      datakey: "key",
+      key: "key",
       render: (data: any) => {
         return (
           <UserModal type="approve" data={data}>
             <i className="fas fa-pencil mr-2" />
-            View More
+            View
           </UserModal>
         );
       },
     },
   ];
 
-  const data: DataType[] = [];
-
-  for (let i = 0; i < 26; i++) {
-    data.push({
-      key: i,
-      name: `Edward King ${i}`,
-      email: "progfams@gmail.com",
-      phone: "09045673445",
-      gender: "Male",
-      state: "Imo State",
-    });
-  }
+  useEffect(() => {
+    dispatch(fetchAllUserAction(dispatch, filter));
+  }, []);
 
   return (
     <>
@@ -61,8 +87,10 @@ const Users = () => {
 
       <AdminTable
         columns={columns}
-        data={data}
+        data={result}
         placeholder="Search for a user..."
+        moreData={moreData}
+        loading={loading}
       />
     </>
   );

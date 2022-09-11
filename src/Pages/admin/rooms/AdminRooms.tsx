@@ -1,5 +1,4 @@
 import AdminTable from "../../../components/admin-users/AdminTable";
-import "antd/dist/antd.css";
 import RoomModal from "./RoomModal";
 
 const AdminRooms = () => {
