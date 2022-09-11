@@ -17,18 +17,27 @@ const Login: React.FC = () => {
 
   const { auth, dispatch } = useAppSelector();
 
+  console.log("auth", auth);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     if (auth.isAuth) {
-      openNotification("Notification:", "Login Successful!", "success");
-      navigate("/");
+      auth.userDetails.isAdmin ? navigate("/admin/overview") : navigate("/");
     }
+
     if (auth.authError) {
       openNotification("Login Failed:", auth.authError, "error");
       dispatch({ type: "CLEAR_AUTH_ERROR" });
     }
-  }, [auth.isAuth, auth.authError, navigate, openNotification, dispatch]);
+  }, [
+    auth.isAuth,
+    auth.authError,
+    auth.userDetails.isAdmin,
+    navigate,
+    openNotification,
+    dispatch,
+  ]);
 
   const [form, setForm] = React.useState<ILogin>({
     email: "",
@@ -46,7 +55,7 @@ const Login: React.FC = () => {
       return false;
     }
 
-    loginAction(dispatch, form);
+    loginAction(dispatch, openNotification, form);
   };
 
   return (

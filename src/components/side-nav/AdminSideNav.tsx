@@ -3,6 +3,8 @@ import SideNavItem from "./SideNavItem";
 import { SIDE_MENU_ITEMS } from "./sidemenu";
 import { Accordion } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { logoutAction } from "../../context/actions/AuthAction";
+import { useAppSelector } from "../../context/GlobalState";
 
 interface SideNavProps {
   toggleNav: boolean;
@@ -11,6 +13,7 @@ interface SideNavProps {
 
 const AdminSideNav = ({ toggleNav, setToggleNav }: SideNavProps) => {
   const navigate = useNavigate();
+  const { auth, dispatch } = useAppSelector();
   return (
     <Accordion defaultActiveKey="sidenav">
       <div id="sidenav" className={`${toggleNav ? "toggled" : ""}`}>
@@ -33,7 +36,11 @@ const AdminSideNav = ({ toggleNav, setToggleNav }: SideNavProps) => {
             <li
               className="cursor-pointer fw-bold text-red ps-5"
               style={{ marginTop: "20px" }}
-              onClick={() => navigate("/")}
+              onClick={() => {
+                if (auth.isAuth) {
+                  return logoutAction(dispatch, navigate);
+                }
+              }}
             >
               <i className="fas fa-power-off me-3 text-red"></i>Logout
             </li>

@@ -3,7 +3,6 @@ import { Modal } from "antd";
 import PropTypes from "prop-types";
 
 const RoomModal = ({ type, children, data }: any) => {
-  console.log("data::", data);
   const [loading, setLoading] = useState<boolean>(false);
   const [visible, setModal] = useState(false);
 

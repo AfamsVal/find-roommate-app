@@ -25,11 +25,17 @@ export const allReducer = (state = initialState, action: IAction) => {
         loading: false,
         error: action.payload,
       };
+    case types.SHOW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload,
+      };
     case types.RESET_ALL:
       return {
         ...state,
         error: "",
-        success: false,
+        success: "",
         loading: false,
         loadingTwo: false,
       };
@@ -103,10 +109,23 @@ export const allReducer = (state = initialState, action: IAction) => {
       return {
         ...state,
         loading: false,
-        success: true,
+        success: "Updated Successfully",
         auth: {
           ...state.auth,
           userDetails: { ...state.auth.userDetails, ...action.payload },
+        },
+      };
+
+    //CONTACT REDUCER///////////
+    ///////////////////////////////////////
+
+    case types.LIST_CONTACT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        contactUs: {
+          ...state.contactUs,
+          contactList: action.payload,
         },
       };
 
@@ -126,14 +145,14 @@ export const allReducer = (state = initialState, action: IAction) => {
       return {
         ...state,
         loading: true,
-        success: false,
+        success: "",
       };
 
     case types.ADD_NEW_ROOM_COMPLETED:
       return {
         ...state,
         loading: false,
-        success: true,
+        success: "success",
       };
 
     case types.FETCHING_ALL_LISTING:

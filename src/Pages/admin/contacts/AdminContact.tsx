@@ -1,10 +1,20 @@
 import { ColumnsType } from "antd/lib/table";
-import React from "react";
+import { useEffect, useState } from "react";
 import AdminTable from "../../../components/admin-users/AdminTable";
-import { DataType } from "../../../utils/types";
+import { fetchAllContactAction } from "../../../context/actions/contactAction";
+import { useAppSelector } from "../../../context/GlobalState";
+import { DataType, IFilterSize } from "../../../utils/types";
 import ContactModal from "./ContactModal";
 
 const AdminContact = () => {
+  const { dispatch, contactUs, loading } = useAppSelector();
+  const [filter, setFilter] = useState<IFilterSize>({
+    start: 0,
+    limit: 50,
+  });
+
+  const { result, moreData }: any = contactUs.contactList;
+
   const columns: ColumnsType<DataType> | any = [
     {
       title: "Name",
@@ -19,8 +29,20 @@ const AdminContact = () => {
       dataIndex: "subject",
     },
     {
-      title: "Details",
-      dataIndex: "details",
+      title: "Status",
+      dataIndex: "treated",
+      key: "treated",
+      render: (data: any) => {
+        return (
+          <div>
+            {data === "0" ? (
+              <span className="text-warning">Pending</span>
+            ) : (
+              <span className="text-success">Treated</span>
+            )}
+          </div>
+        );
+      },
     },
     {
       title: <span className="font-bold capitalize">Action</span>,
@@ -30,22 +52,17 @@ const AdminContact = () => {
         return (
           <ContactModal type="approve" data={data}>
             <i className="fas fa-pencil mr-2" />
-            View
+            View{" "}
           </ContactModal>
         );
       },
     },
   ];
-  const data: DataType[] = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i,
-      name: `Edward King ${i}`,
-      email: "progfams@gmail.com",
-      subject: `London, Park Lane no. ${i}`,
-      details: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum harum fuga eveniet quod.`,
-    });
-  }
+
+  useEffect(() => {
+    dispatch(fetchAllContactAction(dispatch, filter));
+  }, []);
+
   return (
     <>
       <div className="row px-3 mb-3">
@@ -54,8 +71,10 @@ const AdminContact = () => {
 
       <AdminTable
         columns={columns}
-        data={data}
+        data={result}
         placeholder="Search contact..."
+        moreData={moreData}
+        loading={loading}
       />
     </>
   );

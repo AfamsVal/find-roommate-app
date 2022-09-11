@@ -69,7 +69,7 @@ export const logoutState: IGlobalState = {
   loading: false,
   loadingTwo: false,
   error: "",
-  success: false,
+  success: "",
 };
 
 export const initialState: IGlobalState = window.localStorage?.getItem(
@@ -81,7 +81,7 @@ export const initialState: IGlobalState = window.localStorage?.getItem(
       loading: false,
       loadingTwo: false,
       error: "",
-      success: false,
+      success: "",
       contactUs: contactState,
       listing: listingState2,
     };
