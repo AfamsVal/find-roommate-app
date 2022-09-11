@@ -109,4 +109,72 @@ class Contact
 
         return false;
     }
+
+
+    //////////////USER BY FIELD NAME////
+    ////////////////////////////
+    public function get_contact_by_field($field_key, $value)
+    {
+        $sql = "SELECT name,email,subject,message,reply,createdAt,treated FROM " . $this->table . " WHERE " . $field_key . " = ? LIMIT 1";
+        $query = $this->conn->prepare($sql);
+        $query->bind_param('i', $value);
+        $query->execute();
+        $query->store_result();
+        if ($query->num_rows) {
+            $query->bind_result(
+                $this->name,
+                $this->email,
+                $this->subject,
+                $this->message,
+                $this->reply,
+                $this->createdAt,
+                $this->treated
+            );
+            $query->fetch();
+            return array(
+                'count' => $query->num_rows,
+                'data' => array(
+                    'name' => $this->name,
+                    'email' => $this->email,
+                    'subject' => $this->subject,
+                    'message' => $this->message,
+                    'reply' => $this->reply,
+                    'createdAt' => $this->createdAt,
+                    'treated' => $this->treated
+
+                )
+            );
+        }
+
+        return array(
+            'count' => 0
+        );
+        /* free results */
+        $query->free_result();
+
+        /* close statement */
+        $query->close();
+
+        /* close connection */
+        $this->conn->close();
+    }
+
+
+    ////UPDATE USER/////////////
+    /////////////////////////////(id,2,firstName,'val')
+    public function update_user_by_field($field_key, $uid, $prop, $value)
+    {
+        $sql =  "UPDATE " . $this->table . " SET " . $prop . " = ? WHERE " . $field_key . " = ?";
+        $query = $this->conn->prepare($sql);
+        $query->bind_param(
+            'ss',
+            $value,
+            $uid
+        );
+        if ($query->execute()) {
+            return true;
+        }
+
+        return false;
+    }
 }

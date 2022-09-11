@@ -19,6 +19,7 @@ interface IResponse extends ILoginPayload {
 
 export const loginAction = async (
   dispatch: ({ type, payload }: IAction<ILoginPayload | string>) => void,
+  openNotification: any,
   user: ILogin
 ) => {
   try {
@@ -33,6 +34,7 @@ export const loginAction = async (
     if (result.status === true) {
       sessionStorage.setItem("i-token", result.data.token);
       var decoded: IResponse = jwt_decode(result.data.token);
+      openNotification("Notification:", "Login Successful!", "success");
       dispatch({
         type: types.LOGIN,
         payload: decoded,

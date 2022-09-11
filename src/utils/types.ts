@@ -52,7 +52,7 @@ export interface IGlobalState {
   loading: boolean;
   loadingTwo: boolean;
   error: string;
-  success: boolean;
+  success: string;
   contactUs: IContactState;
   listing: IListingState;
   dispatch?: any;
@@ -173,6 +173,17 @@ export interface IChangePwd {
   newPassword: string;
   confirmPassword: string;
   isLogin?: boolean;
+}
+
+export interface IAdminReply {
+  contactId: string;
+  adminUID: number;
+  reply: string;
+}
+
+export interface IFilterSize {
+  start: number;
+  limit: number;
 }
 
 export interface DataType {

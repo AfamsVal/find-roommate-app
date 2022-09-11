@@ -27,11 +27,12 @@ if ($result[0] > 0) {
     while ($row = mysqli_fetch_assoc($result[1])) {
         extract($row);
         $contact_item = array(
-            'id' => $id,
+            'key' => $id,
             'name' => $name,
             'email' => $email,
             'subject' => $subject,
             'message' => $message,
+            'reply' => $reply,
             'createdAt' => $createdAt,
             'treated' => $treated
         );
@@ -39,7 +40,7 @@ if ($result[0] > 0) {
         array_push($contacts_arr, $contact_item);
     }
 
-    response(true, 200, '', $contacts_arr);
+    response(true, 200, '', array("result" => $contacts_arr, "moreData" => true));
 } else {
     response(true, 200, 'No room found!', array());
 }
