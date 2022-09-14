@@ -9,7 +9,6 @@ class Room extends Filter
 
     public $id;
     public $address;
-    public $applicantName;
     public $bathRoomNo;
     public $category;
     public $createdAt;
@@ -128,7 +127,6 @@ class Room extends Filter
     {
         $sql = "INSERT INTO " . $this->table . " (
         address,
-        applicantName,
         bathRoomNo,
         category,
         descriptions,
@@ -147,12 +145,11 @@ class Room extends Filter
         toiletNo,
         uid,
         university
-        ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $query = $this->conn->prepare($sql);
         $query->bind_param(
-            'ssssssssssssssssssss',
+            'sssssssssssssssssss',
             $this->address,
-            $this->applicantName,
             $this->bathRoomNo,
             $this->category,
             $this->descriptions,
@@ -196,7 +193,6 @@ class Room extends Filter
     public function update_room()
     {
         $sql = "UPDATE " . $this->table . " SET address = ?,
-        applicantName = ?,
         bathRoomNo = ?,
         category = ?,
         descriptions = ?,
@@ -216,9 +212,8 @@ class Room extends Filter
         university = ? WHERE id = ?";
         $query = $this->conn->prepare($sql);
         $query->bind_param(
-            'sssssssssssssssssssi',
+            'ssssssssssssssssssi',
             $this->address,
-            $this->applicantName,
             $this->bathRoomNo,
             $this->category,
             $this->descriptions,
@@ -272,6 +267,41 @@ class Room extends Filter
         }
 
         return false;
+    }
+
+
+
+    //////////////USER BY FIELD NAME////
+    ////////////////////////////
+    public function get_user_by_id($value)
+    {
+        $sql = "SELECT firstName,lastName,email FROM users WHERE id = ? LIMIT 1";
+        $query = $this->conn->prepare($sql);
+        $query->bind_param('i', $value);
+        $query->execute();
+        $query->store_result();
+        if ($query->num_rows) {
+            $query->bind_result(
+                $this->firstName,
+                $this->lastName,
+                $this->email
+            );
+            $query->fetch();
+            return array(
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'email' => $this->email
+            );
+        }
+
+        /* free results */
+        $query->free_result();
+
+        /* close statement */
+        $query->close();
+
+        /* close connection */
+        $this->conn->close();
     }
 }
 

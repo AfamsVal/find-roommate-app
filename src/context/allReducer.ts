@@ -129,6 +129,15 @@ export const allReducer = (state = initialState, action: IAction) => {
         },
       };
 
+    case types.LIST_ITEMS_EMPTY:
+      return {
+        ...state,
+        contactUs: {
+          ...state.contactUs,
+          contactList: [],
+        },
+      };
+
     //ROOMS REDUCER///////////
     ///////////////////////////////////////
 

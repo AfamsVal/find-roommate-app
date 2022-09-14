@@ -26,7 +26,7 @@ if ($result[0] > 0) {
     while ($row = mysqli_fetch_assoc($result[1])) {
         extract($row);
         $user_item = array(
-            'id' => $id,
+            'key' => $id,
             'createdAt' => $createdAt,
             'firstName' => $firstName,
             'lastName' => $lastName,
@@ -34,11 +34,12 @@ if ($result[0] > 0) {
             'phone' => $phone,
             'state' => $state,
             'gender' => $gender,
+            'isBlocked' => $blocked,
         );
         //Push to data
         array_push($users_arr, $user_item);
     }
-    response(true, 200, 'success', $users_arr);
+    response(true, 200, 'success', array("result" => $users_arr, "moreData" => true));
 } else {
     response(true, 200, 'No record found!', array());
 }

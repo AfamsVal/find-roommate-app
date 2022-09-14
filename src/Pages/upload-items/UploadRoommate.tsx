@@ -17,7 +17,6 @@ const UploadRoommate = () => {
   const formObj = useMemo(() => {
     return {
       hostelName: "",
-      applicantName: "",
       email: "",
       phone: "",
       houseType: "",
@@ -46,8 +45,7 @@ const UploadRoommate = () => {
   };
 
   const handleSubmit = () => {
-    const { hostelName, ...objToValidate } = form;
-    const { isValid, error } = validateForm(objToValidate);
+    const { isValid, error } = validateForm(form);
 
     if (!isValid) {
       openNotification(error.title, error.value, "error");
@@ -104,10 +102,10 @@ const UploadRoommate = () => {
                   </label> */}
                 <input
                   type="text"
-                  placeholder="Enter Name"
+                  placeholder="Enter Lodge/Hostel Name"
                   className="form-control"
-                  name="applicantName"
-                  value={form.applicantName}
+                  name="hostelName"
+                  value={form.hostelName}
                   onChange={handleChange}
                 />
               </div>

@@ -1,29 +1,61 @@
+import { useEffect, useState } from "react";
 import AdminTable from "../../../components/admin-users/AdminTable";
-import "antd/dist/antd.css";
+import { fetchAllAdminRoomsAction } from "../../../context/actions/roomsAction";
+import { useAppSelector } from "../../../context/GlobalState";
+import { formatCurrency } from "../../../utils/formValidator";
+import { IFilterSize } from "../../../utils/types";
 import RoomModal from "./RoomModal";
 
 const AdminRooms = () => {
+  const { dispatch, contactUs, loading } = useAppSelector();
+  const [filter, setFilter] = useState<IFilterSize>({
+    start: 0,
+    limit: 50,
+  });
+  const { result, moreData }: any = contactUs.contactList;
+
   // const columns: ColumnsType<IAdminUsers> = [
   const columns: any = [
     {
       title: "Name",
-      dataIndex: "name",
+      dataIndex: "hostelName",
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
+      title: "Amount (₦)",
+      dataIndex: "rentPerYear",
+      render: (amount: any) => {
+        return <span>{formatCurrency(amount)}.00</span>;
+      },
     },
     {
       title: "Type",
-      dataIndex: "type",
+      dataIndex: "category",
     },
     {
       title: "Phone",
       dataIndex: "phone",
     },
     {
-      title: "Agent Name",
-      dataIndex: "agentName",
+      title: "Uploaded By",
+      dataIndex: "uploadedBy",
+    },
+    {
+      title: "Created",
+      dataIndex: "createdAt",
+      render: (createdAt: any) => {
+        return <span>{new Date(createdAt).toLocaleDateString()}</span>;
+      },
+    },
+    {
+      title: "Status",
+      dataIndex: "isVerified",
+      render: (isVerified: any) => {
+        return isVerified === "1" ? (
+          <span className="text-success">Verified</span>
+        ) : (
+          <span className="text-danger">Pending</span>
+        );
+      },
     },
     {
       title: <span className="font-bold capitalize">Action</span>,
@@ -33,38 +65,16 @@ const AdminRooms = () => {
         return (
           <RoomModal type="approve" data={data}>
             <i className="fas fa-pencil mr-2" />
-            View More
+            View
           </RoomModal>
         );
       },
     },
   ];
 
-  // const data: IAdminUsers[] = [];
-  const data: any = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i,
-      name: "Main Top Hostel",
-      amount: "10000",
-      type: `London, Park Lane no. ${i}`,
-      phone: `London, Park Lane no. ${i}`,
-      agentName: `London, Park Lane no. ${i}`,
-      email: "progfams@gmail.com",
-      rentAmount: "250000",
-      roomType: "1 Bedroom",
-      noOfBathroom: 2,
-      noOfToilet: 3,
-      university: "Imo State University",
-      state: "Imo State",
-      location: "No 2 imsu extention gate",
-      houseType: "Story Building",
-      hasWater: "Yes",
-      hasLight: "Yes",
-      moreInfo:
-        "I am sure you will love the appartment if you see it and it is highly secured",
-    });
-  }
+  useEffect(() => {
+    dispatch(fetchAllAdminRoomsAction(dispatch, filter));
+  }, []);
 
   return (
     <>
@@ -74,8 +84,10 @@ const AdminRooms = () => {
 
       <AdminTable
         columns={columns}
-        data={data}
+        data={result}
         placeholder="Search for room..."
+        moreData={moreData}
+        loading={loading}
       />
     </>
   );

@@ -3,11 +3,7 @@ import { Modal } from "antd";
 import PropTypes from "prop-types";
 import useToast from "../../../hooks/toast/useToast";
 import { useAppSelector } from "../../../context/GlobalState";
-import {
-  adminReplyContactAction,
-  fetchAllContactAction,
-} from "../../../context/actions/contactAction";
-import * as types from "../../../context/types";
+import { adminReplyContactAction } from "../../../context/actions/contactAction";
 
 const ContactModal = ({ type, children, data }: any) => {
   const [openNotification] = useToast();

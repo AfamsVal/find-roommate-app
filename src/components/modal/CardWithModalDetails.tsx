@@ -94,9 +94,7 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                     {details?.hostelName.toUpperCase()}
                   </h2>
                 )}
-                {details?.applicantName && (
-                  <h2 className={style.items}>{details?.applicantName}</h2>
-                )}
+
                 <p>({details?.address})</p>
                 <h3 className={style.pricing}>
                   {" "}
@@ -105,12 +103,10 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                 <div>
                   <hr />
                 </div>
-                {details?.applicantName && (
-                  <p>
-                    <span className={style.items}>AGENT NAME:</span>{" "}
-                    <span>{details?.applicantName}</span>
-                  </p>
-                )}
+                <p>
+                  <span className={style.items}>UPLOADED BY:</span>{" "}
+                  <span>{details?.hostelName}</span>
+                </p>
                 <p>
                   <span className={style.items}>UNIVERSITY: </span>
                   <span className={style.cap}>{details?.university}</span>

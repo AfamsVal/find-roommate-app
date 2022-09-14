@@ -8,7 +8,7 @@ const RoomModal = ({ type, children, data }: any) => {
 
   const [contact, setContact] = useState({
     key: "",
-    name: "",
+    hostelName: "",
     amount: "",
     type: "",
     phone: "",
@@ -58,7 +58,7 @@ const RoomModal = ({ type, children, data }: any) => {
               className="mt-2 text-black pt-3"
               style={{ borderTop: "2px solid #ccc" }}
             >
-              <strong> Property Name:</strong> {contact.name}
+              <strong> Property Name:</strong> {contact.hostelName}
             </p>
             <p className="mt-2 text-black">
               <strong> Amount:</strong> {contact.email}
@@ -118,7 +118,7 @@ const RoomModal = ({ type, children, data }: any) => {
                 {loading && (
                   <i className="fa fa-spin fa-spinner mr-2 font-bold text-lg" />
                 )}
-                Reject Room
+                Block Room
               </button>
               <button
                 onClick={submitFormHandle}

@@ -118,7 +118,6 @@ export interface IRoomDetails {
   createdAt?: any;
   uid?: number;
   university: string;
-  applicantName: string;
   category?: string;
 }
 

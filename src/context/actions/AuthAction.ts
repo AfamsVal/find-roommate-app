@@ -2,7 +2,13 @@ import { sendPasswordResetEmail, signOut } from "firebase/auth";
 import { NavigateFunction } from "react-router-dom";
 import { auth } from "../../firebase";
 import { httpRequest, HTTPResponse } from "../../https/http";
-import { IAction, ILogin, ILoginPayload, IRegister } from "../../utils/types";
+import {
+  IAction,
+  IFilterSize,
+  ILogin,
+  ILoginPayload,
+  IRegister,
+} from "../../utils/types";
 import * as types from "../types";
 import jwt_decode from "jwt-decode";
 
@@ -117,5 +123,58 @@ export const logoutAction = async (
       type: "AUTH_ERROR",
       payload: error.code,
     });
+  }
+};
+
+/////////////////////////////////////
+////ADMIN FETCH ALL USERS//////////
+export const fetchAllUserAction = async (
+  dispatch: ({ type, payload }: IAction<string>) => void,
+  details: IFilterSize
+) => {
+  try {
+    dispatch({ type: types.LIST_ITEMS_EMPTY });
+    dispatch({ type: types.START_LOADING });
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "user/users",
+      method: "POST",
+      body: details,
+    });
+
+    if (res.status === true) {
+      dispatch({ type: types.LIST_CONTACT_SUCCESS, payload: res.data });
+    } else {
+      dispatch({ type: types.SHOW_ERROR, payload: res.message });
+    }
+  } catch (error: any) {
+    dispatch({ type: types.SHOW_ERROR, payload: error?.code });
+  }
+};
+
+/////////////////////////////////////
+////ADMIN BLOCK AND UNBLOCK USER//////////
+export const blockUnblockAction = async (
+  dispatch: ({ type, payload }: IAction<string>) => void,
+  openNotification: any,
+  details: { type: string; userId: string }
+) => {
+  try {
+    dispatch({ type: types.START_LOADING_TWO });
+
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "user/update-user-permission",
+      method: "PUT",
+      body: details,
+    });
+
+    if (res.status === true) {
+      openNotification("Success:", res.message, "success");
+      dispatch({ type: types.RESET_ALL });
+      fetchAllUserAction(dispatch, { start: 0, limit: 50 });
+    } else {
+      dispatch({ type: types.SHOW_ERROR, payload: res.message });
+    }
+  } catch (error: any) {
+    dispatch({ type: types.SHOW_ERROR, payload: error?.code });
   }
 };

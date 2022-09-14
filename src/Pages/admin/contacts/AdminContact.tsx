@@ -46,8 +46,8 @@ const AdminContact = () => {
     },
     {
       title: <span className="font-bold capitalize">Action</span>,
-      datakey: "AFAMS VAL",
-      key: "name",
+      // datakey: "action",
+      // key: "action",
       render: (data: any) => {
         return (
           <ContactModal type="approve" data={data}>

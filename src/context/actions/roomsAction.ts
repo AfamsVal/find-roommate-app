@@ -1,5 +1,10 @@
 import { httpRequest, HTTPResponse } from "./../../https/http";
-import { IAction, IRoomDetails, ISearchQuery } from "../../utils/types";
+import {
+  IAction,
+  IFilterSize,
+  IRoomDetails,
+  ISearchQuery,
+} from "../../utils/types";
 import * as types from "../types";
 
 export const uploadRoomAction = async (
@@ -183,5 +188,32 @@ export const searchRoomListing = async (
     }
   } catch (err) {
     console.log(err);
+  }
+};
+
+/////////////////////////////////////
+////ADMIN FETCH ALL ROOMS//////////
+export const fetchAllAdminRoomsAction = async (
+  dispatch: ({ type, payload }: IAction<string>) => void,
+  details: IFilterSize
+) => {
+  try {
+    dispatch({ type: types.LIST_ITEMS_EMPTY });
+    dispatch({ type: types.START_LOADING });
+
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "room/all-rooms",
+      method: "POST",
+      body: details,
+    });
+
+    console.log("res::", res);
+    if (res.status === true) {
+      dispatch({ type: types.LIST_CONTACT_SUCCESS, payload: res.data });
+    } else {
+      dispatch({ type: types.SHOW_ERROR, payload: res.message });
+    }
+  } catch (error: any) {
+    dispatch({ type: types.SHOW_ERROR, payload: error?.code });
   }
 };
