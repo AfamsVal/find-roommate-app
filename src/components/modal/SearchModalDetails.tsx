@@ -30,20 +30,10 @@ const SearchModalDetails: React.FC<IProps> = ({ itemId, children }) => {
     <>
       <div onClick={showModal}>{children}</div>
       <Modal
-        title={`FindRoomy | ${
-          details?.hostelName ? (
-            <h2 className={style.items}>{details?.hostelName}</h2>
-          ) : (
-            ""
-          )
-        }
-        ${
-          details?.applicantName ? (
-            <h2 className={style.items}>{details?.applicantName}</h2>
-          ) : (
-            ""
-          )
-        }`}
+        title={`FindRoomy | ${(
+          <h2 className={style.items}>{details?.hostelName}</h2>
+        )}
+        `}
         centered
         style={{ marginTop: "15vh", marginBottom: "20px" }}
         visible={visible}
@@ -108,9 +98,7 @@ const SearchModalDetails: React.FC<IProps> = ({ itemId, children }) => {
                   {details?.hostelName && (
                     <h2 className={style.items}>{details?.hostelName}</h2>
                   )}
-                  {details?.applicantName && (
-                    <h2 className={style.items}>{details?.applicantName}</h2>
-                  )}
+
                   <p>({details?.address})</p>
                   <h3 className={style.pricing}>
                     {" "}
@@ -119,10 +107,10 @@ const SearchModalDetails: React.FC<IProps> = ({ itemId, children }) => {
                   <div>
                     <hr />
                   </div>
-                  {details?.applicantName && (
+                  {details?.hostelName && (
                     <p>
                       <span className={style.items}>AGENT NAME:</span>{" "}
-                      <span>{details?.applicantName}</span>
+                      <span>{details?.hostelName}</span>
                     </p>
                   )}
                   <p>

@@ -43,13 +43,10 @@ const RoomCard: React.FC<IProp> = ({ item, modalItem }) => {
             </div>
             <h5
               className={`text-main mb-0 mt-1 text-center text-uppercase text-lg font-bold`}
-              title={item?.hostelName ? item?.hostelName : item?.applicantName}
+              title={item?.hostelName}
             >
               {item?.hostelName ? item?.hostelName.substring(0, 15) : ""}
               {item?.hostelName.length > 15 && "..."}
-              {/* //below two for roommate */}
-              {item?.applicantName ? item?.applicantName.substring(0, 15) : ""}
-              {item?.applicantName.length > 15 && "..."}
             </h5>
             <div className={style.cardDate}>
               <span>

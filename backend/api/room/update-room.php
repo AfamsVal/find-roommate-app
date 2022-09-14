@@ -16,7 +16,6 @@ $data = json_decode(file_get_contents('php://input'));
 
 $room->id = clean_input_and_strip_tags($data->id, $db);
 $room->address = clean_input_and_strip_tags($data->address, $db);
-$room->applicantName = clean_input_and_strip_tags($data->applicantName, $db);
 $room->bathRoomNo = clean_input_and_strip_tags($data->bathRoomNo, $db);
 $room->category = clean_input_and_strip_tags($data->category, $db);
 $room->descriptions = clean_input_and_strip_tags($data->descriptions, $db);

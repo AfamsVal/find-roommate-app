@@ -26,11 +26,12 @@ if ($result[0] > 0) {
     $rooms_arr = array();
     while ($row = mysqli_fetch_assoc($result[1])) {
         extract($row);
+        $user = $room->get_user_by_id($id);
         $images = $room->fetch_more_images($id);
         $room_item = array(
-            'id' => $id,
+            'key' => $id,
+            'uploadedBy' => $user['lastName'] . ' ' . $user['firstName'],
             'address' => $address,
-            'applicantName' => $applicantName,
             'bathRoomNo' => $bathRoomNo,
             'category' => $category,
             'createdAt' => $createdAt,
@@ -55,7 +56,7 @@ if ($result[0] > 0) {
         //Push to data
         array_push($rooms_arr, $room_item);
     }
-    response(true, 200, 'success', $rooms_arr);
+    response(true, 200, 'success', array("result" => $rooms_arr, "moreData" => true));
 } else {
     response(true, 200, 'No record found!', array());
 }

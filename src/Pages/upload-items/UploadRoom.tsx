@@ -17,7 +17,6 @@ const UploadRoom = () => {
   const formObj = useMemo(() => {
     return {
       hostelName: "",
-      applicantName: "",
       email: "",
       phone: "",
       rentPerYear: "",
@@ -46,8 +45,7 @@ const UploadRoom = () => {
   };
 
   const handleSubmit = () => {
-    const { applicantName, ...objToValidate } = form;
-    const { isValid, error } = validateForm(objToValidate);
+    const { isValid, error } = validateForm(form);
 
     if (!isValid) {
       openNotification(error.title, error.value, "error");

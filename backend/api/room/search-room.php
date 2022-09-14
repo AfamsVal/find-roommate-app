@@ -34,7 +34,6 @@ if ($result[0] > 0) {
         $room_item = array(
             'id' => $id,
             'address' => $address,
-            'applicantName' => $applicantName,
             'bathRoomNo' => $bathRoomNo,
             'category' => $category,
             'createdAt' => $createdAt,

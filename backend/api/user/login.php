@@ -28,6 +28,12 @@ $user->password = $password;
 $user_data = $user->check_login();
 
 if (!empty($user_data)) {
+
+    if ($user_data['blocked'] >= '1') {
+        response(false, 200, 'This account has been blocked');
+        exit();
+    }
+
     $firstName = $user_data['firstName'];
     $lastName = $user_data['lastName'];
     $email = $user_data['email'];
