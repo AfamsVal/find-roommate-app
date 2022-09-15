@@ -26,9 +26,13 @@ const RoomCard: React.FC<IProp> = ({ item, modalItem }) => {
             className={`col-md-12 ${style.topImage}`}
             style={{ backgroundImage: `url(${item?.image})` }}
           >
-            <div className={`${style.Verified}  px-2 py-1`}>
+            <div
+              className={`${
+                item.isVerified === "1" ? style.Verified : style.notVerified
+              }  px-2 py-1`}
+            >
               <i className="fa fa-home"></i>{" "}
-              {item.isVerified ? "Verified" : "Not Verified"}
+              {item.isVerified === "1" ? "Verified" : "Not Verified"}
             </div>
           </div>
         </div>

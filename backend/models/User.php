@@ -32,7 +32,6 @@ class User
     public function all_users()
     {
         $sql = "SELECT * FROM " . $this->table . " ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
-
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
         return array($count, $query);

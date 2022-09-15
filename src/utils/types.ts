@@ -104,10 +104,10 @@ export interface IRoomDetails {
   hasWater: string;
   hostelName: string;
   houseType: string;
-  id?: string;
+  key?: string;
   image?: string;
   images?: any;
-  isVerified?: boolean;
+  isVerified?: boolean | string;
   phone: string;
   rentPerYear?: any;
   roomType: string;
@@ -116,9 +116,11 @@ export interface IRoomDetails {
   toiletNo: string;
   timeStamp?: any;
   createdAt?: any;
-  uid?: number;
+  uid?: number | string;
   university: string;
   category?: string;
+  uploadedBy?: string;
+  updatedAt?: string;
 }
 
 export interface IListingState {

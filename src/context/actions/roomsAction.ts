@@ -202,7 +202,7 @@ export const fetchAllAdminRoomsAction = async (
     dispatch({ type: types.START_LOADING });
 
     const res: HTTPResponse<string> = await httpRequest({
-      url: "room/all-rooms",
+      url: "room/admin-rooms",
       method: "POST",
       body: details,
     });

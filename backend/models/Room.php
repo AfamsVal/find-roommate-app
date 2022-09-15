@@ -125,6 +125,7 @@ class Room extends Filter
     //Create Room
     public function create_room()
     {
+        $isVerified = 0;
         $sql = "INSERT INTO " . $this->table . " (
         address,
         bathRoomNo,
@@ -158,7 +159,7 @@ class Room extends Filter
             $this->hasWater,
             $this->hostelName,
             $this->houseType,
-            $this->isVerified,
+            $isVerified,
             $this->phone,
             $this->rentPerYear,
             $this->roomType,

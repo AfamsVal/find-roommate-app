@@ -56,7 +56,7 @@ if ($result[0] > 0) {
         //Push to data
         array_push($rooms_arr, $room_item);
     }
-    response(true, 200, 'success', $rooms_arr);
+    response(true, 200, 'success', array("result" => $rooms_arr, "moreData" => true));
 } else {
     response(true, 200, 'No record found!', array());
 }

@@ -11,6 +11,7 @@ interface IProps {
 const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
   const [visible, setVisible] = useState(false);
   const [details, setDetails] = useState<IRoomDetails | null>(null);
+
   const [img, setImg] = useState<string>("");
 
   const handleClose = () => {
@@ -24,7 +25,7 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
       {items.length > 0 &&
         items.map((item: IRoomDetails) => (
           <div
-            key={item?.id}
+            key={item?.key}
             className="col-12 col-sm-6 col-md-4 col-lg-3"
             onClick={() => setVisible(true)}
           >
@@ -55,7 +56,7 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                 />
                 <div className={`${style.bage} px-3 py-2`}>
                   <i className="fa fa-home"></i>{" "}
-                  {details?.isVerified ? "Verified" : "Not Verified"}
+                  {details?.isVerified === "1" ? "Verified" : "Not Verified"}
                 </div>
               </div>
               {details?.images.length > 0 && (
@@ -105,7 +106,7 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                 </div>
                 <p>
                   <span className={style.items}>UPLOADED BY:</span>{" "}
-                  <span>{details?.hostelName}</span>
+                  <span>{details?.uploadedBy}</span>
                 </p>
                 <p>
                   <span className={style.items}>UNIVERSITY: </span>
