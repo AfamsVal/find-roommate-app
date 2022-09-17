@@ -33,6 +33,7 @@ if ($result[0] > 0) {
         $images = $room->fetch_more_images($id);
         $room_item = array(
             'id' => $id,
+            'key' => $id,
             'address' => $address,
             'bathRoomNo' => $bathRoomNo,
             'category' => $category,

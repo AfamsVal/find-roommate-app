@@ -27,6 +27,7 @@ if ($result[0] > 0) {
         extract($row);
         $user_item = array(
             'key' => $id,
+            'userId' => $id,
             'createdAt' => $createdAt,
             'firstName' => $firstName,
             'lastName' => $lastName,

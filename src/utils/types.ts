@@ -51,6 +51,7 @@ export interface IGlobalState {
   auth: IAuth;
   loading: boolean;
   loadingTwo: boolean;
+  loadingThree: boolean;
   error: string;
   success: string;
   contactUs: IContactState;

@@ -2,10 +2,21 @@ import { useEffect, useState } from "react";
 import { Modal } from "antd";
 import PropTypes from "prop-types";
 import { IRoomDetails } from "../../../utils/types";
+import useToast from "../../../hooks/toast/useToast";
+import { useAppSelector } from "../../../context/GlobalState";
+import { blockRoomAction } from "../../../context/actions/roomsAction";
 
 const RoomModal = ({ type, children, data }: any) => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [visible, setModal] = useState(false);
+  const [openNotification] = useToast();
+  const {
+    loadingTwo,
+    loadingThree,
+    dispatch,
+    auth: {
+      userDetails: { userId },
+    },
+  } = useAppSelector();
 
   const [room, setRoom] = useState<IRoomDetails>({
     address: "",
@@ -48,6 +59,10 @@ const RoomModal = ({ type, children, data }: any) => {
 
   const submitFormHandle = () => {
     // dispatch(room)
+  };
+
+  const submitBtnHandle = (type: string, roomId: string) => {
+    blockRoomAction(dispatch, openNotification, { userId, roomId, type });
   };
 
   return (
@@ -129,23 +144,37 @@ const RoomModal = ({ type, children, data }: any) => {
             <div className="col-12 mt-3">
               <div className="mt-2">
                 <button
-                  onClick={submitFormHandle}
-                  className="btn btn-danger px-4"
-                  style={{ marginRight: "10px" }}
+                  onClick={() =>
+                    submitBtnHandle(
+                      data.isBlocked === "1" ? "unblocked" : "blocked",
+                      room?.key as string
+                    )
+                  }
+                  style={{ marginRight: "12px" }}
+                  className={`btn px-4 ${
+                    data.isBlocked === "1" ? "btn-danger" : "btn-warning"
+                  }`}
                 >
-                  {loading && (
+                  {data.isBlocked === "1" ? "Unblock Room" : "Block Room"}{" "}
+                  {loadingThree && (
                     <i className="fa fa-spin fa-spinner mr-2 font-bold text-lg" />
                   )}
-                  Block Room
                 </button>
                 <button
-                  onClick={submitFormHandle}
-                  className="btn btn-success px-4"
+                  onClick={() =>
+                    submitBtnHandle(
+                      data.isVerified === "1" ? "unverified" : "verified",
+                      room?.key as string
+                    )
+                  }
+                  className={`btn px-4 ${
+                    data.isVerified === "1" ? "btn-success" : "btn-primary"
+                  }`}
                 >
-                  {loading && (
+                  {data.isVerified === "1" ? "Unverify Room" : "Verify Room"}{" "}
+                  {loadingTwo && (
                     <i className="fa fa-spin fa-spinner mr-2 font-bold text-lg" />
                   )}
-                  Approve Room
                 </button>
               </div>
             </div>

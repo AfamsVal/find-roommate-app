@@ -7,9 +7,14 @@ import useToast from "../../../hooks/toast/useToast";
 import { blockUnblockAction } from "../../../context/actions/AuthAction";
 
 const UserModal = ({ type, children, data }: any) => {
-  const { dispatch } = useAppSelector();
+  const {
+    dispatch,
+    loadingTwo,
+    auth: {
+      userDetails: { userId },
+    },
+  } = useAppSelector();
   const [openNotification] = useToast();
-  const [loading, setLoading] = useState<boolean>(false);
   const [visible, setModal] = useState(false);
 
   const [contact, setContact] = useState({
@@ -34,8 +39,12 @@ const UserModal = ({ type, children, data }: any) => {
     setModal(false);
   };
 
-  const submitBtnHandle = (userId: string, type: string) => {
-    blockUnblockAction(dispatch, openNotification, { userId, type });
+  const submitBtnHandle = (uID: string, type: string) => {
+    blockUnblockAction(dispatch, openNotification, {
+      sessionId: userId,
+      userId: uID,
+      type,
+    });
   };
 
   return (
@@ -86,24 +95,26 @@ const UserModal = ({ type, children, data }: any) => {
               </p>
             </div>
 
-            <div className="mt-2">
-              <button
-                onClick={() =>
-                  submitBtnHandle(
-                    data.key,
-                    data.isBlocked === "1" ? "unblocked" : "blocked"
-                  )
-                }
-                className={`btn px-4 ${
-                  data.isBlocked === "1" ? "btn-danger" : "btn-warning"
-                }`}
-              >
-                {data.isBlocked === "1" ? "Unblock User" : "Block User"}{" "}
-                {loading && (
-                  <i className="fa fa-spin fa-spinner mr-2 font-bold text-lg" />
-                )}
-              </button>
-            </div>
+            {Number(data.userId) !== Number(userId) && (
+              <div className="mt-2">
+                <button
+                  onClick={() =>
+                    submitBtnHandle(
+                      data.key,
+                      data.isBlocked === "1" ? "unblocked" : "blocked"
+                    )
+                  }
+                  className={`btn px-4 ${
+                    data.isBlocked === "1" ? "btn-danger" : "btn-warning"
+                  }`}
+                >
+                  {data.isBlocked === "1" ? "Unblock User" : "Block User"}{" "}
+                  {loadingTwo && (
+                    <i className="fa fa-spin fa-spinner mr-2 font-bold text-lg" />
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </Modal>

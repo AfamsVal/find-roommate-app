@@ -32,10 +32,6 @@ const AdminRooms = () => {
       dataIndex: "category",
     },
     {
-      title: "Phone",
-      dataIndex: "phone",
-    },
-    {
       title: "Uploaded By",
       dataIndex: "uploadedBy",
     },
@@ -44,6 +40,18 @@ const AdminRooms = () => {
       dataIndex: "createdAt",
       render: (createdAt: any) => {
         return <span>{new Date(createdAt).toLocaleDateString()}</span>;
+      },
+    },
+    {
+      title: "Blocked",
+      dataKey: "key",
+      key: "key",
+      render: (data: any) => {
+        return (
+          <span className="ml-2 pl-1">
+            {data.isBlocked === "1" ? "Yes" : "No"}
+          </span>
+        );
       },
     },
     {

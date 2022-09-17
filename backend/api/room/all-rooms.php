@@ -29,6 +29,7 @@ if ($result[0] > 0) {
         $user = $room->get_user_by_id($uid);
         $images = $room->fetch_more_images($id);
         $room_item = array(
+            'id' => $id,
             'key' => $id,
             'uploadedBy' => $user['lastName'] . ' ' . $user['firstName'],
             'address' => $address,

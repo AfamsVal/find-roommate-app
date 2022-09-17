@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ButtomLine from "../../components/buttom-border/ButtomLine";
 import FilterSection from "../../components/filter/FilterSection";
 import EmptyState from "../../components/loader/EmptyState";
@@ -23,7 +24,9 @@ const Listings = () => {
         <div className="row" style={{ marginBottom: "100px" }}>
           {loading ? (
             <div className="col-md-12 mt-5 pt-2">
-              <div className="row">{loading && <Loader />}</div>
+              <div className="row">
+                <Loader />
+              </div>
             </div>
           ) : !loading && allListing.length ? (
             <CardWithModalDetails items={allListing} />

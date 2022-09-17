@@ -17,8 +17,6 @@ const Login: React.FC = () => {
 
   const { auth, dispatch } = useAppSelector();
 
-  console.log("auth", auth);
-
   const navigate = useNavigate();
 
   useEffect(() => {

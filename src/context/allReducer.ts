@@ -19,6 +19,11 @@ export const allReducer = (state = initialState, action: IAction) => {
         ...state,
         loadingTwo: true,
       };
+    case types.START_LOADING_THREE:
+      return {
+        ...state,
+        loadingThree: true,
+      };
     case types.SHOW_ERROR:
       return {
         ...state,
@@ -38,6 +43,7 @@ export const allReducer = (state = initialState, action: IAction) => {
         success: "",
         loading: false,
         loadingTwo: false,
+        loadingThree: false,
       };
     case types.LOGIN:
       data = {
@@ -182,6 +188,7 @@ export const allReducer = (state = initialState, action: IAction) => {
           ...state.listing,
           allListing: action.payload,
           loading: false,
+          searching: false,
         },
       };
       save(data);
@@ -205,6 +212,7 @@ export const allReducer = (state = initialState, action: IAction) => {
           ...state.listing,
           roomListing: action.payload,
           loading: false,
+          searching: false,
         },
       };
       save(data);
@@ -228,6 +236,7 @@ export const allReducer = (state = initialState, action: IAction) => {
           ...state.listing,
           roommateListing: action.payload,
           loading: false,
+          searching: false,
         },
       };
 

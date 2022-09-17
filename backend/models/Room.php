@@ -42,6 +42,14 @@ class Room extends Filter
     //Get Rooms
     public function all_rooms()
     {
+        $sql = "SELECT * FROM " . $this->table . " WHERE blocked = '0' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
+        $query = mysqli_query($this->conn, $sql);
+        $count = mysqli_num_rows($query);
+        return array($count, $query);
+    }
+
+    public function all_admin_rooms()
+    {
         $sql = "SELECT * FROM " . $this->table . " ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
@@ -303,6 +311,35 @@ class Room extends Filter
 
         /* close connection */
         $this->conn->close();
+    }
+
+
+    ////UPDATE ROOMS BY FIELD/////////////
+    /////////////////////////////(id,2,firstName,'val')
+    public function update_room_permission($roomId, $type)
+    {
+        if ($type === 'blocked') {
+            $sql =  "UPDATE " . $this->table . " SET blocked = 1 WHERE id = ?";
+        }
+        if ($type === 'unblocked') {
+            $sql =  "UPDATE " . $this->table . " SET blocked = 0 WHERE id = ?";
+        }
+        if ($type === 'verified') {
+            $sql =  "UPDATE " . $this->table . " SET isVerified = 1 WHERE id = ?";
+        }
+        if ($type === 'unverified') {
+            $sql =  "UPDATE " . $this->table . " SET isVerified = 0 WHERE id = ?";
+        }
+        $query = $this->conn->prepare($sql);
+        $query->bind_param(
+            'i',
+            $roomId
+        );
+        if ($query->execute()) {
+            return true;
+        }
+
+        return false;
     }
 }
 

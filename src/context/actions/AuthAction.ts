@@ -1,6 +1,4 @@
-import { sendPasswordResetEmail, signOut } from "firebase/auth";
 import { NavigateFunction } from "react-router-dom";
-import { auth } from "../../firebase";
 import { httpRequest, HTTPResponse } from "../../https/http";
 import {
   IAction,
@@ -90,7 +88,9 @@ export const forgotPwdAction = async (
 ) => {
   try {
     dispatch({ type: types.AUTH_REQUEST });
-    await sendPasswordResetEmail(auth, email);
+
+    //HTTPS REQUEST
+
     dispatch({ type: types.FORGOT_PWD });
   } catch (error: any) {
     dispatch({ type: types.AUTH_ERROR, payload: error.code });
@@ -112,7 +112,8 @@ export const logoutAction = async (
   navigate: NavigateFunction
 ) => {
   try {
-    await signOut(auth);
+    //HTTPS REQUEST HERE
+
     localStorage.removeItem("find-roommate");
     dispatch({
       type: "LOGOUT",
@@ -156,7 +157,7 @@ export const fetchAllUserAction = async (
 export const blockUnblockAction = async (
   dispatch: ({ type, payload }: IAction<string>) => void,
   openNotification: any,
-  details: { type: string; userId: string }
+  details: { type: string; sessionId: number; userId: string }
 ) => {
   try {
     dispatch({ type: types.START_LOADING_TWO });
@@ -169,12 +170,12 @@ export const blockUnblockAction = async (
 
     if (res.status === true) {
       openNotification("Success:", res.message, "success");
-      dispatch({ type: types.RESET_ALL });
       fetchAllUserAction(dispatch, { start: 0, limit: 50 });
     } else {
-      dispatch({ type: types.SHOW_ERROR, payload: res.message });
+      openNotification("Request failed:", res.message, "error");
     }
+    dispatch({ type: types.RESET_ALL });
   } catch (error: any) {
-    dispatch({ type: types.SHOW_ERROR, payload: error?.code });
+    openNotification("Request failed:", error?.code, "error");
   }
 };

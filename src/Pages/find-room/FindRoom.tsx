@@ -17,10 +17,6 @@ const FindRoom: React.FC = () => {
   const { roomListing, loading } = listing;
 
   useEffect(() => {
-    console.log("feedback::", { roomListing, loading });
-  }, [roomListing, loading]);
-
-  useEffect(() => {
     if (firstRenderRef.current) {
       window.scrollTo(0, 0);
 
