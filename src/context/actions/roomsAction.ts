@@ -184,7 +184,7 @@ export const searchRoomListing = async (
             : types.FETCHED_ALL_LISTING,
         payload: res.data,
       });
-      dispatch({ type: types.SEARCHING_ROOM, payload: false });
+      // dispatch({ type: types.SEARCHING_ROOM, payload: false });
     }
   } catch (err) {
     console.log(err);
@@ -202,12 +202,11 @@ export const fetchAllAdminRoomsAction = async (
     dispatch({ type: types.START_LOADING });
 
     const res: HTTPResponse<string> = await httpRequest({
-      url: "room/all-rooms",
+      url: "room/admin-rooms",
       method: "POST",
       body: details,
     });
 
-    console.log("res::", res);
     if (res.status === true) {
       dispatch({ type: types.LIST_CONTACT_SUCCESS, payload: res.data });
     } else {
@@ -215,5 +214,37 @@ export const fetchAllAdminRoomsAction = async (
     }
   } catch (error: any) {
     dispatch({ type: types.SHOW_ERROR, payload: error?.code });
+  }
+};
+
+/////////////////////////////////////
+////ADMIN BLOCK AND UNBLOCK ROOMS//////////
+export const blockRoomAction = async (
+  dispatch: ({ type, payload }: IAction<string>) => void,
+  openNotification: any,
+  details: { type: string; userId: number; roomId: number | string }
+) => {
+  try {
+    if (details.type === "unverified" || details.type === "verified") {
+      dispatch({ type: types.START_LOADING_TWO });
+    } else {
+      dispatch({ type: types.START_LOADING_THREE });
+    }
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "room/update-room-permission",
+      method: "PUT",
+      body: details,
+    });
+
+    if (res.status === true) {
+      openNotification("Success:", res.message, "success");
+      fetchAllAdminRoomsAction(dispatch, { start: 0, limit: 50 });
+    } else {
+      openNotification("Request failed:", res.message, "error");
+    }
+    dispatch({ type: types.RESET_ALL });
+  } catch (error: any) {
+    openNotification("Request failed:", error?.code, "error");
+    dispatch({ type: types.RESET_ALL });
   }
 };

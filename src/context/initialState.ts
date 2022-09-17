@@ -68,6 +68,7 @@ export const logoutState: IGlobalState = {
   listing: listingState,
   loading: false,
   loadingTwo: false,
+  loadingThree: false,
   error: "",
   success: "",
 };
@@ -80,6 +81,7 @@ export const initialState: IGlobalState = window.localStorage?.getItem(
       auth: authState,
       loading: false,
       loadingTwo: false,
+      loadingThree: false,
       error: "",
       success: "",
       contactUs: contactState,

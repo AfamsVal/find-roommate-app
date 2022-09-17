@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PRICE, UNIVERSITIES } from "../../utils/state";
 import { formatCurrency } from "../../utils/formValidator";
@@ -8,7 +8,7 @@ import {
   searchRoomListing,
 } from "../../context/actions/roomsAction";
 import { useAppSelector } from "../../context/GlobalState";
-import { useLocation, useNavigate, useRoutes } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const FilterSection = () => {
   const [openNotification] = useToast();
@@ -60,14 +60,16 @@ const FilterSection = () => {
       );
       return false;
     }
+
     if (Number(minAmount) && Number(maxAmount)) {
-      Number(minAmount) > Number(maxAmount) &&
+      if (Number(minAmount) > Number(maxAmount)) {
         openNotification(
           "Invalid Input:",
           "Minimum amount is greater than maximum amount!",
           "error"
         );
-      return false;
+        return false;
+      }
     }
 
     const selectedType =

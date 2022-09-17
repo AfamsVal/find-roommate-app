@@ -17,6 +17,7 @@ const GlobalState = ({ children }: any) => {
         auth: state.auth,
         loading: state.loading,
         loadingTwo: state.loadingTwo,
+        loadingThree: state.loadingThree,
         error: state.error,
         success: state.success,
         contactUs: state.contactUs,

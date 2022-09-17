@@ -12,12 +12,12 @@ const RoomCard: React.FC<IProp> = ({ item, modalItem }) => {
     <motion.div
       className="row mb-4"
       onClick={() => modalItem(item)}
-      initial={{ x: -1000, opacity: 0 }}
-      animate={{ x: [50, 0, 10, 0], opacity: 1 }}
+      initial={{ y: -1000, opacity: 0 }}
+      animate={{ y: [50, 0, 10, 0], opacity: 1 }}
       transition={{
         type: "tween",
-        duration: 2,
-        delay: 1,
+        duration: 1,
+        // delay: 0.5,
       }}
     >
       <div className={`col-11 mx-auto cursor-pointer ${style.topBorderRadius}`}>
@@ -26,9 +26,13 @@ const RoomCard: React.FC<IProp> = ({ item, modalItem }) => {
             className={`col-md-12 ${style.topImage}`}
             style={{ backgroundImage: `url(${item?.image})` }}
           >
-            <div className={`${style.Verified}  px-2 py-1`}>
+            <div
+              className={`${
+                item.isVerified === "1" ? style.Verified : style.notVerified
+              }  px-2 py-1`}
+            >
               <i className="fa fa-home"></i>{" "}
-              {item.isVerified ? "Verified" : "Not Verified"}
+              {item.isVerified === "1" ? "Verified" : "Not Verified"}
             </div>
           </div>
         </div>

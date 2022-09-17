@@ -15,6 +15,7 @@ class User
     public $start;
     public $limit;
     public $inValidPwdCount;
+    public $isBlocked;
 
 
     private $conn;
@@ -32,7 +33,6 @@ class User
     public function all_users()
     {
         $sql = "SELECT * FROM " . $this->table . " ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
-
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
         return array($count, $query);
@@ -161,11 +161,12 @@ class User
 
     //////////////USER BY FIELD NAME////
     ////////////////////////////
-    public function get_user_by_field($field_key, $value)
+    public function get_user_by_field($field_key, $value, $sessionId = 0)
     {
-        $sql = "SELECT firstName,lastName,email,phone,password,inValidPwdCount,inValidPwdTimer FROM users WHERE " . $field_key . " = ? LIMIT 1";
+        $id = $sessionId > 0 ? $sessionId : $value;
+        $sql = "SELECT firstName,lastName,email,phone,password,inValidPwdCount,inValidPwdTimer,blocked FROM users WHERE " . $field_key . " = ? LIMIT 1";
         $query = $this->conn->prepare($sql);
-        $query->bind_param('i', $value);
+        $query->bind_param('i', $id);
         $query->execute();
         $query->store_result();
         if ($query->num_rows) {
@@ -176,11 +177,20 @@ class User
                 $this->phone,
                 $this->password,
                 $this->inValidPwdCount,
-                $this->inValidPwdTimer
+                $this->inValidPwdTimer,
+                $this->isBlocked
             );
             $query->fetch();
+
+            if ($this->isBlocked >= '1') {
+                return array(
+                    'count' => 0,
+                    'msg' => 'Account blocked'
+                );
+            }
             return array(
                 'count' => $query->num_rows,
+                'msg' => 'User found',
                 'data' => array(
                     'firstName' => $this->firstName,
                     'lastName' => $this->lastName,
@@ -195,7 +205,8 @@ class User
         }
 
         return array(
-            'count' => 0
+            'count' => 0,
+            'msg' => 'User not found!'
         );
         /* free results */
         $query->free_result();

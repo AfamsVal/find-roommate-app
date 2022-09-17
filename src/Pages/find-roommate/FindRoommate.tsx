@@ -7,7 +7,6 @@ import CardWithModalDetails from "../../components/modal/CardWithModalDetails";
 import { getAllRoommatesAction } from "../../context/actions/roomsAction";
 import { useAppSelector } from "../../context/GlobalState";
 import useToast from "../../hooks/toast/useToast";
-import { IRoomDetails } from "../../utils/types";
 const FindRoommate = () => {
   const { dispatch, listing } = useAppSelector();
   const [openNotification] = useToast();

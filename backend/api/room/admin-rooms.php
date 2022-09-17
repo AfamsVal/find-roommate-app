@@ -19,7 +19,7 @@ $room->start = clean_input_and_strip_tags($data->start, $db);
 $room->limit = clean_input_and_strip_tags($data->limit, $db);
 
 //Room query
-$result = $room->all_rooms();
+$result = $room->all_admin_rooms();
 
 //Check if any room
 if ($result[0] > 0) {
@@ -29,8 +29,8 @@ if ($result[0] > 0) {
         $user = $room->get_user_by_id($uid);
         $images = $room->fetch_more_images($id);
         $room_item = array(
-            'id' => $id,
             'key' => $id,
+            'id' => $id,
             'uploadedBy' => $user['lastName'] . ' ' . $user['firstName'],
             'address' => $address,
             'bathRoomNo' => $bathRoomNo,
@@ -52,12 +52,13 @@ if ($result[0] > 0) {
             'updatedAt' => $updatedAt,
             'toiletNo' => $toiletNo,
             'uid' => $uid,
-            'university' => $university
+            'university' => $university,
+            'isBlocked' => $blocked
         );
         //Push to data
         array_push($rooms_arr, $room_item);
     }
-    response(true, 200, 'success', $rooms_arr);
+    response(true, 200, 'success', array("result" => $rooms_arr, "moreData" => true));
 } else {
     response(true, 200, 'No record found!', array());
 }
