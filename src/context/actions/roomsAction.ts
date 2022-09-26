@@ -68,6 +68,26 @@ export const getAllListing = async (
   }
 };
 
+export const getRoomStatistics = async (
+  dispatch: ({ type, payload }: IAction) => void
+) => {
+  try {
+    const res: HTTPResponse<any> = await httpRequest({
+      url: "room/room-statistics",
+      method: "GET",
+    });
+
+    if (res.status) {
+      dispatch({
+        type: types.FETCHED_STATISTICS,
+        payload: res?.data,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getAllRoomsAction = async (
   dispatch: any,
   openNotification: any

@@ -131,6 +131,7 @@ export interface IListingState {
   roomListing: IRoomDetails[];
   roommateListing: IRoomDetails[];
   searching: boolean;
+  statistics: {};
 }
 
 export interface ISearch {

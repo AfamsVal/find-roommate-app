@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import ButtomLine from "../../components/buttom-border/ButtomLine";
 import FilterSection from "../../components/filter/FilterSection";
 import EmptyState from "../../components/loader/EmptyState";
@@ -7,6 +7,7 @@ import CardWithModalDetails from "../../components/modal/CardWithModalDetails";
 import { getAllRoommatesAction } from "../../context/actions/roomsAction";
 import { useAppSelector } from "../../context/GlobalState";
 import useToast from "../../hooks/toast/useToast";
+
 const FindRoommate = () => {
   const { dispatch, listing } = useAppSelector();
   const [openNotification] = useToast();

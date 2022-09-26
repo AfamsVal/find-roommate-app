@@ -156,6 +156,12 @@ export const allReducer = (state = initialState, action: IAction) => {
         listing: { ...state.listing, searching: action.payload },
       };
 
+    case types.FETCHED_STATISTICS:
+      return {
+        ...state,
+        listing: { ...state.listing, statistics: action.payload },
+      };
+
     case types.ADDING_NEW_ROOM:
       return {
         ...state,

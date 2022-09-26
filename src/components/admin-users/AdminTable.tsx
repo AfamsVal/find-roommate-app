@@ -1,6 +1,6 @@
 import { Table } from "antd";
 import { motion } from "framer-motion";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 interface ITable {
   data?: any;

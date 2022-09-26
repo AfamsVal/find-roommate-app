@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { PRICE, UNIVERSITIES } from "../../utils/state";
 import { formatCurrency } from "../../utils/formValidator";

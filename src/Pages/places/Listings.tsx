@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import ButtomLine from "../../components/buttom-border/ButtomLine";
 import FilterSection from "../../components/filter/FilterSection";
 import EmptyState from "../../components/loader/EmptyState";
