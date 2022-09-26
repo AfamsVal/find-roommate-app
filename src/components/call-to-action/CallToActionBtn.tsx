@@ -4,19 +4,19 @@ import { motion } from "framer-motion";
 
 const CallToActionBtn: React.FC = () => {
   const navigate = useNavigate();
-  const variants: any = {
-    initial: { x: -1000 },
-    animate: {
-      x: [10, 0, -10, 0],
-      transition: {
-        type: "spring",
-        duration: 3,
-        delay: 2,
-        damping: 10,
-        stiffness: 100,
-      },
-    },
-  };
+  // const variants: any = {
+  //   initial: { x: -1000 },
+  //   animate: {
+  //     x: [10, 0, -10, 0],
+  //     transition: {
+  //       type: "spring",
+  //       duration: 3,
+  //       delay: 2,
+  //       damping: 10,
+  //       stiffness: 100,
+  //     },
+  //   },
+  // };
   return (
     <div className="d-flex flex-column flex-md-row justify-content-center pt-5">
       <motion.div

@@ -1,48 +1,97 @@
-import React, { useState } from "react";
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
 import "./Overview.css";
 import allImg from "../../../assets/icons/applications.svg";
 import approvedImg from "../../../assets/icons/approved.png";
 import pendingImg from "../../../assets/icons/pending.png";
 import decinedImg from "../../../assets/icons/declined.png";
 import PersonalInfo from "../../../components/personal-info/PersonalInfo";
+import { useAppSelector } from "../../../context/GlobalState";
+import { getRoomStatistics } from "../../../context/actions/roomsAction";
+import { useNavigate } from "react-router-dom";
 
 interface IStatistics {
-  count: number;
+  count: null | number;
   title: string;
   img: string;
 }
+
 const Overview = () => {
-  const [statistics, setStatistics] = useState<IStatistics[]>([
-    { count: 102, title: "All Applications", img: allImg },
-    { count: 64, title: "Pending Applications", img: pendingImg },
-    { count: 5, title: "Approvd Applications", img: approvedImg },
-    { count: 24, title: "Declined Applications", img: decinedImg },
+  const { dispatch, listing } = useAppSelector();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getRoomStatistics(dispatch);
+  }, [dispatch]);
+
+  const { statistics }: any = listing;
+
+  const [statis, setStatis] = useState<IStatistics[]>([
+    {
+      count: null,
+      title: "All Applications",
+      img: allImg,
+    },
+    {
+      count: null,
+      title: "Pending Applications",
+      img: pendingImg,
+    },
+    {
+      count: null,
+      title: "Verified Applications",
+      img: approvedImg,
+    },
+    {
+      count: null,
+      title: "Blocked Applications",
+      img: decinedImg,
+    },
   ]);
-  // const userLogin = async () => {
-  //   const data = await fetch("https://jsonplaceholder.typicode.com/users");
-  //   return await data.json();
-  // };
 
-  // const { data, status } = useQuery("login", userLogin);
-
-  // if (status === "loading") {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (status === "error") {
-  //   return <div>Error...</div>;
-  // }
+  useEffect(() => {
+    setStatis([
+      {
+        count: statistics?.total,
+        title: "All Applications",
+        img: allImg,
+      },
+      {
+        count: statistics?.pending,
+        title: "Pending Applications",
+        img: pendingImg,
+      },
+      {
+        count: statistics?.verified,
+        title: "Verified Applications",
+        img: approvedImg,
+      },
+      {
+        count: statistics?.blocked,
+        title: "Blocked Applications",
+        img: decinedImg,
+      },
+    ]);
+  }, [statistics]);
 
   return (
     <>
       <div className="row mt-4">
-        {statistics.map((item: IStatistics, i: number) => (
-          <div key={i} className="col-6 col-sm-4 col-md-3 mb-3">
+        {statis.map((item: IStatistics, i: number) => (
+          <div
+            onClick={() => navigate("/admin/rooms")}
+            key={i}
+            className="col-6 col-sm-4 col-md-3 mb-3"
+          >
             <div className="row">
               <div className="col-11 col-md-11 mx-auto stats-box d-flex justify-between cursor-pointer">
                 <div className="stat-title">
-                  <h3 className="text-dark">{item.count}</h3>
+                  <h3 className="text-dark">
+                    {item?.count ? (
+                      item.count
+                    ) : (
+                      <span className="spinner-border spinner-border-md"></span>
+                    )}
+                  </h3>
                   <p>{item.title}</p>
                 </div>
                 <div className="stat-icon px-2">

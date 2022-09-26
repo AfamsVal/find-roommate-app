@@ -341,6 +341,15 @@ class Room extends Filter
 
         return false;
     }
+
+
+
+    public function get_room_statistics()
+    {
+        $sql = "SELECT * FROM " . $this->table;
+        $query = mysqli_query($this->conn, $sql);
+        return $query;
+    }
 }
 
 

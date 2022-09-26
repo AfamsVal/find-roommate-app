@@ -6,7 +6,7 @@ import useToast from "../../../hooks/toast/useToast";
 import { useAppSelector } from "../../../context/GlobalState";
 import { blockRoomAction } from "../../../context/actions/roomsAction";
 
-const RoomModal = ({ type, children, data }: any) => {
+const RoomModal = ({ children, data }: any) => {
   const [visible, setModal] = useState(false);
   const [openNotification] = useToast();
   const {
@@ -57,9 +57,9 @@ const RoomModal = ({ type, children, data }: any) => {
     // dispatch.applications.setAdminModalTask(true)
   };
 
-  const submitFormHandle = () => {
-    // dispatch(room)
-  };
+  // const submitFormHandle = () => {
+  //   // dispatch(room)
+  // };
 
   const submitBtnHandle = (type: string, roomId: string) => {
     blockRoomAction(dispatch, openNotification, { userId, roomId, type });

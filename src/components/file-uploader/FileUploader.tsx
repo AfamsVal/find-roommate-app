@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { CloudUploadOutlined } from "@ant-design/icons";
 import useToast from "../../hooks/toast/useToast";
 import { IUpload } from "../../utils/types";
-import { beforeFileUpload, beforeUpload } from "../../utils";
+import { beforeFileUpload } from "../../utils";
 import { useAppSelector } from "../../context/GlobalState";
 import { httpRequest, HTTPResponse } from "../../https/http";
 import ImageUploadCard from "./ImageUploadCard";
