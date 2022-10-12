@@ -123,8 +123,13 @@ function compress_image($location, $quality)
 
 function image_uploader($new_img_name, $size, $tmp)
 {
-    $url = get_url("/findRoomy/backend/uploaded/" . $new_img_name);
     $location = '../../uploaded/' . $new_img_name;
+    if (is_localhost()) {
+        $url = get_url("/findRoomy/backend/uploaded/" . $new_img_name);
+    } else {
+        $url = get_url("/routes/uploaded/" . $new_img_name);
+    }
+
 
     if ($tmp) {
         if (move_uploaded_file($tmp, $location)) {
@@ -161,4 +166,17 @@ function isValidURL($url)
         return false;
     }
     return true;
+}
+
+// Check if we are in a local environment
+
+function is_localhost()
+{
+    $whitelist = array('127.0.0.1', '::1');
+
+    // check if the server is in the array
+    if (in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
+
+        return true;
+    }
 }
