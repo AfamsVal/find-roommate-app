@@ -2,9 +2,10 @@ import { SetStateAction, Dispatch } from "react";
 import SideNavItem from "./SideNavItem";
 import { SIDE_MENU_ITEMS } from "./sidemenu";
 import { Accordion } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoutAction } from "../../context/actions/AuthAction";
 import { useAppSelector } from "../../context/GlobalState";
+import { relative } from "path";
 
 interface SideNavProps {
   toggleNav: boolean;
@@ -17,7 +18,13 @@ const AdminSideNav = ({ toggleNav, setToggleNav }: SideNavProps) => {
   return (
     <Accordion defaultActiveKey="sidenav">
       <div id="sidenav" className={`${toggleNav ? "toggled" : ""}`}>
-        <nav className="d-block">
+        <nav
+          className="d-block"
+          style={{
+            minHeight: "92vh",
+            position: "relative",
+          }}
+        >
           <ul
             className="navbar-nav mt-5 text-left"
             style={{ justifyContent: "flex-start" }}
@@ -43,6 +50,21 @@ const AdminSideNav = ({ toggleNav, setToggleNav }: SideNavProps) => {
               }}
             >
               <i className="fas fa-power-off me-3 text-red"></i>Logout
+            </li>
+          </ul>
+
+          <ul
+            className="navbar-nav mt-5 text-left"
+            style={{
+              position: "absolute",
+              bottom: "0px",
+              marginBottom: "20px",
+            }}
+          >
+            <li className="cursor-pointer fw-bold text-red ps-5">
+              <Link to="/" style={{ textDecoration: "none", color: "gray" }}>
+                Go To Home
+              </Link>{" "}
             </li>
           </ul>
         </nav>

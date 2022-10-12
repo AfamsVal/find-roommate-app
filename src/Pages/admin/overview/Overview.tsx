@@ -71,6 +71,8 @@ const Overview = () => {
         img: decinedImg,
       },
     ]);
+
+    console.log("STAT:", statistics);
   }, [statistics]);
 
   return (
@@ -86,7 +88,7 @@ const Overview = () => {
               <div className="col-11 col-md-11 mx-auto stats-box d-flex justify-between cursor-pointer">
                 <div className="stat-title">
                   <h3 className="text-dark">
-                    {item?.count ? (
+                    {item?.count !== null ? (
                       item.count
                     ) : (
                       <span className="spinner-border spinner-border-md"></span>

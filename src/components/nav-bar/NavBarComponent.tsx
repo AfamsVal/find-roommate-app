@@ -104,7 +104,7 @@ const NavBarComponent = () => {
               className="nav-item mx-3 pt-4 pb-3 pb-md-0 pt-md-0"
             >
               <button onClick={handleLogout} className="btn btn-light">
-                {auth.isAuth ? "Log out" : "LogIn"}
+                {auth.isAuth ? "Log out" : "Log In"}
               </button>
             </motion.li>
           </ul>

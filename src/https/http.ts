@@ -1,5 +1,5 @@
 import { sanitizeUserInput } from "../utils/encrypt";
-import { DEV_URL } from "../utils/environment";
+import { BASE_URL } from "../utils/environment";
 
 interface HTTPParams {
   method?: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
@@ -57,7 +57,7 @@ export const httpRequest = async (
         : JSON.stringify(body);
     }
 
-    const res = await fetch(`${DEV_URL}${url}`, options);
+    const res = await fetch(`${BASE_URL}${url}`, options);
     const responseData: any = await res.json();
     return responseData;
   } catch (error) {
