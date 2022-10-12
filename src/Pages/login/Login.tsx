@@ -137,7 +137,7 @@ const Login: React.FC = () => {
                 variants={btnVarient}
                 whileHover="hover"
               >
-                Login{" "}
+                Log In{" "}
                 {auth.authLoading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
