@@ -94,13 +94,13 @@ const Faq = () => {
             <div className="col-md-12 mt-3">
               <div id="accordion">
                 <div className="card">
-                  <div className="card-header p-0">
+                  <div className="card-header p-0 bg-main">
                     <a
-                      className="d-block text-left text-black p-3 text-decoration-none"
+                      className="d-block text-left text-white p-3 text-decoration-none"
                       data-bs-toggle="collapse"
                       href="#collapseOne"
                     >
-                      What is Find Roomy application
+                      What is FindRoomy application
                     </a>
                   </div>
                   <div
@@ -109,18 +109,16 @@ const Faq = () => {
                     data-bs-parent="#accordion"
                   >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Animi deserunt vero ut odio quos quasi veritatis ratione
-                      et facilis accusantium aut distinctio, culpa, hic, cum
-                      itaque vel quis molestias doloribus. Ipsa facere quam
-                      nesciunt modi alias aut eum aspernatur reiciendis nihil,
-                      ea delectus fuga. Reprehenderit, nam. Doloribus pariatur
-                      id similique, facere architecto porro in placeat numquam.
-                      Error explicabo accusamus animi! Omnis assumenda
-                      doloremque earum quibusdam eaque eum modi dolor nostrum
-                      quam ut maxime, repellendus sequi quidem, accusamus
-                      pariatur maiores sed quod! Rerum at praesentium impedit
-                      iste nemo non itaque ex!
+                      FindRoomy is a dynamic online platform, to easily find the
+                      best available hostel and book/rent an accomodation from
+                      the comfort of your phone. Alongside find a roomate.
+                      <br />
+                      <br />
+                      FindRommy application is a platform where you can get a
+                      comfortable accomodation within a short period of time at
+                      cheap prices. You can also find a Roomy on our platform
+                      byjust uploading it. We also make sure our customers are
+                      safe and comfortable at all cost.
                     </div>
                   </div>
                 </div>
@@ -128,11 +126,11 @@ const Faq = () => {
                 <div className="card">
                   <div className="card-header p-0">
                     <a
-                      className="collapsed d-block text-left text-black p-3 text-decoration-none"
+                      className="collapsed d-block text-left text-white p-3 text-decoration-none"
                       data-bs-toggle="collapse"
                       href="#collapseTwo"
                     >
-                      Is find Roomy applicatio secured
+                      How can I upload a room
                     </a>
                   </div>
                   <div
@@ -141,14 +139,10 @@ const Faq = () => {
                     data-bs-parent="#accordion"
                   >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Deserunt culpa numquam dolor cumque distinctio voluptates,
-                      sapiente tempora omnis dolorem suscipit dolores commodi,
-                      praesentium tenetur quae itaque repellat ipsam, facilis
-                      asperiores! Eos, saepe, alias tenetur quisquam, nihil unde
-                      rerum velit magnam iusto voluptas aut ex! Numquam, dolores
-                      blanditiis officiis eaque soluta sunt suscipit dolorum
-                      provident, facere eligendi corporis animi, sapiente quas.
+                      On the landing page, you will see a button that says
+                      "Upload Item". A form will be provided for you to fill,
+                      fill the form and when you're done, you submit it with the
+                      "Publish Now" button.
                     </div>
                   </div>
                 </div>
@@ -156,11 +150,11 @@ const Faq = () => {
                 <div className="card">
                   <div className="card-header p-0">
                     <a
-                      className="collapsed d-block text-left text-black p-3 text-decoration-none"
+                      className="collapsed d-block text-left text-white p-3 text-decoration-none"
                       data-bs-toggle="collapse"
                       href="#collapseThree"
                     >
-                      How can I post in Find Roomy application
+                      How can my room be verified
                     </a>
                   </div>
                   <div
@@ -169,18 +163,51 @@ const Faq = () => {
                     data-bs-parent="#accordion"
                   >
                     <div className="card-body">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Soluta alias, maxime accusamus culpa dolores voluptatum
-                      fugiat error adipisci nostrum laboriosam dicta! Magni, ad.
-                      Ea, repellendus minima ab eius adipisci nobis? Accusamus
-                      beatae quae laborum ratione iusto explicabo delectus
-                      distinctio laboriosam impedit sint ullam est, eaque
-                      quisquam commodi magni nihil eveniet modi itaque iure
-                      culpa tenetur in. Est aspernatur voluptas quisquam? Iure,
-                      a blanditiis. Aliquam possimus dolorum laboriosam quod?
-                      Quos aut magnam possimus accusantium accusamus iste minima
-                      hic similique ex ipsum. Labore porro odio laboriosam illo
-                      commodi odit a asperiores! Asperiores?
+                      After uploading, you can get a quick support response from
+                      our team within the next 48 hours.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header p-0">
+                    <a
+                      className="collapsed d-block text-left text-white p-3 text-decoration-none"
+                      data-bs-toggle="collapse"
+                      href="#collapseFour"
+                    >
+                      How can I reach out to the support team
+                    </a>
+                  </div>
+                  <div
+                    id="collapseFour"
+                    className="collapse "
+                    data-bs-parent="#accordion"
+                  >
+                    <div className="card-body">
+                      Click on the Contact Us link on the menu section and fill the form there. We'll reach out to you within 24 hours.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header p-0">
+                    <a
+                      className="collapsed d-block text-left text-white p-3 text-decoration-none"
+                      data-bs-toggle="collapse"
+                      href="#collapseFive"
+                    >
+                      How can I earn from FindRoomy
+                    </a>
+                  </div>
+                  <div
+                    id="collapseFive"
+                    className="collapse "
+                    data-bs-parent="#accordion"
+                  >
+                    <div className="card-body">
+                      For now, we don't have any earning unit but we will upload
+                      that soon.
                     </div>
                   </div>
                 </div>
