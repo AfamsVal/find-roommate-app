@@ -82,6 +82,14 @@ html {
   background-color: var(--primary-color-100);
 }
 
+.card > .card-header {
+  background-color: var(--primary-color-100);
+}
+
+.card{
+  font-size: 20px;
+}
+
 .text-lighter {
   color: var(--text-light-100);
 }
