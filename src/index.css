@@ -86,7 +86,7 @@ html {
   background-color: var(--primary-color-100);
 }
 
-.card{
+.card {
   font-size: 20px;
 }
 
@@ -371,6 +371,29 @@ form .form-control:focus {
 /* /////////////////////////
 //////////Landing Page/////
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+@media (max-width: 576px) {
+  .text-sm-left {
+    text-align: left !important;
+  }
+  .text-sm-right {
+    text-align: right !important;
+  }
+  .text-sm-center {
+    text-align: center !important;
+  }
+  .text-2xl {
+    font-size: 1.1rem !important; /* 24px */
+    line-height: 2rem;
+  }
+  .text-4xl {
+    font-size: 1.5rem; /* 36px */
+  } /* 40px */
+  .text-6xl {
+    font-size: 2rem; /* 60px */
+    line-height: 1;
+  }
+}
 
 @media (min-width: 576px) {
   .text-sm-left {
