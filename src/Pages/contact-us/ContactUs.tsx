@@ -61,41 +61,36 @@ const ContactUs: React.FC = () => {
       initial="hidden"
       animate="visible"
       exit="clear"
-      className={`${style.login} container-fluid`}
+      className={`${style.login} container-fluid fix-offset`}
+      style={{ marginBottom: "50px" }}
     >
-      <div className="row h-100   px-0  ">
+      <div className="row px-0">
         <div
-          className={`${style.imageCon} px-0 mx-0 h-100  col-sm-10 col-md-6 col-lg-6 col-xl-6 mx-auto `}
+          className={`${style.imageCon} d-none d-md-block col-md-6 mx-auto d-md-flex align-items-center`}
         >
           <img
             src={card}
-            className={`${style.imageCard}  h-100 w-100`}
+            className={`${style.imageCard} w-75 mx-auto`}
             alt="contact us"
           />
         </div>
-        <div
-          className={` px-md-5 col-sm-10  col-md-6 col-lg-6 col-xl-6 mx-auto  ${style.formCard}  `}
-        >
-          <div className={style.topItem}>
-            <div className={`auth-text gradient-text my-4`}>Contact Us</div>
-            <h2>
-              If You Have Any Query, Please Feel <br /> Free Contact Us
-            </h2>
-            <p className="text-center">
-              We love questions and feedback - and we're always happy to help!
-              Send us a message and we'll respond within 24 hours
-            </p>
+        <div className={`px-md-5 col-sm-10 col-md-6 mx-auto  mt-5 `}>
+          <div>
+            <div className={`auth-text gradient-text mb-5`}>Contact Us</div>
+            <h4 className="text-center text-dark">
+              If You Have Any Query, Please Feel <br /> Free to Contact Us
+            </h4>
           </div>
           <div>
             <form>
-              <div className="d-md-flex my-4">
+              <div className="d-md-flex mt-5">
                 <div className="w-100 mx-1 my-form">
                   <input
                     type="text"
                     name="name"
                     onChange={handleChange}
                     value={form.name}
-                    className="form-control"
+                    className="form-control mb-4"
                     placeholder=" "
                   />
                   <label htmlFor="FullName" className="form-label">
@@ -109,7 +104,7 @@ const ContactUs: React.FC = () => {
                     name="email"
                     onChange={handleChange}
                     value={form.email}
-                    className="form-control"
+                    className="form-control mb-4"
                     placeholder=" "
                   />
                   <label htmlFor="email" className="form-label">
