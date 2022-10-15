@@ -175,6 +175,7 @@ const UploadRoom = () => {
                   value={form.roomType}
                 >
                   <option value="">-- Select Room Type --</option>
+                  <option value="0">Self Contain</option>
                   <option value="1">1 Bedroom Flat</option>
                   <option value="2">2 Bedroom Flat</option>
                   <option value="3">3 Bedroom Flat</option>
@@ -270,10 +271,7 @@ const UploadRoom = () => {
                   value={form.houseType}
                 >
                   <option value="">-- Select House Type --</option>
-                  <option value="1 Story Building">1 Story Building</option>
-                  <option value="2 Story Building">2 Story Building</option>
-                  <option value="3 Story Building">3 Story Building</option>
-                  <option value="4 Story Building">4 Story Building</option>
+                  <option value="Story Building">Story Building</option>
                   <option value="Bongalow">Bongalow</option>
                 </select>
               </div>

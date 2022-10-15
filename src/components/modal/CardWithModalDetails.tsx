@@ -128,6 +128,13 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                   <span className={style.cap}>{details?.descriptions}</span>
                 </p>
                 <p>
+                  {details?.roomType === "0" ? (
+                    <span className="card-badge">Self Contain</span>
+                  ) : (
+                    <span className="card-badge">
+                      {details?.roomType} Bedroom
+                    </span>
+                  )}
                   <span className="card-badge">
                     {details?.bathRoomNo} Bathroom
                   </span>

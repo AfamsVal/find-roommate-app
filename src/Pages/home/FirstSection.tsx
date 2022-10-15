@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./FirstSection.module.css";
-import findRoomyImg from "../../assets/images/find-roomy.gif";
+import findRoomyImg from "../../assets/images/find-roomy.png";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 

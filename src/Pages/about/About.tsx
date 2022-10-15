@@ -112,7 +112,7 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        <div className="row bg-lighter" style={{ marginBottom: "100px" }}>
+        {/* <div className="row bg-lighter" style={{ marginBottom: "100px" }}>
           <div className="col-md-12 mt-5 mb-3">
             <h1 className="text-center">Our Team</h1>
             <div className="my-3">
@@ -149,7 +149,7 @@ const About: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </motion.div>
     </>
   );

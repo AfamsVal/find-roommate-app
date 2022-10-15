@@ -69,12 +69,12 @@ const Faq = () => {
     >
       <div className="row">
         <div
-          className="col-md-10 mx-auto mt-3 mt-md-5"
+          className="col-12 col-md-10 mx-auto mt-3 mt-md-5"
           style={{ marginBottom: "100px" }}
         >
           <div className="row">
             <div className="col-md-12 text-center my-3">
-              <h1 className="gradient-text">Frequently Asked Questions</h1>
+              <h1 className="gradient-text">Frequently ... Asked Questions</h1>
               <div className="my-3">
                 <ButtomLine circleSize="12px" lineSize="100px" align="center" />
               </div>
@@ -109,11 +109,6 @@ const Faq = () => {
                     data-bs-parent="#accordion"
                   >
                     <div className="card-body">
-                      FindRoomy is a dynamic online platform, to easily find the
-                      best available hostel and book/rent an accomodation from
-                      the comfort of your phone. Alongside find a roomate.
-                      <br />
-                      <br />
                       FindRommy application is a platform where you can get a
                       comfortable accomodation within a short period of time at
                       cheap prices. You can also find a Roomy on our platform
@@ -185,7 +180,8 @@ const Faq = () => {
                     data-bs-parent="#accordion"
                   >
                     <div className="card-body">
-                      Click on the Contact Us link on the menu section and fill the form there. We'll reach out to you within 24 hours.
+                      Click on the Contact Us link on the menu section and fill
+                      the form there. We'll reach out to you within 24 hours.
                     </div>
                   </div>
                 </div>

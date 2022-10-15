@@ -1,7 +1,7 @@
 {
-  "name": "find-roommate",
-  "proxy": "https://progfams.com",
-  "homepage": "https://progfams.com",
+  "name": "findroomy",
+  "proxy": "https://findroomy.com",
+  "homepage": "https://findroomy.com",
   "version": "1.0.0",
   "private": true,
   "dependencies": {

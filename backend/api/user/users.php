@@ -35,6 +35,7 @@ if ($result[0] > 0) {
             'phone' => $phone,
             'state' => $state,
             'gender' => $gender,
+            'admin' => $admin,
             'isBlocked' => $blocked,
         );
         //Push to data
