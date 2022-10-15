@@ -77,10 +77,16 @@ const RoomCard: React.FC<IProp> = ({ item, modalItem }) => {
                 className="col-4 p-1 border text-center d-flex align-items-center justify-content-center"
                 style={{ fontSize: "12px" }}
               >
-                <span>
-                  <i className="fa fa-bed"></i> {item?.roomType}{" "}
-                  {`Room${item.roomType === "1" ? "" : "s"}`}
-                </span>
+                {item?.roomType === "0" ? (
+                  <span>
+                    <i className="fa fa-bed"></i> Self Con.
+                  </span>
+                ) : (
+                  <span>
+                    <i className="fa fa-bed"></i> {item?.roomType}{" "}
+                    {`Room${item.roomType === "1" ? "" : "s"}`}
+                  </span>
+                )}
               </small>
               <small
                 className="col-4 p-1 border text-center d-flex align-items-center justify-content-center"

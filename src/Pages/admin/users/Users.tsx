@@ -49,6 +49,17 @@ const Users = () => {
       dataIndex: "state",
     },
     {
+      title: "Admin",
+      dataKey: "key",
+      key: "key",
+      render: (data: any) => {
+        console.log(data);
+        return (
+          <span className="ml-2 pl-1">{data.admin === "1" ? "YES" : "NO"}</span>
+        );
+      },
+    },
+    {
       title: "Blocked",
       dataKey: "key",
       key: "key",

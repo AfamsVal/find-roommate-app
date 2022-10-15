@@ -175,7 +175,7 @@ const UploadRoom = () => {
                   value={form.roomType}
                 >
                   <option value="">-- Select Room Type --</option>
-                  <option value="Self Contain">Self Contain</option>
+                  <option value="0">Self Contain</option>
                   <option value="1">1 Bedroom Flat</option>
                   <option value="2">2 Bedroom Flat</option>
                   <option value="3">3 Bedroom Flat</option>

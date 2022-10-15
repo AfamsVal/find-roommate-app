@@ -38,7 +38,14 @@ const Footer: React.FC = () => {
           <h6>ADDRESS</h6>
           <p>Owerri, Imo State</p>
           <h6>PHONE</h6>
-          <p>+234 701 485 8673</p>
+          <p>
+            <a
+              href="tel:+2347014858673"
+              style={{ textDecoration: "none", color: "gray" }}
+            >
+              +234 701 485 8673
+            </a>
+          </p>
           <h6>EMAIL</h6>
           <p>info@findroomy.com</p>
         </div>
