@@ -21,6 +21,7 @@ import AdminRoute from "./components/admin-route/AdminRoute";
 import Users from "./Pages/admin/users/Users";
 import AdminContact from "./Pages/admin/contacts/AdminContact";
 import AdminRooms from "./Pages/admin/rooms/AdminRooms";
+import Profile from "./Pages/admin/profile/Profile";
 
 function App() {
   const location = useLocation();
@@ -68,6 +69,7 @@ function App() {
               <Route path="users" element={<Users />} />
               <Route path="contact" element={<AdminContact />} />
               <Route path="rooms" element={<AdminRooms />} />
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Route>
             <Route

@@ -23,4 +23,10 @@ export const SIDE_MENU_ITEMS = [
     icon: "fas fa-address-book",
     iconStyle: {},
   },
+  {
+    title: "Profile",
+    link: "/admin/profile",
+    icon: "fas fa-user",
+    iconStyle: {},
+  },
 ];

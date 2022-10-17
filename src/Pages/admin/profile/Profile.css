@@ -1,0 +1,21 @@
+.stats-box {
+  height: 150px;
+  border: solid 2px var(--text-light-100);
+  border-radius: 10px;
+}
+
+.stat-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+}
+
+.personal-info-title {
+  background-color: #ddd;
+}
