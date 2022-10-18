@@ -13,7 +13,7 @@ import Faq from "./Pages/faq/Faq";
 import Overview from "./Pages/admin/overview/Overview";
 import FindRoom from "./Pages/find-room/FindRoom";
 import FindRoommate from "./Pages/find-roommate/FindRoommate";
-import GlobalState from "./context/GlobalState";
+import GlobalState, { useAppSelector } from "./context/GlobalState";
 import UploadTab from "./Pages/upload-items/UploadTab";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -25,6 +25,7 @@ import Profile from "./Pages/admin/profile/Profile";
 
 function App() {
   const location = useLocation();
+  const { auth } = useAppSelector();
 
   return (
     <div>
@@ -64,7 +65,7 @@ function App() {
                 </CustomerRoute>
               }
             />
-            <Route path="admin" element={<AdminRoute auth={true} />}>
+            <Route path="admin" element={<AdminRoute auth={auth} />}>
               <Route path="overview" element={<Overview />} />
               <Route path="users" element={<Users />} />
               <Route path="contact" element={<AdminContact />} />
@@ -75,7 +76,7 @@ function App() {
             <Route
               path="/find-room"
               element={
-                <ProtectedRoute auth={true}>
+                <ProtectedRoute auth={auth.isAuth}>
                   <FindRoom />
                 </ProtectedRoute>
               }
@@ -83,7 +84,7 @@ function App() {
             <Route
               path="/find-roommate"
               element={
-                <ProtectedRoute auth={true}>
+                <ProtectedRoute auth={auth.isAuth}>
                   <FindRoommate />
                 </ProtectedRoute>
               }
@@ -91,7 +92,7 @@ function App() {
             <Route
               path="/upload-items"
               element={
-                <ProtectedRoute auth={true}>
+                <ProtectedRoute auth={auth.isAuth}>
                   <UploadTab />
                 </ProtectedRoute>
               }

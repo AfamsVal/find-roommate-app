@@ -19,3 +19,6 @@
 .personal-info-title {
   background-color: #ddd;
 }
+::placeholder {
+  font-size: 14px;
+}

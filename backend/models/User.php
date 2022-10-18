@@ -80,16 +80,17 @@ class User
     }
 
     //Update User Profile
-    public function update_user_profile($id, $firstName, $lastName, $email, $phone)
+    public function update_user_profile($id, $firstName, $lastName, $phone, $gender, $state)
     {
-        $sql = "UPDATE " . $this->table . " SET firstName = ?, lastName = ?, phone = ?, email = ? WHERE id = ?";
+        $sql = "UPDATE " . $this->table . " SET firstName = ?, lastName = ?, phone = ?, gender = ?, state = ? WHERE id = ?";
         $query = $this->conn->prepare($sql);
         $query->bind_param(
-            'ssssi',
+            'sssssi',
             $firstName,
             $lastName,
             $phone,
-            $email,
+            $gender,
+            $state,
             $id
         );
         if ($query->execute()) {
@@ -244,6 +245,8 @@ class User
         if (!$validUser['count']) {
             return array("isValid" => false, "msg" => 'User not found!');
         }
+
+        response(false, 200, array("validUser" => $validUser['data']));
 
         if (password_verify($pwd, $validUser['data']['password'])) {
             $this->update_user_by_field('id', $uid, 'inValidPwdTimer', '');

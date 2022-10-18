@@ -82,6 +82,31 @@ export const registerAction = async (
   }
 };
 
+export const profileUpdateAction = async (
+  dispatch: ({ type, payload }: IAction<string>) => void,
+  user: IRegister
+) => {
+  try {
+    dispatch({ type: types.AUTH_REQUEST });
+    const { confirmPwd, ...userDetails } = user;
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "user/register",
+      method: "POST",
+      body: userDetails,
+      sanitize: false,
+    });
+    if (res.status === true) {
+      dispatch({
+        type: "REGISTER",
+      });
+    } else {
+      dispatch({ type: types.AUTH_ERROR, payload: res.message });
+    }
+  } catch (error: any) {
+    dispatch({ type: types.AUTH_ERROR, payload: error });
+  }
+};
+
 export const forgotPwdAction = async (
   dispatch: ({ type, payload }: IAction<string>) => void,
   email: string

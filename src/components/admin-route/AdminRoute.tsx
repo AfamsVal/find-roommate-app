@@ -6,7 +6,10 @@ import "./AdminRoute.css";
 
 const AdminRoute = ({ auth, children }: any) => {
   const [toggleNav, setToggleNav] = useState(false);
-  if (!auth) return <Navigate to={`/login`} replace />;
+  if (!auth?.isAuth && !auth?.userDetails?.isAdmin) {
+    return <Navigate to={`/login`} replace />;
+  }
+
   return (
     <div className="d-flex">
       <AdminSideNav toggleNav={toggleNav} setToggleNav={setToggleNav} />
