@@ -29,6 +29,7 @@ const Register: React.FC = () => {
         "Account created successfully",
         "success"
       );
+      clearAuthError(dispatch);
       setTimeout(() => navigate("/login"), 1000);
     }
   }, [auth.authError, auth.isRegister, dispatch, navigate, openNotification]);

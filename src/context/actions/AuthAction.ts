@@ -43,21 +43,17 @@ export const loginAction = async (
         type: types.LOGIN,
         payload: decoded,
       });
-      // console.log({ decoded });
-      // decoded.isAdmin ? navigate("/admin/overview") : navigate("/");
     } else {
-      // dispatch({
-      //   type: types.AUTH_ERROR,
-      //   payload: result.message,
-      // });
       openNotification("Login Failed:", result.message, "error");
-      dispatch({ type: "CLEAR_AUTH_ERROR" });
+      dispatch({ type: types.CLEAR_AUTH_ERROR });
     }
   } catch (error: any) {
-    dispatch({
-      type: types.AUTH_ERROR,
-      payload: error.code,
-    });
+    openNotification(
+      "Login Failed:",
+      error.code || "Something went wrong, please try again!",
+      "error"
+    );
+    dispatch({ type: types.CLEAR_AUTH_ERROR });
   }
 };
 

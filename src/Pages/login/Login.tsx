@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import useToast from "../../hooks/toast/useToast";
 import { loginAction } from "../../context/actions/AuthAction";
 import { useAppSelector } from "../../context/GlobalState";
