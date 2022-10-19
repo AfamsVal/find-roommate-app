@@ -47,7 +47,14 @@ const Footer: React.FC = () => {
             </a>
           </p>
           <h6>EMAIL</h6>
-          <p>info@findroomy.com</p>
+          <p>
+            <a
+              href="mailto:info@findroomy.com"
+              style={{ textDecoration: "none", color: "gray" }}
+            >
+              info@findroomy.com
+            </a>
+          </p>
         </div>
         <div className={` ${style.col1} col-md-3 `}>
           <h3>CUSTOMER SERVICE</h3>

@@ -13,7 +13,7 @@ import Faq from "./Pages/faq/Faq";
 import Overview from "./Pages/admin/overview/Overview";
 import FindRoom from "./Pages/find-room/FindRoom";
 import FindRoommate from "./Pages/find-roommate/FindRoommate";
-import GlobalState from "./context/GlobalState";
+import GlobalState, { useAppSelector } from "./context/GlobalState";
 import UploadTab from "./Pages/upload-items/UploadTab";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -21,9 +21,12 @@ import AdminRoute from "./components/admin-route/AdminRoute";
 import Users from "./Pages/admin/users/Users";
 import AdminContact from "./Pages/admin/contacts/AdminContact";
 import AdminRooms from "./Pages/admin/rooms/AdminRooms";
+import Profile from "./Pages/admin/profile/Profile";
+import UnProtectedRoute from "./components/unprotected-routes/UnProtectedRoute";
 
 function App() {
   const location = useLocation();
+  const { auth } = useAppSelector();
 
   return (
     <div>
@@ -63,17 +66,18 @@ function App() {
                 </CustomerRoute>
               }
             />
-            <Route path="admin" element={<AdminRoute auth={true} />}>
+            <Route path="admin" element={<AdminRoute />}>
               <Route path="overview" element={<Overview />} />
               <Route path="users" element={<Users />} />
               <Route path="contact" element={<AdminContact />} />
               <Route path="rooms" element={<AdminRooms />} />
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Route>
             <Route
               path="/find-room"
               element={
-                <ProtectedRoute auth={true}>
+                <ProtectedRoute>
                   <FindRoom />
                 </ProtectedRoute>
               }
@@ -81,7 +85,7 @@ function App() {
             <Route
               path="/find-roommate"
               element={
-                <ProtectedRoute auth={true}>
+                <ProtectedRoute>
                   <FindRoommate />
                 </ProtectedRoute>
               }
@@ -89,13 +93,21 @@ function App() {
             <Route
               path="/upload-items"
               element={
-                <ProtectedRoute auth={true}>
+                <ProtectedRoute>
                   <UploadTab />
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/login"
+              element={
+                <UnProtectedRoute>
+                  <Login />
+                </UnProtectedRoute>
+              }
+            />
 
-            <Route path="/login" element={<Login />} />
+            {/* <Route path="/login" element={<Login />} /> */}
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/change-password" element={<ChangePassword />} />

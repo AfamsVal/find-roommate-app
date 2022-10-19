@@ -43,11 +43,15 @@ export const loginAction = async (
         type: types.LOGIN,
         payload: decoded,
       });
+      // console.log({ decoded });
+      // decoded.isAdmin ? navigate("/admin/overview") : navigate("/");
     } else {
-      dispatch({
-        type: types.AUTH_ERROR,
-        payload: result.message,
-      });
+      // dispatch({
+      //   type: types.AUTH_ERROR,
+      //   payload: result.message,
+      // });
+      openNotification("Login Failed:", result.message, "error");
+      dispatch({ type: "CLEAR_AUTH_ERROR" });
     }
   } catch (error: any) {
     dispatch({
@@ -58,6 +62,31 @@ export const loginAction = async (
 };
 
 export const registerAction = async (
+  dispatch: ({ type, payload }: IAction<string>) => void,
+  user: IRegister
+) => {
+  try {
+    dispatch({ type: types.AUTH_REQUEST });
+    const { confirmPwd, ...userDetails } = user;
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "user/register",
+      method: "POST",
+      body: userDetails,
+      sanitize: false,
+    });
+    if (res.status === true) {
+      dispatch({
+        type: "REGISTER",
+      });
+    } else {
+      dispatch({ type: types.AUTH_ERROR, payload: res.message });
+    }
+  } catch (error: any) {
+    dispatch({ type: types.AUTH_ERROR, payload: error });
+  }
+};
+
+export const profileUpdateAction = async (
   dispatch: ({ type, payload }: IAction<string>) => void,
   user: IRegister
 ) => {

@@ -18,8 +18,9 @@ $data = json_decode(file_get_contents('php://input'));
 $uid = clean_input_and_strip_tags($data->id, $db);
 $firstName = clean_input_and_strip_tags($data->firstName, $db);
 $lastName = clean_input_and_strip_tags($data->lastName, $db);
-$email = clean_input_and_strip_tags($data->email, $db);
 $phone = clean_input_and_strip_tags($data->phone, $db);
+$gender = clean_input_and_strip_tags($data->gender, $db);
+$state = clean_input_and_strip_tags($data->state, $db);
 $password = clean_input_and_strip_tags($data->password, $db);
 //Check if user is updated
 
@@ -27,13 +28,9 @@ $password = clean_input_and_strip_tags($data->password, $db);
 $validUser = $user->get_user_by_field('id', $uid);
 
 
-if (!isValidEmail($email)) {
-    response(false, 200, 'Email not valid!');
-    exit();
-}
-
 if (!$validUser['count']) {
-    response(false, 200, 'User not found!');
+    // response(false, 200, array("validUser" => $validUser['msg']));
+    response(false, 200, $validUser['msg']);
     exit();
 }
 
@@ -43,14 +40,15 @@ if (!$checkPwd['isValid']) {
     exit();
 }
 
-$res = $user->update_user_profile($uid, $firstName, $lastName, $email, $phone);
+$res = $user->update_user_profile($uid, $firstName, $lastName, $phone, $gender, $state);
 
 if ($res === true) {
     $user_info = array(
         'firstName'  => $firstName,
         'lastName'  => $lastName,
-        'email'  => $email,
-        'phone'  => $phone
+        'phone'  => $phone,
+        'gender'  => $gender,
+        'state'  => $state,
     );
 
     response(true, 200, 'Profile updated successful!', $user_info);

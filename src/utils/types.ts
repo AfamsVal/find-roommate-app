@@ -5,8 +5,8 @@ export interface IRegisterForm {
   phone: string;
   state: string;
   gender: string;
-  password: string;
-  confirmPwd: string;
+  password?: string;
+  confirmPwd?: string;
 }
 
 export interface IPlaces {
@@ -66,8 +66,8 @@ export interface IRegister {
   phone: string;
   state: string;
   gender: string;
-  password: string;
-  confirmPwd: string;
+  password?: string;
+  confirmPwd?: string;
 }
 
 export interface ILogin {

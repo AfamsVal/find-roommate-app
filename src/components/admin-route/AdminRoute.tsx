@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAppSelector } from "../../context/GlobalState";
 import AdminSideNav from "../side-nav/AdminSideNav";
 import AdminTopNav from "../top-nav/AdminTopNav";
 import "./AdminRoute.css";
 
-const AdminRoute = ({ auth, children }: any) => {
+const AdminRoute = () => {
+  const { auth } = useAppSelector();
   const [toggleNav, setToggleNav] = useState(false);
-  if (!auth) return <Navigate to={`/login`} replace />;
+  if (!auth?.isAuth && !auth?.userDetails?.isAdmin) {
+    return <Navigate to={`/login`} replace />;
+  }
+
   return (
     <div className="d-flex">
       <AdminSideNav toggleNav={toggleNav} setToggleNav={setToggleNav} />

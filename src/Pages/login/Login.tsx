@@ -17,26 +17,6 @@ const Login: React.FC = () => {
 
   const { auth, dispatch } = useAppSelector();
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (auth.isAuth) {
-      auth.userDetails.isAdmin ? navigate("/admin/overview") : navigate("/");
-    }
-
-    if (auth.authError) {
-      openNotification("Login Failed:", auth.authError, "error");
-      dispatch({ type: "CLEAR_AUTH_ERROR" });
-    }
-  }, [
-    auth.isAuth,
-    auth.authError,
-    auth.userDetails.isAdmin,
-    navigate,
-    openNotification,
-    dispatch,
-  ]);
-
   const [form, setForm] = React.useState<ILogin>({
     email: "",
     password: "",
