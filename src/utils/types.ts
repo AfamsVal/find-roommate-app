@@ -60,9 +60,10 @@ export interface IGlobalState {
 }
 
 export interface IRegister {
+  id?: string;
   firstName: string;
   lastName: string;
-  email: string;
+  email?: string;
   phone: string;
   state: string;
   gender: string;

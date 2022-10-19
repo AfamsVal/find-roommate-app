@@ -60,7 +60,7 @@ if (!empty($user_data)) {
 
         $jwt = generateToken($data, $uid, $isAdmin);
 
-        response(true, 200, 'User logged in successfully', array('token' => $jwt, "db_password" => $db_password));
+        response(true, 200, 'User logged in successfully', array('token' => $jwt));
         exit();
     }
 

@@ -68,6 +68,30 @@ export const getAllListing = async (
   }
 };
 
+export const getProfileListing = async (
+  dispatch: ({ type, payload }: IAction) => void,
+  range: any
+) => {
+  try {
+    dispatch({ type: types.FETCHING_ALL_LISTING });
+
+    const res: HTTPResponse<any> = await httpRequest({
+      url: "room/all-rooms",
+      method: "POST",
+      body: range,
+    });
+
+    if (res.status) {
+      dispatch({
+        type: types.FETCHED_ALL_LISTING,
+        payload: res?.data,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getRoomStatistics = async (
   dispatch: ({ type, payload }: IAction) => void
 ) => {

@@ -49,12 +49,19 @@ const AdminTable: React.FC<ITable> = (props) => {
         </motion.div>
       </div>
       <div className="col-12" style={{ marginBottom: 16 }}>
-        <Table
-          rowSelection={rowSelection}
-          columns={props.columns}
-          dataSource={props.data}
-          loading={props.loading}
-        />
+        <div className="table-responsive mb-5">
+          <Table
+            rowSelection={rowSelection}
+            columns={props.columns}
+            dataSource={props.data}
+            loading={props.loading}
+            pagination={{
+              defaultPageSize: 30,
+              showSizeChanger: true,
+              pageSizeOptions: ["10", "20", "30", "50", "100"],
+            }}
+          />
+        </div>
       </div>
     </div>
   );

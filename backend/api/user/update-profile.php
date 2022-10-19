@@ -29,7 +29,6 @@ $validUser = $user->get_user_by_field('id', $uid);
 
 
 if (!$validUser['count']) {
-    // response(false, 200, array("validUser" => $validUser['msg']));
     response(false, 200, $validUser['msg']);
     exit();
 }
