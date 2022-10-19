@@ -34,6 +34,7 @@ if (!empty($user_data)) {
         exit();
     }
 
+
     $firstName = $user_data['firstName'];
     $lastName = $user_data['lastName'];
     $email = $user_data['email'];
@@ -42,7 +43,10 @@ if (!empty($user_data)) {
     $gender = $user_data['gender'];
     $db_password = $user_data['password'];
 
-    if ($user->verify_password($password, $db_password)) {
+
+    $checkPwd = $user->verify_password($password, $user_data['id']);
+
+    if ($checkPwd['isValid']) {
         $data = array(
             "firstName" => $user_data['firstName'],
             "lastName" => $user_data['lastName'],
@@ -57,9 +61,11 @@ if (!empty($user_data)) {
         $jwt = generateToken($data, $uid, $isAdmin);
 
         response(true, 200, 'User logged in successfully', array('token' => $jwt, "db_password" => $db_password));
-    } else {
-        response(false, 200, 'Invalid Credentials!');
+        exit();
     }
+
+    response(false, 200, $checkPwd['msg']);
+    exit();
 } else {
     response(false, 200, 'Invalid Credentials!');
 }

@@ -71,8 +71,6 @@ const Overview = () => {
         img: decinedImg,
       },
     ]);
-
-    console.log("STAT:", statistics);
   }, [statistics]);
 
   return (

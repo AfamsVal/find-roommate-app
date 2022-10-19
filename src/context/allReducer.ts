@@ -86,6 +86,7 @@ export const allReducer = (state = initialState, action: IAction) => {
           isRegister: false,
           isPwdReset: false,
           authError: "",
+          authLoading: false,
         },
       };
 

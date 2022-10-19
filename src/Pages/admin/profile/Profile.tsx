@@ -34,10 +34,6 @@ const Profile: React.FC = () => {
   const { firstName, lastName, email, phone, state, gender } =
     auth.userDetails.userInfo;
 
-  useEffect(() => {
-    console.log("gender", gender.charAt(0).toUpperCase() + gender.substr(1));
-  }, [gender]);
-
   const [form, setForm] = React.useState<IRegisterForm>({
     firstName,
     lastName,
