@@ -22,6 +22,7 @@ import Users from "./Pages/admin/users/Users";
 import AdminContact from "./Pages/admin/contacts/AdminContact";
 import AdminRooms from "./Pages/admin/rooms/AdminRooms";
 import Profile from "./Pages/admin/profile/Profile";
+import UnProtectedRoute from "./components/unprotected-routes/UnProtectedRoute";
 
 function App() {
   const location = useLocation();
@@ -65,7 +66,7 @@ function App() {
                 </CustomerRoute>
               }
             />
-            <Route path="admin" element={<AdminRoute auth={auth} />}>
+            <Route path="admin" element={<AdminRoute />}>
               <Route path="overview" element={<Overview />} />
               <Route path="users" element={<Users />} />
               <Route path="contact" element={<AdminContact />} />
@@ -76,7 +77,7 @@ function App() {
             <Route
               path="/find-room"
               element={
-                <ProtectedRoute auth={auth.isAuth}>
+                <ProtectedRoute>
                   <FindRoom />
                 </ProtectedRoute>
               }
@@ -84,7 +85,7 @@ function App() {
             <Route
               path="/find-roommate"
               element={
-                <ProtectedRoute auth={auth.isAuth}>
+                <ProtectedRoute>
                   <FindRoommate />
                 </ProtectedRoute>
               }
@@ -92,13 +93,21 @@ function App() {
             <Route
               path="/upload-items"
               element={
-                <ProtectedRoute auth={auth.isAuth}>
+                <ProtectedRoute>
                   <UploadTab />
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/login"
+              element={
+                <UnProtectedRoute>
+                  <Login />
+                </UnProtectedRoute>
+              }
+            />
 
-            <Route path="/login" element={<Login />} />
+            {/* <Route path="/login" element={<Login />} /> */}
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/change-password" element={<ChangePassword />} />

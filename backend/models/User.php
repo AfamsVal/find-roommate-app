@@ -246,7 +246,7 @@ class User
             return array("isValid" => false, "msg" => 'User not found!');
         }
 
-        response(false, 200, array("validUser" => $validUser['data']));
+        response(false, 200, array("validUser" => $validUser['data']['password'], 'mine' => $pwd));
 
         if (password_verify($pwd, $validUser['data']['password'])) {
             $this->update_user_by_field('id', $uid, 'inValidPwdTimer', '');
