@@ -60,9 +60,10 @@ export interface IGlobalState {
 }
 
 export interface IRegister {
+  id?: string;
   firstName: string;
   lastName: string;
-  email: string;
+  email?: string;
   phone: string;
   state: string;
   gender: string;
@@ -121,6 +122,8 @@ export interface IRoomDetails {
   university: string;
   category?: string;
   uploadedBy?: string;
+  blocked?: string;
+  taken?: string;
   updatedAt?: string;
 }
 

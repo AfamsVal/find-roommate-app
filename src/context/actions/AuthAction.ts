@@ -70,6 +70,7 @@ export const registerAction = async (
       body: userDetails,
       sanitize: false,
     });
+
     if (res.status === true) {
       dispatch({
         type: "REGISTER",
@@ -84,26 +85,32 @@ export const registerAction = async (
 
 export const profileUpdateAction = async (
   dispatch: ({ type, payload }: IAction<string>) => void,
+  openNotification: any,
   user: IRegister
 ) => {
   try {
     dispatch({ type: types.AUTH_REQUEST });
-    const { confirmPwd, ...userDetails } = user;
     const res: HTTPResponse<string> = await httpRequest({
-      url: "user/register",
-      method: "POST",
-      body: userDetails,
-      sanitize: false,
+      url: "user/update-profile",
+      method: "PUT",
+      body: user,
     });
+
     if (res.status === true) {
-      dispatch({
-        type: "REGISTER",
-      });
+      dispatch({ type: types.PROFILE_UPDATE, payload: res?.data });
+      openNotification("Account Update:", res.message, "success");
     } else {
-      dispatch({ type: types.AUTH_ERROR, payload: res.message });
+      openNotification("Account Update:", res.message, "error");
     }
+    clearAuthError(dispatch);
   } catch (error: any) {
+    openNotification(
+      "Account Update:",
+      error?.code || "Update failed!",
+      "error"
+    );
     dispatch({ type: types.AUTH_ERROR, payload: error });
+    clearAuthError(dispatch);
   }
 };
 

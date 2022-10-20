@@ -17,9 +17,11 @@ $data = json_decode(file_get_contents('php://input'));
 
 $room->start = clean_input_and_strip_tags($data->start, $db);
 $room->limit = clean_input_and_strip_tags($data->limit, $db);
+$user_id = clean_input_and_strip_tags($data->uid, $db);
+
 
 //Room query
-$result = $room->all_rooms();
+$result = $room->profile_rooms($user_id);
 
 //Check if any room
 if ($result[0] > 0) {

@@ -1,4 +1,4 @@
-import { SetStateAction, Dispatch } from "react";
+import { SetStateAction, Dispatch, useEffect } from "react";
 import SideNavItem from "./SideNavItem";
 import { SIDE_MENU_ITEMS } from "./sidemenu";
 import { Accordion } from "react-bootstrap";
@@ -15,6 +15,7 @@ interface SideNavProps {
 const AdminSideNav = ({ toggleNav, setToggleNav }: SideNavProps) => {
   const navigate = useNavigate();
   const { auth, dispatch } = useAppSelector();
+
   return (
     <Accordion defaultActiveKey="sidenav">
       <div id="sidenav" className={`${toggleNav ? "toggled" : ""}`}>
@@ -29,17 +30,35 @@ const AdminSideNav = ({ toggleNav, setToggleNav }: SideNavProps) => {
             className="navbar-nav mt-5 text-left"
             style={{ justifyContent: "flex-start" }}
           >
-            {SIDE_MENU_ITEMS.map((menu: any, i: number) => (
-              <div key={i}>
-                <SideNavItem
-                  title={menu.title}
-                  link={menu.link}
-                  icon={menu.icon}
-                  iconStyle={menu.iconStyle}
-                  setToggleNav={setToggleNav}
-                />
-              </div>
-            ))}
+            {auth.userDetails.isAdmin
+              ? SIDE_MENU_ITEMS.map((menu: any, i: number) => {
+                  return (
+                    <div key={i}>
+                      <SideNavItem
+                        title={menu.title}
+                        link={menu.link}
+                        icon={menu.icon}
+                        iconStyle={menu.iconStyle}
+                        setToggleNav={setToggleNav}
+                      />
+                    </div>
+                  );
+                })
+              : SIDE_MENU_ITEMS.map((menu: any, i: number) => {
+                  return (
+                    menu.isAdmin === false && (
+                      <div key={i}>
+                        <SideNavItem
+                          title={menu.title}
+                          link={menu.link}
+                          icon={menu.icon}
+                          iconStyle={menu.iconStyle}
+                          setToggleNav={setToggleNav}
+                        />
+                      </div>
+                    )
+                  );
+                })}
             <li
               className="cursor-pointer fw-bold text-red ps-5"
               style={{ marginTop: "20px" }}

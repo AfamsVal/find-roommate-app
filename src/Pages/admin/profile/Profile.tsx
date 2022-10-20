@@ -1,20 +1,30 @@
 import React, { useEffect } from "react";
 import "./Profile.css";
 import { useAppSelector } from "../../../context/GlobalState";
-import { Link, useNavigate } from "react-router-dom";
 import useToast from "../../../hooks/toast/useToast";
 import { IRegisterForm } from "../../../utils/types";
 import { validateForm } from "../../../utils/formValidator";
 import { STATE } from "../../../utils/state";
-import CardWithModalDetails from "../../../components/modal/CardWithModalDetails";
 import { profileUpdateAction } from "../../../context/actions/AuthAction";
+import { getProfileListing } from "../../../context/actions/roomsAction";
+import Loader from "../../../components/loader/Loader";
+import EmptyState from "../../../components/loader/EmptyState";
+import ProfileModalDetails from "../../../components/ProfileModalDetails.module.css/ProfileModalDetails";
 
 const Profile: React.FC = () => {
   const [openNotification] = useToast();
-  const { auth, dispatch }: any = useAppSelector();
+  const { auth, dispatch, listing }: any = useAppSelector();
 
-  const { listing } = useAppSelector();
   const { allListing, loading } = listing;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getProfileListing(dispatch, {
+      uid: auth?.userDetails?.userId,
+      start: 0,
+      limit: 50,
+    });
+  }, [dispatch, auth?.userDetails?.userId]);
 
   useEffect(() => {
     if (auth.authError) {
@@ -39,7 +49,7 @@ const Profile: React.FC = () => {
     lastName,
     email,
     phone,
-    state: state.split(" ")[0],
+    state: state,
     gender: gender.charAt(0).toUpperCase() + gender.substr(1),
     password: "",
   });
@@ -49,13 +59,19 @@ const Profile: React.FC = () => {
   };
 
   const handleUpdate = () => {
-    const { isValid, error } = validateForm(form, true);
+    const { isValid, error } = validateForm(form, false);
     if (!isValid) {
       openNotification(error.title, error.value, "error");
       return false;
     }
 
-    profileUpdateAction(dispatch, form);
+    const { userId } = auth?.userDetails;
+    // const { email, ...newForm } = form;
+
+    profileUpdateAction(dispatch, openNotification, {
+      id: userId,
+      ...form,
+    });
   };
 
   return (
@@ -205,7 +221,7 @@ const Profile: React.FC = () => {
                 className="custom-button"
               >
                 Update Now{" "}
-                {loading && (
+                {auth.authLoading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
               </button>
@@ -225,8 +241,22 @@ const Profile: React.FC = () => {
               >
                 Uploaded Items
               </p>
-              <div className="px-2 row mt-4" style={{ fontSize: "14px" }}>
-                <CardWithModalDetails items={allListing} />
+              <div className="row px-2 mb-5" style={{ fontSize: "14px" }}>
+                <div className="col-md-12 py-5">
+                  <div className="row" style={{ marginBottom: "100px" }}>
+                    {loading ? (
+                      <div className="col-md-12 mt-5 pt-2">
+                        <div className="row">
+                          <Loader />
+                        </div>
+                      </div>
+                    ) : !loading && allListing.length ? (
+                      <ProfileModalDetails items={allListing} />
+                    ) : (
+                      !loading && !allListing.length && <EmptyState />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
