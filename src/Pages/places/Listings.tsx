@@ -2,7 +2,7 @@ import ButtomLine from "../../components/buttom-border/ButtomLine";
 import FilterSection from "../../components/filter/FilterSection";
 import EmptyState from "../../components/loader/EmptyState";
 import Loader from "../../components/loader/Loader";
-import CardWithModalDetails from "../../components/modal/CardWithModalDetails";
+import CardWithModalDetails from "../../components/ProfileModalDetails.module.css/CardWithModalDetails";
 import { useAppSelector } from "../../context/GlobalState";
 
 const Listings = () => {

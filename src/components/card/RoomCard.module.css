@@ -37,6 +37,17 @@
   box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 }
 
+.taken {
+  background-color: rgb(180, 114, 7);
+  display: inline-block;
+  color: whitesmoke;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: 1px solid;
+  font-size: 12px;
+  box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
 .Verified {
   background-color: rgb(4, 83, 4);
   display: inline-block;

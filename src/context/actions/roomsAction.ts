@@ -76,7 +76,7 @@ export const getProfileListing = async (
     dispatch({ type: types.FETCHING_ALL_LISTING });
 
     const res: HTTPResponse<any> = await httpRequest({
-      url: "room/all-rooms",
+      url: "room/profile-rooms",
       method: "POST",
       body: range,
     });
@@ -119,7 +119,7 @@ export const getAllRoomsAction = async (
   const body = {
     selectedType: "room",
     start: 0,
-    limit: 50,
+    limit: 500,
   };
   try {
     dispatch({ type: types.FETCHING_ROOM_LISTING });
@@ -152,7 +152,7 @@ export const getAllRoommatesAction = async (
   const body = {
     selectedType: "roommate",
     start: 0,
-    limit: 50,
+    limit: 500,
   };
   try {
     dispatch({ type: types.FETCHING_ROOMMATE_LISTING });
@@ -281,12 +281,53 @@ export const blockRoomAction = async (
     });
 
     if (res.status === true) {
+      dispatch({ type: types.RESET_ALL });
       openNotification("Success:", res.message, "success");
-      fetchAllAdminRoomsAction(dispatch, { start: 0, limit: 50 });
+      fetchAllAdminRoomsAction(dispatch, { start: 0, limit: 500 });
+      getProfileListing(dispatch, {
+        uid: details?.userId,
+        start: 0,
+        limit: 500,
+      });
     } else {
+      dispatch({ type: types.RESET_ALL });
       openNotification("Request failed:", res.message, "error");
     }
+  } catch (error: any) {
+    openNotification("Request failed:", error?.code, "error");
     dispatch({ type: types.RESET_ALL });
+  }
+};
+
+/////////////////////////////////////
+////ADMIN PROFILE ROOM TAKEN//////////
+export const takenRoomAction = async (
+  dispatch: ({ type, payload }: IAction<string>) => void,
+  openNotification: any,
+  roomId: number | string,
+  userId: number | string
+) => {
+  try {
+    dispatch({ type: types.START_LOADING_TWO });
+
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "room/taken-room-permission",
+      method: "PUT",
+      body: { roomId, userId },
+    });
+
+    if (res.status === true) {
+      dispatch({ type: types.RESET_ALL });
+      openNotification("Success:", res.message, "success");
+      getProfileListing(dispatch, {
+        uid: userId,
+        start: 0,
+        limit: 500,
+      });
+    } else {
+      dispatch({ type: types.RESET_ALL });
+      openNotification("Request failed:", res.message, "error");
+    }
   } catch (error: any) {
     openNotification("Request failed:", error?.code, "error");
     dispatch({ type: types.RESET_ALL });

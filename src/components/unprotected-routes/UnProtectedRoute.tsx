@@ -8,7 +8,7 @@ const UnProtectedRoute = ({ children }: any) => {
     return auth?.userDetails?.isAdmin ? (
       <Navigate to={`/admin/overview`} replace />
     ) : (
-      <Navigate to={`/`} replace />
+      <Navigate to={`/admin/profile`} replace />
     );
 
   return children;

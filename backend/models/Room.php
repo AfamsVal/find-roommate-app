@@ -42,7 +42,16 @@ class Room extends Filter
     //Get Rooms
     public function all_rooms()
     {
-        $sql = "SELECT * FROM " . $this->table . " WHERE blocked = '0' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
+        $sql = "SELECT * FROM " . $this->table . " WHERE blocked = '0' AND taken = '0' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
+        $query = mysqli_query($this->conn, $sql);
+        $count = mysqli_num_rows($query);
+        return array($count, $query);
+    }
+
+    //Get Profile Rooms
+    public function profile_rooms($user_id)
+    {
+        $sql = "SELECT * FROM " . $this->table . " WHERE uid = '$user_id' AND blocked = '0' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
         return array($count, $query);
@@ -316,19 +325,22 @@ class Room extends Filter
 
     ////UPDATE ROOMS BY FIELD/////////////
     /////////////////////////////(id,2,firstName,'val')
-    public function update_room_permission($roomId, $type)
+    public function update_room_permission($roomId, $type, $userId)
     {
         if ($type === 'blocked') {
-            $sql =  "UPDATE " . $this->table . " SET blocked = 1 WHERE id = ?";
+            $sql =  "UPDATE " . $this->table . " SET blocked = '$userId' WHERE id = ?";
         }
         if ($type === 'unblocked') {
             $sql =  "UPDATE " . $this->table . " SET blocked = 0 WHERE id = ?";
         }
         if ($type === 'verified') {
-            $sql =  "UPDATE " . $this->table . " SET isVerified = 1 WHERE id = ?";
+            $sql =  "UPDATE " . $this->table . " SET isVerified = '$userId' WHERE id = ?";
         }
         if ($type === 'unverified') {
             $sql =  "UPDATE " . $this->table . " SET isVerified = 0 WHERE id = ?";
+        }
+        if ($type === 'taken') {
+            $sql =  "UPDATE " . $this->table . " SET taken = 1 WHERE id = ?";
         }
         $query = $this->conn->prepare($sql);
         $query->bind_param(

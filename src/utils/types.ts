@@ -122,6 +122,8 @@ export interface IRoomDetails {
   university: string;
   category?: string;
   uploadedBy?: string;
+  blocked?: string;
+  taken?: string;
   updatedAt?: string;
 }
 

@@ -28,11 +28,19 @@ const RoomCard: React.FC<IProp> = ({ item, modalItem }) => {
           >
             <div
               className={`${
-                item.isVerified === "1" ? style.Verified : style.notVerified
+                item.taken === "1"
+                  ? style.taken
+                  : item.isVerified === "1"
+                  ? style.Verified
+                  : style.notVerified
               }  px-2 py-1`}
             >
               <i className="fa fa-home"></i>{" "}
-              {item.isVerified === "1" ? "Verified" : "Not Verified"}
+              {item?.taken === "1"
+                ? "Taken"
+                : item.isVerified === "1"
+                ? "Verified"
+                : "Not Verified"}
             </div>
           </div>
         </div>

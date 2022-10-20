@@ -1,0 +1,44 @@
+.topImage {
+  height: 400px;
+  margin-left: 5px;
+  position: relative;
+  background: white;
+  border: 0.1px solid rgb(238, 238, 238);
+  border-left: none;
+}
+
+.bottomImage {
+  height: 150px;
+  width: 200px;
+  margin-left: 5px;
+  position: relative;
+  background: white;
+  border: 2px solid black;
+}
+.bage {
+  position: absolute;
+  height: 40px;
+  top: 5px;
+  margin-left: 4px;
+  background-color: var(--primary-color-100);
+  color: white;
+}
+.leftTopContainer {
+  margin-left: 10px;
+}
+
+.items {
+  font-weight: bold;
+  text-transform: capitalize;
+  color: var(--primary-color-100);
+}
+
+.cap {
+  text-transform: capitalize;
+}
+
+.pricing {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: black;
+}
