@@ -119,7 +119,7 @@ export const getAllRoomsAction = async (
   const body = {
     selectedType: "room",
     start: 0,
-    limit: 500,
+    limit: 5000,
   };
   try {
     dispatch({ type: types.FETCHING_ROOM_LISTING });
@@ -152,7 +152,7 @@ export const getAllRoommatesAction = async (
   const body = {
     selectedType: "roommate",
     start: 0,
-    limit: 500,
+    limit: 5000,
   };
   try {
     dispatch({ type: types.FETCHING_ROOMMATE_LISTING });
@@ -287,7 +287,7 @@ export const blockRoomAction = async (
       getProfileListing(dispatch, {
         uid: details?.userId,
         start: 0,
-        limit: 500,
+        limit: 5000,
       });
     } else {
       dispatch({ type: types.RESET_ALL });
@@ -322,7 +322,7 @@ export const takenRoomAction = async (
       getProfileListing(dispatch, {
         uid: userId,
         start: 0,
-        limit: 500,
+        limit: 5000,
       });
     } else {
       dispatch({ type: types.RESET_ALL });

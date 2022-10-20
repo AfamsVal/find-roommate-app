@@ -10,7 +10,7 @@ const Users = () => {
   const { dispatch, contactUs, loading } = useAppSelector();
   const [filter, setFilter] = useState<IFilterSize>({
     start: 0,
-    limit: 50,
+    limit: 5000,
   });
   const { result, moreData }: any = contactUs.contactList;
 

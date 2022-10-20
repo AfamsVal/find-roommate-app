@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
     getProfileListing(dispatch, {
       uid: auth?.userDetails?.userId,
       start: 0,
-      limit: 50,
+      limit: 5000,
     });
   }, [dispatch, auth?.userDetails?.userId]);
 
