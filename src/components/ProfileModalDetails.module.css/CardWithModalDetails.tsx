@@ -116,6 +116,10 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                   <span className={style.items}>EMAIL:</span>{" "}
                   <span>{details?.email}</span>
                 </p>
+                <p>
+                  <span className={style.items}>LOCATION:</span>{" "}
+                  <span>{details?.address}</span>
+                </p>
 
                 {details?.category && (
                   <p>
@@ -125,7 +129,9 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                 )}
                 <p>
                   <span className={style.items}>DESCRIPTION: </span>
-                  <span className={style.cap}>{details?.descriptions}</span>
+                  <span className={style.cap}>
+                    {details?.descriptions.replace(/(\r\n|\n|\r)/gm, " ")}
+                  </span>
                 </p>
                 <p>
                   {details?.roomType === "0" ? (

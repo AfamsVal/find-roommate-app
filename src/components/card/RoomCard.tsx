@@ -71,7 +71,10 @@ const RoomCard: React.FC<IProp> = ({ item, modalItem }) => {
               </span>
             </div>
 
-            <p className={`${style.desc} mt-2`} title={item?.descriptions}>
+            <p
+              className={`${style.desc} mt-2`}
+              title={item?.descriptions.replace(/(\r\n|\n|\r)/gm, " ")}
+            >
               {item?.descriptions.substring(0, 80)}{" "}
               {item?.descriptions.length > 80 && "..."}
             </p>
