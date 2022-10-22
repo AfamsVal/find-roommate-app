@@ -85,7 +85,7 @@ const FilterSection = () => {
       max: Number(maxAmount) || 0,
       selectedType,
       start: 0,
-      limit: 40,
+      limit: 50,
     };
 
     searchRoomListing(dispatch, filtered);

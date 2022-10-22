@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Modal } from "antd";
 import style from "./CardWithModalDetails.module.css";
 import RoomCard from "../card/RoomCard";
 import { IRoomDetails } from "../../utils/types";
 import { formatCurrency } from "../../utils/formValidator";
+import BreakLine from "../break-line/BreakLine";
 
 interface IProps {
   items: IRoomDetails[];
@@ -116,6 +117,10 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                   <span className={style.items}>EMAIL:</span>{" "}
                   <span>{details?.email}</span>
                 </p>
+                <p>
+                  <span className={style.items}>LOCATION:</span>{" "}
+                  <span>{details?.address}</span>
+                </p>
 
                 {details?.category && (
                   <p>
@@ -125,7 +130,12 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                 )}
                 <p>
                   <span className={style.items}>DESCRIPTION: </span>
-                  <span className={style.cap}>{details?.descriptions}</span>
+                  <span className={style.cap} style={{ display: "block" }}>
+                    <BreakLine
+                      newLine={true}
+                      str={details?.descriptions || "kjdsjjdfjsdj"}
+                    />
+                  </span>
                 </p>
                 <p>
                   {details?.roomType === "0" ? (
