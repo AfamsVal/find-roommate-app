@@ -313,7 +313,7 @@ const UploadRoommate = () => {
                   rows={5}
                   name="descriptions"
                   onChange={handleChange}
-                  value={form.descriptions}
+                  value={form.descriptions.replace("\n\n\n", "\n\n")}
                   placeholder="Type here..."
                 ></textarea>
               </div>

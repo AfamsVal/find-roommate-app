@@ -10,6 +10,7 @@ import * as types from "../../context/types";
 
 const UploadRoom = () => {
   const [fileList, setFileList] = useState<IUpload[]>([]);
+  const [single, setSingle] = useState<boolean>(false);
   const [openNotification] = useToast();
   const { dispatch, auth, loading, success } = useAppSelector();
   useEffect(() => window.scrollTo(0, 0), []);
@@ -41,7 +42,10 @@ const UploadRoom = () => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = () => {
@@ -309,7 +313,7 @@ const UploadRoom = () => {
                   rows={5}
                   name="descriptions"
                   onChange={handleChange}
-                  value={form.descriptions}
+                  value={form.descriptions.replace("\n\n\n", "\n\n")}
                   placeholder="Type here..."
                 ></textarea>
               </div>

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import style from "./RoomCard.module.css";
 import { IRoomDetails } from "../../utils/types";
 import { formatCurrency } from "../../utils/formValidator";
 import { motion } from "framer-motion";
+import BreakLine from "../break-line/BreakLine";
 interface IProp {
   item: IRoomDetails;
   modalItem: (item: IRoomDetails) => void;
@@ -71,11 +72,11 @@ const RoomCard: React.FC<IProp> = ({ item, modalItem }) => {
               </span>
             </div>
 
-            <p
-              className={`${style.desc} mt-2`}
-              title={item?.descriptions.replace(/(\r\n|\n|\r)/gm, " ")}
-            >
-              {item?.descriptions.substring(0, 80)}{" "}
+            <p className={`${style.desc} mt-2`} title={item?.descriptions}>
+              <BreakLine
+                newLine={false}
+                str={item?.descriptions.substring(0, 80)}
+              />
               {item?.descriptions.length > 80 && "..."}
             </p>
 
