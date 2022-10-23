@@ -19,13 +19,7 @@ const AdminSideNav = ({ toggleNav, setToggleNav }: SideNavProps) => {
   return (
     <Accordion defaultActiveKey="sidenav">
       <div id="sidenav" className={`${toggleNav ? "toggled" : ""}`}>
-        <nav
-          className="d-block"
-          style={{
-            minHeight: "92vh",
-            position: "relative",
-          }}
-        >
+        <nav className="d-block">
           <ul
             className="navbar-nav mt-5 text-left"
             style={{ justifyContent: "flex-start" }}
@@ -68,21 +62,23 @@ const AdminSideNav = ({ toggleNav, setToggleNav }: SideNavProps) => {
                 }
               }}
             >
-              <i className="fas fa-power-off me-3 text-red"></i>Logout
+              <i className="fas fa-power-off me-3 text-red" />
+              Logout
             </li>
           </ul>
 
-          <ul
-            className="navbar-nav mt-5 text-left"
-            style={{
-              position: "absolute",
-              bottom: "0px",
-              marginBottom: "20px",
-            }}
-          >
-            <li className="cursor-pointer fw-bold text-red ps-5">
+          <ul className="navbar-nav mt-5 text-left">
+            <li className="cursor-pointer fw-bold text-red ps-5 mt-4">
+              <Link
+                to="/upload-items"
+                style={{ textDecoration: "none", color: "gray" }}
+              >
+                <i className="fas fa-upload me-3 text-red" /> Upload Item
+              </Link>{" "}
+            </li>
+            <li className="cursor-pointer fw-bold text-red ps-5 mt-4">
               <Link to="/" style={{ textDecoration: "none", color: "gray" }}>
-                Go To Home
+                <i className="fas fa-home me-3 text-red" /> Go To Home
               </Link>{" "}
             </li>
           </ul>
