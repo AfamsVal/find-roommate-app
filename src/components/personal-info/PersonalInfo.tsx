@@ -94,8 +94,8 @@ const PersonalInfo = () => {
           <div className="d-flex flex-column justify-center "></div>
           <div>
             <form>
-              <div className="d-md-flex my-4">
-                <div className="w-100 mx-1 my-form">
+              <div className="d-md-flex mt-4">
+                <div className="w-100 mx-1 my-form mb-4">
                   <input
                     type="text"
                     name="firstName"
@@ -109,7 +109,7 @@ const PersonalInfo = () => {
                   </label>
                 </div>
 
-                <div className="mx-1 w-100 my-form">
+                <div className="mx-1 w-100 my-form mb-4">
                   <input
                     type="text"
                     name="lastName"
@@ -124,8 +124,8 @@ const PersonalInfo = () => {
                 </div>
               </div>
 
-              <div className="mb-4 d-md-flex">
-                <div className="mx-1 w-100 my-form">
+              <div className="d-md-flex">
+                <div className="mx-1 w-100 my-form mb-4">
                   <input
                     type="text"
                     name="email"
@@ -138,7 +138,7 @@ const PersonalInfo = () => {
                     Email:
                   </label>
                 </div>
-                <div className="w-100 mx-1 my-form">
+                <div className="w-100 mx-1 my-form mb-4">
                   <input
                     type="text"
                     name="phone"
@@ -153,8 +153,8 @@ const PersonalInfo = () => {
                 </div>
               </div>
 
-              <div className="mb-4 d-md-flex">
-                <div className="w-100 mx-1 my-form">
+              <div className="d-md-flex">
+                <div className="w-100 mx-1 my-form mb-4">
                   <input
                     type="password"
                     name="password"
