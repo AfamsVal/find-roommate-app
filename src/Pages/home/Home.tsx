@@ -27,6 +27,7 @@ const Home = () => {
       <FirstSection />
       <CallToActionBtn />
       <Listings />
+      
     </div>
   );
 };

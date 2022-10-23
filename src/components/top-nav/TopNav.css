@@ -18,7 +18,31 @@
   border-radius: 10px;
   background-color: var(--primary-blue);
 }
+.number{
+  background: rgb(212, 3, 3);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.not-text{
+  font-size: 10px;
+  line-height: 15px;
+  color: wheat;
 
+}
+.bg-lighter{
+  background: rgb(247, 248, 251) !important;
+}
+.drop-menu{
+  position: absolute;
+  right: -10px;
+}
 #user-image {
   width: 50px;
   height: 50px;
@@ -35,6 +59,25 @@
     border-radius: 10px;
     background-color: var(--primary-blue);
   }
+    .number {
+      background: rgb(212, 3, 3);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      position: absolute;
+      right: 5px;
+      top: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .not-text {
+      font-size: 8px;
+      line-height: 15px;
+      color: wheat;
+  
+    }
 
   #user-image {
     width: 30px;
