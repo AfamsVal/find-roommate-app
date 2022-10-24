@@ -1,8 +1,10 @@
 // import moment from "moment";
 import { Dispatch, SetStateAction, useState } from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
+ 
 
 import "./TopNav.css";
+import { useAppSelector } from "../../context/GlobalState";
 
 interface TopNavProps {
   toggleNav: boolean;
@@ -13,6 +15,9 @@ interface TopNavProps {
 
 const AdminTopNav = ({ toggleNav, setToggleNav }: TopNavProps) => {
   const [not, setNot] = useState(false);
+  const {auth} = useAppSelector()
+  const {firstName}:any = auth?.userDetails?.userInfo;
+  // console.log(auth)
 const show =()=>{
   if (!not) {
       
@@ -26,7 +31,7 @@ const show =()=>{
       <div className="top-nav-content align-self-end w-100 bg-white d-flex justify-content-between">
         <div className="d-flex">
           <div className="ms-3">
-            <h4 className="gradient-text">Hi, Afams</h4>
+            <h4 className="gradient-text">Hi, {firstName}</h4>
           </div>
         </div>
         <div className="d-flex justfify-content-end align-items-center">
@@ -36,13 +41,7 @@ const show =()=>{
 
 
     <Dropdown>
-       
-      {/* <Dropdown.Toggle variant="primary" className="d-flex pt-2">
-        <i className="fas fa-bell text-white text-center"></i>
-         <div className="number"> 
-          <span className="not-text">5</span>
-          </div>
-      </Dropdown.Toggle> */}
+     
       
         <div
             id="notification-icon"
@@ -59,10 +58,10 @@ const show =()=>{
 <div className="drop-menu bg-white">
       <Dropdown.Item href="#" className="bg-primary text-light">All Notification</Dropdown.Item>
               <Dropdown.Item href="#" className="border-bottom border-secondary py-1" >
-               <div className=""> <strong>Room Avaliablibility</strong></div>
-                <div >Lorem ipsum dolor sit amet harum.</div>
+               <div className=""> <strong>Support</strong></div>
+                <div >Hi {firstName}, Welcome to findroomy</div>
               </Dropdown.Item>
-              <Dropdown.Item href="#" className="border-bottom border-secondary py-1"  >
+              {/* <Dropdown.Item href="#" className="border-bottom border-secondary py-1"  >
                <div> <strong>Google Drive</strong></div>
                 <div>Lorem ipsum dolor sit amet harum.</div>
               </Dropdown.Item>
@@ -70,7 +69,7 @@ const show =()=>{
               <Dropdown.Item href="#"  className="border-bottom border-secondary py-1" >
                <div> <strong>Google Drive</strong></div>
                 <div>Lorem ipsum dolor sit amet harum.</div>
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               </div>
               : ""
               }
@@ -88,7 +87,7 @@ const show =()=>{
   
 
           <i
-            className="fas fa-bars cursor-pointer ms-2 d-block d-lg-none"
+            className={`px-1 font-size cursor-pointer ms-2 d-block d-lg-none ${toggleNav ? "fas fa-times": "fas fa-bars"}`}
             onClick={() => setToggleNav(!toggleNav)}
           ></i>
         </div>

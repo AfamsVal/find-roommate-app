@@ -16,22 +16,16 @@ const ForgotPassword = () => {
 
   const [openNotification] = useToast();
 
+
   useEffect(() => {
+    console.log('err:', auth)
     if (auth.authError) {
-      openNotification("Password Reset Failed:", auth.authError, "error");
+      openNotification("Registration Failed:", auth.authError, "error");
       clearAuthError(dispatch);
     }
+  }, [auth.authError, dispatch, openNotification]);
 
-    if (auth.isPwdReset) {
-      openNotification(
-        "Password Reset:",
-        "Kindly check you email and use the link sent to reset your password!",
-        "success",
-        15
-      );
-      navigate("/login");
-    }
-  }, [auth.authError, auth.isPwdReset, dispatch, navigate, openNotification]);
+
 
   const handleChange = (e: any) => {
     setEmail(e.target.value);
@@ -44,7 +38,7 @@ const ForgotPassword = () => {
       return false;
     }
 
-    forgotPwdAction(dispatch, email);
+    forgotPwdAction(dispatch,navigate, {email});
   };
   return (
     <div className={`${style.login} container-fluid`}>

@@ -84,11 +84,6 @@ export const allReducer = (state = initialState, action: IAction) => {
           authError: "",
         },
       };
-    case types.FORGOT_PWD:
-      return {
-        ...state,
-        auth: { ...state.auth, authLoading: false, isPwdReset: true },
-      };
     case types.AUTH_REQUEST:
       return {
         ...state,

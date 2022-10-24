@@ -3,6 +3,31 @@ import { Link } from "react-router-dom";
 import style from "./ChangePassword.module.css";
 
 const ChangePassword = () => {
+//   const [form, setForm] = React.useState<IRegisterForm>({
+//     firstName: "",
+//     lastName: "",
+//     email: "",
+//     phone: "",
+//     state: "",
+//     gender: "",
+//     password: "",
+//     confirmPwd: "",
+//   });
+
+//   const handleChange = (e: any) => {
+//     setForm({ ...form, [e.target.name]: e.target.value });
+//   };
+
+//   const handleRegister = () => {
+//     const { isValid, error } = validateForm(form, true);
+//     if (!isValid) {
+//       openNotification(error.title, error.value, "error");
+//       return false;
+//     }
+
+//     registerAction(dispatch, form);
+//   };
+
   return (
     <div className={`${style.login} container-fluid`}>
       <div className="row h-100 align-content-center">
