@@ -116,26 +116,27 @@ export const profileUpdateAction = async (
 
 export const forgotPwdAction = async (
   dispatch: ({ type, payload }: IAction<string>) => void,
-  navigate:NavigateFunction,
-  email: {email:string}
+  navigate: NavigateFunction,
+  email: { email: string }
 ) => {
-  console.log('res:nmnjk')
+  console.log("res:nmnjk");
   try {
     dispatch({ type: types.AUTH_REQUEST });
 
     //HTTPS REQUEST
-        const res: HTTPResponse<string> = await httpRequest({
+    const res: HTTPResponse<string> = await httpRequest({
       url: "user/forgot-password",
       method: "POST",
       body: email,
     });
 
-console.log('res:',res)
+    console.log("res:", res);
 
-    if(res.status === true){
-      navigate('/change-password')
-    }else{
-       dispatch({ type: types.AUTH_ERROR, payload: res.message });
+    if (res.status === true) {
+      dispatch({ type: types.SHOW_SUCCESS, payload: res.message });
+      navigate("/change-password");
+    } else {
+      dispatch({ type: types.AUTH_ERROR, payload: res.message });
     }
   } catch (error: any) {
     dispatch({ type: types.AUTH_ERROR, payload: error.code });

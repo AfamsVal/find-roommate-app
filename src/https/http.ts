@@ -1,4 +1,4 @@
-import { BASE_URL } from "./../utils/environment";
+import { DEV_URL } from "./../utils/environment";
 import { sanitizeUserInput } from "../utils/encrypt";
 
 interface HTTPParams {
@@ -57,7 +57,7 @@ export const httpRequest = async (
         : JSON.stringify(body);
     }
 
-    const res = await fetch(`${BASE_URL}${url}`, options);
+    const res = await fetch(`${DEV_URL}${url}`, options);
     const responseData: any = await res.json();
     return responseData;
   } catch (error) {
