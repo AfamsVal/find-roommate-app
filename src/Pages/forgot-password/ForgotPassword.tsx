@@ -23,7 +23,7 @@ const ForgotPassword = () => {
       clearAuthError(dispatch);
     }
     if (success) {
-      openNotification("OTP Send to E-mail Successfully:", success, "success");
+      openNotification("OTP Sent Successfully:", success, "success");
       dispatch({ type: types.RESET_ALL });
     }
   }, [auth.authError, success, dispatch, openNotification]);
