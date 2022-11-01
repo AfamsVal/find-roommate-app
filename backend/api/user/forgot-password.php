@@ -2,7 +2,7 @@
 require '../../controllers/core.php';
 include_once '../../config/Database.php';
 include_once '../../models/User.php';
-require '../../controllers/sendMail.php';
+require '../../controllers/sendWithGmail.php';
 
 if (!hasAccessControl('POST')) exit();
 
