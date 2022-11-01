@@ -108,7 +108,7 @@ class User
     {
         $sql = $isLogin == true ?
             "UPDATE " . $this->table . " SET password = ? WHERE id = ?" :
-            "UPDATE " . $this->table . " SET password = ? WHERE code = ?";
+            "UPDATE " . $this->table . " SET password = ?, code = '' WHERE code = ?";
         $query = $this->conn->prepare($sql);
         $query->bind_param(
             'ss',
@@ -131,18 +131,9 @@ class User
         $query->execute();
         $query->store_result();
 
-        if (!$query->num_rows) {
-            return 0;
-        }
-
-        $data = $query->get_result();
-        //mail function here....
-        $sent = true;
-
-        if ($sent) {
+        if ($query->num_rows) {
             return true;
         }
-
         return false;
     }
 
@@ -218,6 +209,7 @@ class User
         /* close connection */
         $this->conn->close();
     }
+
 
 
     ////UPDATE USER/////////////

@@ -10,6 +10,7 @@ import {
 } from "../../context/actions/roomsAction";
 import useToast from "../../hooks/toast/useToast";
 import { useAppSelector } from "../../context/GlobalState";
+import { Link } from "react-router-dom";
 
 interface IProps {
   items: IRoomDetails[];
@@ -186,7 +187,7 @@ const ProfileModalDetails: React.FC<IProps> = ({ items }) => {
                     onClick={() =>
                       handleDelete("blocked", details?.key as string)
                     }
-                    className="btn btn-lg px-5 text-white bg-danger mr-2"
+                    className="btn btn-lg px-3 text-white bg-danger mr-2"
                   >
                     <i className="fas fa-trash-alt" />{" "}
                     {Number(details?.blocked) > 0 ? "Deleted" : "Delete"}
@@ -198,7 +199,7 @@ const ProfileModalDetails: React.FC<IProps> = ({ items }) => {
                   {details?.taken !== "1" && (
                     <button
                       onClick={() => handleTaken(details?.key as string)}
-                      className="btn btn-lg px-5 text-white bg-warning"
+                      className="btn btn-lg px-3 text-white bg-warning"
                     >
                       <i className="fas fa-check-circle" /> Taken
                       {loadingTwo && (
@@ -206,6 +207,16 @@ const ProfileModalDetails: React.FC<IProps> = ({ items }) => {
                       )}
                     </button>
                   )}
+                  &nbsp; &nbsp;
+                  <Link
+                    to={`/upload-items/${details?.key}`}
+                    className="btn btn-lg px-3 text-white bg-info"
+                  >
+                    <i className="fas fa-edit" /> Edit
+                    {loadingTwo && (
+                      <i className="fa fa-spin fa-spinner mr-2 font-bold text-lg" />
+                    )}
+                  </Link>
                 </div>
               </div>
             </div>

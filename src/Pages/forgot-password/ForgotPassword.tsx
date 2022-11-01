@@ -8,24 +8,25 @@ import { useAppSelector } from "../../context/GlobalState";
 import useToast from "../../hooks/toast/useToast";
 import { validateForm } from "../../utils/formValidator";
 import style from "./ForgotPassword.module.css";
+import * as types from "../../context/types";
 
 const ForgotPassword = () => {
-  const { auth, dispatch } = useAppSelector();
+  const { auth, success, dispatch } = useAppSelector();
   const [email, setEmail] = React.useState<string>("");
   const navigate = useNavigate();
 
   const [openNotification] = useToast();
 
-
   useEffect(() => {
-    console.log('err:', auth)
     if (auth.authError) {
       openNotification("Registration Failed:", auth.authError, "error");
       clearAuthError(dispatch);
     }
-  }, [auth.authError, dispatch, openNotification]);
-
-
+    if (success) {
+      openNotification("OTP Send to E-mail Successfully:", success, "success");
+      dispatch({ type: types.RESET_ALL });
+    }
+  }, [auth.authError, success, dispatch, openNotification]);
 
   const handleChange = (e: any) => {
     setEmail(e.target.value);
@@ -38,7 +39,7 @@ const ForgotPassword = () => {
       return false;
     }
 
-    forgotPwdAction(dispatch,navigate, {email});
+    forgotPwdAction(dispatch, navigate, { email });
   };
   return (
     <div className={`${style.login} container-fluid`}>

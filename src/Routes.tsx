@@ -13,7 +13,7 @@ import Faq from "./Pages/faq/Faq";
 import Overview from "./Pages/admin/overview/Overview";
 import FindRoom from "./Pages/find-room/FindRoom";
 import FindRoommate from "./Pages/find-roommate/FindRoommate";
-import GlobalState, { useAppSelector } from "./context/GlobalState";
+import GlobalState from "./context/GlobalState";
 import UploadTab from "./Pages/upload-items/UploadTab";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -26,7 +26,6 @@ import UnProtectedRoute from "./components/unprotected-routes/UnProtectedRoute";
 
 function App() {
   const location = useLocation();
-  const { auth } = useAppSelector();
 
   return (
     <div>
@@ -92,6 +91,14 @@ function App() {
             />
             <Route
               path="/upload-items"
+              element={
+                <ProtectedRoute>
+                  <UploadTab />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/upload-items/:id"
               element={
                 <ProtectedRoute>
                   <UploadTab />

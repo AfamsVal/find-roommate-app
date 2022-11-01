@@ -42,7 +42,7 @@ if ($isLogin) {
 if (!$isLogin) {
     $isCodeValid = $user->get_user_by_field('code', $code);
     if ($isCodeValid['count'] == 0) {
-        response(false, 200, 'Code not valid!');
+        response(false, 200, 'OTP not valid!');
         exit();
     }
 }
