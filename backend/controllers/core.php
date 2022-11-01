@@ -8,7 +8,6 @@ header("X-XSS-Protection: 1; mode=block");
 header("Access-Control-Allow-Credentials", "true");
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
 
-
 function hasAccessControl($type)
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $type === 'POST') return true;
@@ -179,4 +178,19 @@ function is_localhost()
 
         return true;
     }
+}
+
+
+function generateCode()
+{
+    $letter = strtoupper(chr(65 + rand(0, 25)));
+    if ($letter == 'I' or $letter == 'O' or $letter == 'S') {
+        $letter = 'P';
+    }
+    $aa = rand(0, 9);
+    $bb = rand(1, 9);
+    $cc = rand(0, 9);
+    $dd = rand(1, 9);
+    $new_code = $letter . $aa . $bb . $cc . $dd;
+    return $new_code;
 }
