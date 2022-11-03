@@ -15,25 +15,29 @@ export const uploadRoomAction = async (
     value: string,
     type: string,
     duration?: number
-  ) => void
+  ) => void,
+  isEdit = false
 ) => {
   try {
     dispatch({ type: types.ADDING_NEW_ROOM });
-
     const res: HTTPResponse<string> = await httpRequest({
-      url: "room/create-room",
-      method: "POST",
+      url: isEdit ? "room/update-room" : "room/create-room",
+      method: isEdit ? "PUT" : "POST",
       body: form,
     });
 
     if (res.status === true) {
       dispatch({ type: types.ADD_NEW_ROOM_COMPLETED });
       openNotification(
-        "Submission Successful",
+        isEdit ? "Updated Successful" : "Submission Successful",
         "Thank you for the submission. Admin will review this within 48 hours for approval",
         "success",
         10
       );
+    }
+    if (res.status !== true) {
+      openNotification("Request failed:", res.message, "error", 10);
+      dispatch({ type: types.SHOW_ERROR });
     }
   } catch (error: any) {
     openNotification(
@@ -41,6 +45,7 @@ export const uploadRoomAction = async (
       "Something went wrong, please try again!",
       "error"
     );
+    dispatch({ type: types.SHOW_ERROR });
   }
 };
 
@@ -74,7 +79,6 @@ export const getProfileListing = async (
 ) => {
   try {
     dispatch({ type: types.FETCHING_ALL_LISTING });
-
     const res: HTTPResponse<any> = await httpRequest({
       url: "room/profile-rooms",
       method: "POST",

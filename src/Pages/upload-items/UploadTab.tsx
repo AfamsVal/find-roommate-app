@@ -31,23 +31,37 @@ const UploadTab = () => {
           <h3 className="text-main"> {id ? "Edit " : "New "} Submission</h3>
           <p>Fill in the form below and upload image(s) to match</p>
 
-          <div className="d-flex upload-title">
-            <div
-              className={`upload-nav ${tab === "room" ? "active" : ""} `}
-              onClick={() => setTab("room")}
-            >
-              <i className="fas fa-feather"></i> Upload Room
+          {id ? (
+            <div className="d-flex upload-title">
+              <div className={`upload-nav ${tab === "room" ? "active" : ""} `}>
+                <i className="fas fa-feather"></i> Edit Room
+              </div>
             </div>
-            <div
-              className={`upload-nav ${tab === "roommate" ? "active" : ""} `}
-              onClick={() => setTab("roommate")}
-            >
-              <i className="fas fa-feather" /> Upload Roommate
+          ) : (
+            <div className="d-flex upload-title">
+              <div
+                className={`upload-nav ${tab === "room" ? "active" : ""} `}
+                onClick={() => setTab("room")}
+              >
+                <i className="fas fa-feather"></i> Upload Room
+              </div>
+              <div
+                className={`upload-nav ${tab === "roommate" ? "active" : ""} `}
+                onClick={() => setTab("roommate")}
+              >
+                <i className="fas fa-feather" /> Upload Roommate
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
-      {id ? <EditRoom /> : tab === "room" ? <UploadRoom /> : <UploadRoommate />}
+      {id ? (
+        <EditRoom id={id} />
+      ) : tab === "room" ? (
+        <UploadRoom />
+      ) : (
+        <UploadRoommate />
+      )}
     </div>
   );
 };

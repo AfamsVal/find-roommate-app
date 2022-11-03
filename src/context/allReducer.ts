@@ -28,7 +28,7 @@ export const allReducer = (state = initialState, action: IAction) => {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action?.payload ? action?.payload : "",
       };
     case types.SHOW_SUCCESS:
       return {

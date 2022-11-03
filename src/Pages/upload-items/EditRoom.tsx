@@ -7,13 +7,15 @@ import useToast from "../../hooks/toast/useToast";
 import { uploadRoomAction } from "../../context/actions/roomsAction";
 import { useAppSelector } from "../../context/GlobalState";
 import * as types from "../../context/types";
+import { httpRequest, HTTPResponse } from "../../https/http";
+import { Spin } from "antd";
 
-const EditRoom = () => {
+const EditRoom = ({ id }: { id: number | string }) => {
   const [fileList, setFileList] = useState<IUpload[]>([]);
-  const [single, setSingle] = useState<boolean>(false);
+  const [fetching, setFetching] = useState<boolean>(false);
+
   const [openNotification] = useToast();
   const { dispatch, auth, loading, success } = useAppSelector();
-  useEffect(() => window.scrollTo(0, 0), []);
 
   const formObj = useMemo(() => {
     return {
@@ -35,6 +37,36 @@ const EditRoom = () => {
   }, []);
 
   const [form, setForm] = useState<IRoomDetails>(formObj);
+  useEffect(() => window.scrollTo(0, 0), []);
+
+  useEffect(() => {
+    const getSingleRoom = async () => {
+      setFetching(true);
+      try {
+        //HTTPS REQUEST
+        const res: HTTPResponse<IRoomDetails> = await httpRequest({
+          url: `room/single-room?id=${id}`,
+        });
+
+        if (res.status === true) {
+          const { images, ...post } = res?.data;
+          setForm(post);
+          setFileList(res.data.images);
+        } else {
+          openNotification(
+            "Edit Uploaded Item:",
+            "Request failed. Please refresh and try again!",
+            "error"
+          );
+        }
+        setFetching(false);
+      } catch (error: any) {
+        dispatch({ type: types.AUTH_ERROR, payload: error.code });
+      }
+    };
+    getSingleRoom();
+  }, []);
+
   const [uploading, setUploading] = useState<boolean>(false);
 
   const handleChange = (
@@ -76,13 +108,11 @@ const EditRoom = () => {
 
     const newObj = {
       ...form,
-      images: [...fileList],
-      isVerified: false,
-      category: "room",
       uid: auth.userDetails.userId,
+      images: [...fileList],
     };
 
-    uploadRoomAction(dispatch, newObj, openNotification);
+    uploadRoomAction(dispatch, newObj, openNotification, true);
   };
 
   useEffect(() => {
@@ -97,6 +127,15 @@ const EditRoom = () => {
   return (
     <div className="row mb-5">
       <div className="col-11 col-md-10 mx-auto mt-3">
+        {fetching === true && (
+          <div className="row">
+            <div className="col-12">
+              {" "}
+              <Spin size="large" style={{ marginRight: "12px" }} /> Fetching
+              data...
+            </div>
+          </div>
+        )}
         <div className="row">
           <div className="col-12 col-md-8">
             <form className="row">
@@ -265,9 +304,13 @@ const EditRoom = () => {
                 />
               </div>
               <div className="col-md-4 form-group my-2">
-                {/* <label htmlFor="sel1" className="font-bold mb-1">
-                    House Type:
-                  </label> */}
+                <label
+                  htmlFor="sel1"
+                  className="mb-1"
+                  style={{ fontSize: "12px" }}
+                >
+                  House Type:
+                </label>
                 <select
                   className="form-control"
                   name="houseType"
@@ -275,11 +318,22 @@ const EditRoom = () => {
                   value={form.houseType}
                 >
                   <option value="">-- Select House Type --</option>
-                  <option value="Story Building">Story Building</option>
+                  <option value="1 Story Building">1 Story Building</option>
+                  <option value="2 Story Building">2 Story Building</option>
+                  <option value="3 Story Building">3 Story Building</option>
+                  <option value="4 Story Building">4 Story Building</option>
+                  <option value="Duplex">Duplex</option>
                   <option value="Bongalow">Bongalow</option>
                 </select>
               </div>
               <div className="col-md-4 form-group my-2">
+                <label
+                  htmlFor="sel1"
+                  className="mb-1"
+                  style={{ fontSize: "12px" }}
+                >
+                  Has Water:
+                </label>
                 <select
                   className="form-control"
                   name="hasWater"
@@ -292,6 +346,13 @@ const EditRoom = () => {
                 </select>
               </div>
               <div className="col-md-4 form-group my-2">
+                <label
+                  htmlFor="sel1"
+                  className="mb-1"
+                  style={{ fontSize: "12px" }}
+                >
+                  Has Tiles:
+                </label>
                 <select
                   className="form-control"
                   name="hasTiles"

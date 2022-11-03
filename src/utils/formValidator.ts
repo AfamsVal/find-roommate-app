@@ -19,7 +19,7 @@ export const validateForm = (obj: IFormValidator, checkWeakPWD = false) => {
   for (let [key, value] of Object.entries(obj)) {
     //validate empty fields
     ////////////////////////////
-    if (value.trim() === "") {
+    if (String(value).trim() === "") {
       const newKey = changeCase(key);
       error = {
         ...error,

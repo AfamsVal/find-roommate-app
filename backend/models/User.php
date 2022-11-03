@@ -155,10 +155,10 @@ class User
     ////////////////////////////
     public function get_user_by_field($field_key, $value, $sessionId = 0)
     {
-        $id = $sessionId > 0 ? $sessionId : $value;
+        $id_or_code = $sessionId > 0 ? $sessionId : $value;
         $sql = "SELECT firstName,lastName,email,phone,password,inValidPwdCount,inValidPwdTimer,blocked FROM users WHERE " . $field_key . " = ? LIMIT 1";
         $query = $this->conn->prepare($sql);
-        $query->bind_param('i', $id);
+        $query->bind_param('s', $id_or_code);
         $query->execute();
         $query->store_result();
         if ($query->num_rows) {

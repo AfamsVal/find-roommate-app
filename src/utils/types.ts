@@ -106,7 +106,8 @@ export interface IRoomDetails {
   hasWater: string;
   hostelName: string;
   houseType: string;
-  key?: string;
+  id?: string | number;
+  key?: string | number;
   image?: string;
   images?: any;
   isVerified?: boolean | string;

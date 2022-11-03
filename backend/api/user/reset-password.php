@@ -40,6 +40,11 @@ if ($isLogin) {
 
 
 if (!$isLogin) {
+    if (trim($code) === '') {
+        response(false, 200, 'Please enter the OTP sent to your email!');
+        exit();
+    }
+
     $isCodeValid = $user->get_user_by_field('code', $code);
     if ($isCodeValid['count'] == 0) {
         response(false, 200, 'OTP not valid!');
