@@ -29,14 +29,31 @@ $room->phone = clean_input_and_strip_tags($data->phone, $db);
 $room->rentPerYear = clean_input_and_strip_tags($data->rentPerYear, $db);
 $room->roomType = clean_input_and_strip_tags($data->roomType, $db);
 $room->state = clean_input_and_strip_tags($data->state, $db);
+$room->images = $data->images;
 $room->updatedAt = time();
 $room->toiletNo = clean_input_and_strip_tags($data->toiletNo, $db);
 $room->uid = clean_input_and_strip_tags($data->uid, $db);
 $room->university = clean_input_and_strip_tags($data->university, $db);
 
 
+//check if owner of a post is the updating it
+
+$fetched = $room->get_room_by_id($room->id);
+
+if (!$fetched['status']) {
+    response(false, 404, 'Room not found!');
+    exit();
+}
+
+if (strval($fetched['data']['uid']) !== strval($data->uid)) {
+    response(false, 401, 'You are not authorized to update this!');
+    exit();
+}
+
 //Check if room is updated
 $res = $room->update_room();
+
+
 if ($res === true) {
     response(true, 200, 'Room updated successful!');
 } else if ($res === false) {

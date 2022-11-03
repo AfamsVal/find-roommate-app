@@ -1,32 +1,51 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { resetPwdAction } from "../../context/actions/AuthAction";
+import { useAppSelector } from "../../context/GlobalState";
+import useToast from "../../hooks/toast/useToast";
+import { validateForm } from "../../utils/formValidator";
 import style from "./ChangePassword.module.css";
 
+export interface IRestPwd {
+  password?: string;
+  code?: string;
+  confirmPwd?: string;
+  oldPassword?: string;
+  newPassword?: string;
+  isLogin?: boolean;
+}
+
 const ChangePassword = () => {
-  //   const [form, setForm] = React.useState<IRegisterForm>({
-  //     firstName: "",
-  //     lastName: "",
-  //     email: "",
-  //     phone: "",
-  //     state: "",
-  //     gender: "",
-  //     password: "",
-  //     confirmPwd: "",
-  //   });
+  const [openNotification] = useToast();
+  const { dispatch } = useAppSelector();
+  const navigate = useNavigate();
 
-  //   const handleChange = (e: any) => {
-  //     setForm({ ...form, [e.target.name]: e.target.value });
-  //   };
+  const [form, setForm] = React.useState<IRestPwd>({
+    password: "",
+    code: "",
+    confirmPwd: "",
+  });
 
-  //   const handleRegister = () => {
-  //     const { isValid, error } = validateForm(form, true);
-  //     if (!isValid) {
-  //       openNotification(error.title, error.value, "error");
-  //       return false;
-  //     }
+  const handleChange = (e: any) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  //     registerAction(dispatch, form);
-  //   };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { isValid, error } = validateForm(form, true);
+    if (!isValid) {
+      openNotification(error.title, error.value, "error");
+      return false;
+    }
+
+    const newForm = {
+      oldPassword: "",
+      newPassword: form.password,
+      isLogin: false,
+      code: form.code,
+    };
+    resetPwdAction(dispatch, newForm, openNotification, navigate);
+  };
 
   return (
     <div className={`${style.login} container-fluid`}>
@@ -39,14 +58,15 @@ const ChangePassword = () => {
             Change Password
           </h4>
           <div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-3 my-form">
                 <input
-                  type="number"
+                  type="text"
                   className="form-control"
-                  id="pwd"
                   placeholder=" "
-                  name="pswd"
+                  onChange={handleChange}
+                  value={form.code}
+                  name="code"
                 />
                 <label htmlFor="pwd" className="form-label">
                   Enter OTP:
@@ -56,9 +76,10 @@ const ChangePassword = () => {
                 <input
                   type="password"
                   className="form-control"
-                  id="pwd"
                   placeholder=" "
-                  name="pswd"
+                  onChange={handleChange}
+                  value={form.password}
+                  name="password"
                 />
                 <label htmlFor="pwd" className="form-label">
                   New Password:
@@ -68,9 +89,10 @@ const ChangePassword = () => {
                 <input
                   type="password"
                   className="form-control"
-                  id="pwd"
                   placeholder=" "
-                  name="pswd"
+                  onChange={handleChange}
+                  value={form.confirmPwd}
+                  name="confirmPwd"
                 />
                 <label htmlFor="pwd" className="form-label">
                   Confirm New Password:
@@ -94,7 +116,7 @@ const ChangePassword = () => {
                 </div>
               </div>
 
-              <button type="button" className="custom-button">
+              <button type="submit" className="custom-button">
                 Change Password
               </button>
             </form>

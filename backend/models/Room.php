@@ -21,6 +21,7 @@ class Room extends Filter
     public $rentPerYear;
     public $roomType;
     public $state;
+    public $images;
     public $updatedAt;
     public $toiletNo;
     public $uid;
@@ -86,6 +87,21 @@ class Room extends Filter
         return $rooms_arr['images'];
     }
 
+    public function fetch_more_str_images($roomID)
+    {
+        $sql = "SELECT * FROM " . $this->table_images . " WHERE roomID = '$roomID'";
+        $query = mysqli_query($this->conn, $sql);
+        $rooms_arr['images'] = array();
+        if (mysqli_num_rows($query) > 0) {
+            while ($row = mysqli_fetch_assoc($query)) {
+                extract($row);
+                array_push($rooms_arr['images'], $url);
+            }
+        }
+
+        return $rooms_arr['images'];
+    }
+
 
     //Get Rooms By Category
     public function all_rooms_by_category()
@@ -135,6 +151,15 @@ class Room extends Filter
         $user_query = 'INSERT INTO ' . $this->table_images . ' SET roomID = ?, url = ?, uploadID = ?';
         $query = $this->conn->prepare($user_query);
         $query->bind_param('iss', $roomID, $url, $uploadID);
+        $query->execute();
+    }
+
+    public function remove_room_images($roomID, $url)
+    {
+        $sql = "DELETE FROM " . $this->table_images . " WHERE roomID = ? AND url = ?";
+
+        $query = $this->conn->prepare($sql);
+        $query->bind_param('is', $roomID, $url);
         $query->execute();
     }
 
@@ -210,9 +235,10 @@ class Room extends Filter
     //Update Room
     public function update_room()
     {
+
+        $isVerified = 0;
         $sql = "UPDATE " . $this->table . " SET address = ?,
         bathRoomNo = ?,
-        category = ?,
         descriptions = ?,
         email = ?,
         hasTiles = ?,
@@ -223,39 +249,56 @@ class Room extends Filter
         phone = ?,
         rentPerYear = ?,
         roomType = ?,
+        image = ?,
         state = ?,
         updatedAt = ?,
         toiletNo = ?,
-        uid = ?,
         university = ? WHERE id = ?";
         $query = $this->conn->prepare($sql);
         $query->bind_param(
-            'ssssssssssssssssssi',
+            'sssssssssssssssssi',
             $this->address,
             $this->bathRoomNo,
-            $this->category,
             $this->descriptions,
             $this->email,
             $this->hasTiles,
             $this->hasWater,
             $this->hostelName,
             $this->houseType,
-            $this->isVerified,
+            $isVerified,
             $this->phone,
             $this->rentPerYear,
             $this->roomType,
+            $this->images[0]->url,
             $this->state,
             $this->updatedAt,
             $this->toiletNo,
-            $this->uid,
             $this->university,
             $this->id
         );
         if ($query->execute()) {
-            if ($query->affected_rows) {
-                return true;
+            if (count($this->images) > 0) {
+                $imgs = $this->fetch_more_images($this->id);
+                // response(false, 404, $imgs);
+                // exit();
+                foreach ($imgs as $value) {
+
+                    if (!in_array($value['url'], $this->images)) {
+                        //remove image from db
+                        $this->remove_room_images($this->id, $value['url']);
+                    }
+                }
+
+                foreach ($this->images as $value) {
+
+                    if (!in_array($value->url, $imgs)) {
+                        //upload image
+                        $this->add_room_images($this->id, $value->url, $value->id);
+                    }
+                }
             }
-            return 0;
+
+            return true;
         }
 
         return false;
@@ -311,6 +354,49 @@ class Room extends Filter
                 'email' => $this->email
             );
         }
+
+        /* free results */
+        $query->free_result();
+
+        /* close statement */
+        $query->close();
+
+        /* close connection */
+        $this->conn->close();
+    }
+
+
+
+    //////////////ROOM BY FIELD NAME////
+    ////////////////////////////
+    public function get_room_by_id($id)
+    {
+        $sql = "SELECT email,phone,uid FROM rooms WHERE id = ? LIMIT 1";
+        $query = $this->conn->prepare($sql);
+        $query->bind_param('i', $id);
+        $query->execute();
+        $query->store_result();
+        if ($query->num_rows) {
+            $query->bind_result(
+                $this->email,
+                $this->phone,
+                $this->uid
+            );
+            $query->fetch();
+            return array(
+                'status' => true,
+                'data' => array(
+                    'email' => $this->email,
+                    'phone' => $this->phone,
+                    'uid' => $this->uid
+                )
+            );
+        }
+
+        return array(
+            'status' => false,
+            'data' => ''
+        );
 
         /* free results */
         $query->free_result();

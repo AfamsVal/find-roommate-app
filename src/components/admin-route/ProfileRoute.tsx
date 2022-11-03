@@ -5,16 +5,13 @@ import AdminSideNav from "../side-nav/AdminSideNav";
 import AdminTopNav from "../top-nav/AdminTopNav";
 import "./AdminRoute.css";
 
-const AdminRoute = () => {
+const ProfileRoute = () => {
   const { auth } = useAppSelector();
   const [toggleNav, setToggleNav] = useState(false);
-  // const { pathname } = useLocation();
+  //   const { pathname } = useLocation();
 
   if (!auth?.isAuth) {
     return <Navigate to={`/login`} replace />;
-  }
-  if (!auth?.userDetails?.isAdmin) {
-    return <Navigate to={`/`} replace />;
   }
 
   return (
@@ -30,4 +27,4 @@ const AdminRoute = () => {
   );
 };
 
-export default AdminRoute;
+export default ProfileRoute;

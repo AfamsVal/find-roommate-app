@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
 import style from "./ProfileModalDetails.module.css";
 import RoomCard from "../card/RoomCard";

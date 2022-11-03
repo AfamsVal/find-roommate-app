@@ -147,7 +147,11 @@ const UploadRoommate = () => {
                   value={form.houseType}
                 >
                   <option value="">-- Select House Type --</option>
-                  <option value="Story Building">Story Building</option>
+                  <option value="1 Story Building">1 Story Building</option>
+                  <option value="2 Story Building">2 Story Building</option>
+                  <option value="3 Story Building">3 Story Building</option>
+                  <option value="4 Story Building">4 Story Building</option>
+                  <option value="Duplex">Duplex</option>
                   <option value="Bongalow">Bongalow</option>
                 </select>
               </div>

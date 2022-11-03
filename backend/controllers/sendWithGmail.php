@@ -16,12 +16,12 @@ function send_mail($to, $subject, $message)
 
     // 1. Download Php mailer zip folder from: https://github.com/PHPMailer/PHPMailer
     //2. helpful Youtube: https://www.youtube.com/watch?v=QvkxdMlbW90
-    //3. inpmlement the configuration in this page
+    //3. inplement the configuration in this page
     //4. loading to the gmail 
     // => click on profile icon on the right top to drop down 
     // => click on manage google account 
     // => Go to security 
-    // => Active two steps verification 
+    // => Activate two steps verification 
     // => Go back below two steps and click on app password
     // => You can type in test in the input and click on generate to get password 
     // =>  add the password here $mail->Password

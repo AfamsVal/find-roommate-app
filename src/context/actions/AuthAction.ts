@@ -9,6 +9,7 @@ import {
 } from "../../utils/types";
 import * as types from "../types";
 import jwt_decode from "jwt-decode";
+import { IRestPwd } from "../../Pages/change-password/ChangePassword";
 
 interface IResponse extends ILoginPayload {
   aud: string;
@@ -78,8 +79,41 @@ export const registerAction = async (
     } else {
       dispatch({ type: types.AUTH_ERROR, payload: res.message });
     }
+    clearAuthError(dispatch);
   } catch (error: any) {
     dispatch({ type: types.AUTH_ERROR, payload: error });
+    clearAuthError(dispatch);
+  }
+};
+export const resetPwdAction = async (
+  dispatch: ({ type, payload }: IAction<string>) => void,
+  user: IRestPwd,
+  openNotification: any,
+  navigate: any
+) => {
+  try {
+    dispatch({ type: types.AUTH_REQUEST });
+    const res: HTTPResponse<string> = await httpRequest({
+      url: "user/reset-password",
+      method: "POST",
+      body: user,
+      sanitize: true,
+    });
+
+    if (res.status === true) {
+      openNotification("Request Success:", res.message, "success");
+      navigate("/login");
+    } else {
+      openNotification("Request Failed:", res.message, "error");
+    }
+    clearAuthError(dispatch);
+  } catch (error: any) {
+    openNotification(
+      "Request Failed:",
+      error?.message || "Something went wrong, please refresh and try again!",
+      "error"
+    );
+    clearAuthError(dispatch);
   }
 };
 
@@ -119,10 +153,8 @@ export const forgotPwdAction = async (
   navigate: NavigateFunction,
   email: { email: string }
 ) => {
-  console.log("res:nmnjk");
   try {
     dispatch({ type: types.AUTH_REQUEST });
-
     //HTTPS REQUEST
     const res: HTTPResponse<string> = await httpRequest({
       url: "user/forgot-password",
@@ -130,16 +162,16 @@ export const forgotPwdAction = async (
       body: email,
     });
 
-    console.log("res:", res);
-
     if (res.status === true) {
       dispatch({ type: types.SHOW_SUCCESS, payload: res.message });
       navigate("/change-password");
     } else {
       dispatch({ type: types.AUTH_ERROR, payload: res.message });
     }
+    clearAuthError(dispatch);
   } catch (error: any) {
     dispatch({ type: types.AUTH_ERROR, payload: error.code });
+    clearAuthError(dispatch);
   }
 };
 
