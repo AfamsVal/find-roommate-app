@@ -57,7 +57,11 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                 />
                 <div className={`${style.bage} px-3 py-2`}>
                   <i className="fa fa-home"></i>{" "}
-                  {details?.isVerified === "1" ? "Verified" : "Not Verified"}
+                  {details?.taken
+                    ? "Taken"
+                    : details?.isVerified === "1"
+                    ? "Verified"
+                    : "Not Verified"}
                 </div>
               </div>
               {details?.images.length > 0 && (
