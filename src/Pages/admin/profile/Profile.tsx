@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import { useAppSelector } from "../../../context/GlobalState";
 import useToast from "../../../hooks/toast/useToast";
-import { IRegisterForm } from "../../../utils/types";
+import { IRegisterForm, IUpload } from "../../../utils/types";
 import { validateForm } from "../../../utils/formValidator";
 import { STATE } from "../../../utils/state";
 import { profileUpdateAction } from "../../../context/actions/AuthAction";
@@ -10,6 +10,8 @@ import { getProfileListing } from "../../../context/actions/roomsAction";
 import Loader from "../../../components/loader/Loader";
 import EmptyState from "../../../components/loader/EmptyState";
 import ProfileModalDetails from "../../../components/ProfileModalDetails.module.css/ProfileModalDetails";
+import UploadProfile from "../users/UploadProfile";
+import profileImg from "../../../assets/images/profile.webp";
 
 const Profile: React.FC = () => {
   const [openNotification] = useToast();
@@ -41,7 +43,7 @@ const Profile: React.FC = () => {
     }
   }, [auth.authError, auth.isRegister, dispatch, openNotification]);
 
-  const { firstName, lastName, email, phone, state, gender } =
+  const { firstName, lastName, email, phone, state, gender, profileURL } =
     auth.userDetails.userInfo;
 
   const [form, setForm] = React.useState<IRegisterForm>({
@@ -52,6 +54,7 @@ const Profile: React.FC = () => {
     state: state,
     gender: gender.charAt(0).toUpperCase() + gender.substr(1),
     password: "",
+    profileURL,
   });
 
   const handleChange = (e: any) => {
@@ -64,8 +67,8 @@ const Profile: React.FC = () => {
       openNotification(error.title, error.value, "error");
       return false;
     }
-
     const { userId } = auth?.userDetails;
+
     // const { email, ...newForm } = form;
 
     profileUpdateAction(dispatch, openNotification, {
@@ -73,6 +76,11 @@ const Profile: React.FC = () => {
       ...form,
     });
   };
+
+  //IMAGE UPLOAD CODE BELOW//
+  const [uploading, setUploading] = useState<boolean>(false);
+
+  //END IMAGE UPLOAD //
 
   return (
     <>
@@ -95,6 +103,25 @@ const Profile: React.FC = () => {
         </div>
 
         <div className="col-12 col-sm-9 col-md-7 mb-5">
+          <div className="card mb-3 col-12 col-md-6">
+            <div className="bg-lighter">
+              <img
+                src={form.profileURL || profileImg}
+                width="100%"
+                alt="profile"
+              />
+            </div>
+            <div className="card-body">
+              <UploadProfile
+                uploading={uploading}
+                setUploading={setUploading}
+                userId={auth?.userDetails.userId}
+                setForm={(url) => {
+                  setForm({ ...form, profileURL: url });
+                }}
+              />
+            </div>
+          </div>
           <div className="card">
             <form className="card-body">
               <p

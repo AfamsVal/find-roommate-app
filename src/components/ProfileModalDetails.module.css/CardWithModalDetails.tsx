@@ -160,9 +160,12 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                   </span>
                 </p>
                 <div className="pt-3">
-                  <button className="btn btn-lg px-5 py-3 text-white bg-dark">
+                  <a
+                    href={`tel:${details?.phone}`}
+                    className="btn btn-lg px-5 py-3 text-white bg-dark"
+                  >
                     {details?.phone}
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

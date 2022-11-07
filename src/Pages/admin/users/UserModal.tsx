@@ -59,9 +59,15 @@ const UserModal = ({ type, children, data }: any) => {
               <h1 className="text-black text-2xl mt-2 font-bold">
                 User Details
               </h1>
-              <div>
-                <img src={profileImg} width="120" alt="profile" />
-              </div>
+            </div>
+            <div className="col-12 col-md-6">
+              <img
+                src={data?.profileURL || profileImg}
+                width="100%"
+                alt="profile"
+              />
+            </div>
+            <div className="block w-full text-white">
               <div>
                 <hr style={{ borderBottom: "1px solid #999" }} />
               </div>

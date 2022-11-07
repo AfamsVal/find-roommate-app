@@ -74,6 +74,22 @@ export const allReducer = (state = initialState, action: IAction) => {
       };
       save(data);
       return data;
+    case types.PROFILE_UPDATE_PIC:
+      data = {
+        ...state,
+        auth: {
+          ...state.auth,
+          isAuth: true,
+          authLoading: false,
+          authError: "",
+          userDetails: {
+            ...state.auth.userDetails,
+            userInfo: { ...state.auth.userDetails.userInfo, ...action.payload },
+          },
+        },
+      };
+      save(data);
+      return data;
     case types.REGISTER:
       return {
         ...state,

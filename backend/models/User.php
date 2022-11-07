@@ -102,6 +102,19 @@ class User
 
         return false;
     }
+    //Update User Profile Image
+    public function update_profile_image($id, $url)
+    {
+        $sql = "UPDATE " . $this->table . " SET profileURL = ? WHERE id = ?";
+        $query = $this->conn->prepare($sql);
+        $query->bind_param('si', $url, $id);
+        $query->execute();
+        if ($query->affected_rows) {
+            return true;
+        }
+        return false;
+    }
+
 
     //Reset Password
     public function reset_password($isLogin, $code, $new_password)

@@ -12,7 +12,7 @@ const Users = () => {
     start: 0,
     limit: 5000,
   });
-  const { result, moreData }: any = contactUs.contactList;
+  const { result, moreData, count }: any = contactUs.contactList;
 
   const columns: ColumnsType<DataType> | any = [
     {
@@ -92,7 +92,10 @@ const Users = () => {
   return (
     <>
       <div className="row px-3 mb-3">
-        <h4 className="col-12 text-main my-3">All Users</h4>
+        <h4 className="col-12 text-main my-3">
+          All Users(
+          {count || <span className="spinner-border spinner-border-sm"></span>})
+        </h4>
       </div>
 
       <AdminTable

@@ -117,6 +117,13 @@ export const resetPwdAction = async (
   }
 };
 
+export const setFormAction = async (
+  dispatch: ({ type, payload }: IAction<any>) => void,
+  url: string
+) => {
+  dispatch({ type: types.PROFILE_UPDATE_PIC, payload: { profileURL: url } });
+};
+
 export const profileUpdateAction = async (
   dispatch: ({ type, payload }: IAction<string>) => void,
   openNotification: any,
