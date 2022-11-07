@@ -34,16 +34,6 @@ if (!empty($user_data)) {
         exit();
     }
 
-
-    $firstName = $user_data['firstName'];
-    $lastName = $user_data['lastName'];
-    $email = $user_data['email'];
-    $phone = $user_data['phone'];
-    $state = $user_data['state'];
-    $gender = $user_data['gender'];
-    $db_password = $user_data['password'];
-
-
     $checkPwd = $user->verify_password($password, $user_data['id']);
 
     if ($checkPwd['isValid']) {
@@ -53,7 +43,8 @@ if (!empty($user_data)) {
             "email" => $user_data['email'],
             "phone" => $user_data['phone'],
             "state" => $user_data['state'],
-            "gender" => $user_data['gender']
+            "profileURL" => $user_data['profileURL'],
+            "gender" => $user_data['gender'],
         );
         $uid = $user_data['id'];
         $isAdmin = $user_data['admin'];

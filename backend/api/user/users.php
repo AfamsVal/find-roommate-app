@@ -34,6 +34,7 @@ if ($result[0] > 0) {
             'email' => $email,
             'phone' => $phone,
             'state' => $state,
+            'profileURL' => $profileURL,
             'gender' => $gender,
             'admin' => $admin,
             'isBlocked' => $blocked,
@@ -41,7 +42,7 @@ if ($result[0] > 0) {
         //Push to data
         array_push($users_arr, $user_item);
     }
-    response(true, 200, 'success', array("result" => $users_arr, "moreData" => true));
+    response(true, 200, 'success', array("result" => $users_arr, 'count' => $result[0], "moreData" => true));
 } else {
     response(true, 200, 'No record found!', array());
 }

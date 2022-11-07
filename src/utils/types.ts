@@ -6,6 +6,7 @@ export interface IRegisterForm {
   state: string;
   gender: string;
   password?: string;
+  profileURL?: string;
   confirmPwd?: string;
 }
 
