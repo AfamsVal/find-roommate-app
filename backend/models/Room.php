@@ -43,7 +43,7 @@ class Room extends Filter
     //Get Rooms
     public function all_rooms()
     {
-        $sql = "SELECT * FROM " . $this->table . " WHERE blocked = '0' AND taken = '0' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
+        $sql = "SELECT * FROM " . $this->table . " WHERE blocked = '0' ORDER BY id DESC LIMIT " . $this->start . ", " . $this->limit . "";
         $query = mysqli_query($this->conn, $sql);
         $count = mysqli_num_rows($query);
         return array($count, $query);

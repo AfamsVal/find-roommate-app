@@ -9,6 +9,7 @@ interface IProp {
   modalItem: (item: IRoomDetails) => void;
 }
 const RoomCard: React.FC<IProp> = ({ item, modalItem }) => {
+  console.log("taken", item);
   return (
     <motion.div
       className="row mb-4"
