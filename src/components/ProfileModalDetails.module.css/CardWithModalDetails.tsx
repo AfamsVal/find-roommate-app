@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { Modal } from "antd";
 import style from "./CardWithModalDetails.module.css";
 import RoomCard from "../card/RoomCard";
@@ -60,7 +60,7 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
                 />
                 <div className={`${style.bage} px-3 py-2`}>
                   <i className="fa fa-home"></i>{" "}
-                  {details?.taken
+                  {details?.taken === "1"
                     ? "Taken"
                     : details?.isVerified === "1"
                     ? "Verified"
