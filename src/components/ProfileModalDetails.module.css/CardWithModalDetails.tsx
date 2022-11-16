@@ -5,6 +5,7 @@ import RoomCard from "../card/RoomCard";
 import { IRoomDetails } from "../../utils/types";
 import { formatCurrency } from "../../utils/formValidator";
 import BreakLine from "../break-line/BreakLine";
+import ErrorBoundary from "../error-boundary/ErrorBoundary";
 
 interface IProps {
   items: IRoomDetails[];
@@ -30,7 +31,9 @@ const CardWithModalDetails: React.FC<IProps> = ({ items }) => {
             className="col-12 col-sm-6 col-md-4 col-lg-3"
             onClick={() => setVisible(true)}
           >
-            <RoomCard item={item} modalItem={(obj) => setDetails(obj)} />
+            <ErrorBoundary>
+              <RoomCard item={item} modalItem={(obj) => setDetails(obj)} />
+            </ErrorBoundary>
           </div>
         ))}
       <Modal

@@ -5,7 +5,7 @@ import { formatCurrency } from "../../utils/formValidator";
 import { motion } from "framer-motion";
 import BreakLine from "../break-line/BreakLine";
 interface IProp {
-  item: IRoomDetails;
+  item: any;
   modalItem: (item: IRoomDetails) => void;
 }
 const RoomCard: React.FC<IProp> = ({ item, modalItem }) => {
