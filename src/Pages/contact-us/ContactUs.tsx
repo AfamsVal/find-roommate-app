@@ -10,10 +10,13 @@ import { clearError } from "../../context/actions/AuthAction";
 import * as types from "../../context/types";
 import { motion } from "framer-motion";
 import { containerVariants } from "../about/About";
+import Confetti from "react-confetti";
+import { useWindowSize } from "@react-hook/window-size";
 
 const ContactUs: React.FC = () => {
   const [openNotification] = useToast();
   const { dispatch, loading, error, contactUs } = useAppSelector();
+  const [isConfetti, setIsConfetti] = React.useState<Boolean>(false);
 
   const [form, setForm] = React.useState<IContact>({
     name: "",
@@ -29,6 +32,7 @@ const ContactUs: React.FC = () => {
 
     if (contactUs.contactSuccess) {
       setForm({ name: "", email: "", subject: "", message: "" });
+      setIsConfetti(true);
       openNotification(
         "Success Response:",
         "Your feedback was recieved successfully. Thanks!",
@@ -54,6 +58,8 @@ const ContactUs: React.FC = () => {
 
     contactUsAction(dispatch, form);
   };
+
+  const [width, height] = useWindowSize();
 
   return (
     <motion.div
@@ -156,6 +162,7 @@ const ContactUs: React.FC = () => {
         </div>
         {/* col7 end */}
       </div>
+      {isConfetti ? <Confetti width={width} height={height} /> : ""}
     </motion.div>
   );
 };
