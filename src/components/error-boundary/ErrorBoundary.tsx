@@ -3,6 +3,7 @@ import { QueryErrorResetBoundaryProps } from "react-query";
 
 interface ErrorBoundaryProps {
   children: any;
+  errorMsg?: string;
 }
 
 interface ErrorBoundaryState {
@@ -23,7 +24,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <h1>Something went wrong.</h1>;
+      return <h3>{this.props?.errorMsg || "Something went wrong!"}</h3>;
     }
 
     return this.props.children;
