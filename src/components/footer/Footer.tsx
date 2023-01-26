@@ -2,7 +2,7 @@ import React from "react";
 // import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 // import { NavLink, } from "react-router-dom";
-import style from "../../components/footer/Footer.module.css";
+import style from "./Footer.module.css";
 const Footer: React.FC = () => {
   return (
     <div
