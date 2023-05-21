@@ -1,5 +1,6 @@
 <?php
 require '../../controllers/core.php';
+require '../../controllers/sendWithGmail.php';
 include_once '../../config/Database.php';
 include_once '../../models/User.php';
 
@@ -44,6 +45,21 @@ if ($result === 0) {
 }
 
 if ($result === 1) {
+    $to = 'hillarydaniel1404@gmail.com';
+    $subject = 'FindRoomy: New Registration';
+    $message = '<div style="padding:20px 10px;"></div><table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor="#f2f3f8" style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family:sans-serif;">                 
+                <tr>
+                <td style="height:20px;">' . $user->firstName . ' ' . $user->lastName . ' just Registered</td>
+                </tr>                  
+                <tr>
+                    <td style="height:80px;">Phone: ' . $user->phone . '</td>
+                </tr>
+                <tr>
+                    <td style="height:80px;">Phone: ' . $user->email . '</td>
+                </tr>
+            </table></div>';
+    $isSent = send_mail($to, $subject, $message);
+
     response(true, 200, 'User created successfully!');
 }
 

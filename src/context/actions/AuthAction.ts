@@ -79,7 +79,7 @@ export const registerAction = async (
     } else {
       dispatch({ type: types.AUTH_ERROR, payload: res.message });
     }
-    clearAuthError(dispatch);
+    // clearAuthError(dispatch);
   } catch (error: any) {
     dispatch({ type: types.AUTH_ERROR, payload: error });
     clearAuthError(dispatch);

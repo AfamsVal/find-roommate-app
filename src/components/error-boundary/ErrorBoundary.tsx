@@ -1,17 +1,20 @@
 import { Component } from "react";
 import { QueryErrorResetBoundaryProps } from "react-query";
 
-interface ErrorBoundaryProps {
-  children: any;
+interface IErrorBoundaryProps {
+  children: React.ReactNode;
   errorMsg?: string;
 }
 
-interface ErrorBoundaryState {
+interface IErrorBoundaryState {
   hasError: boolean;
 }
 
-class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
+class ErrorBoundary extends Component<
+  IErrorBoundaryProps,
+  IErrorBoundaryState
+> {
+  constructor(props: IErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
