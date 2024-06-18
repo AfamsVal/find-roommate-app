@@ -55,11 +55,12 @@ const show =()=>{
           </div>
           </div>
     {not ?
-<div className="drop-menu bg-white">
-      <Dropdown.Item href="#" className="bg-primary text-light">All Notification</Dropdown.Item>
+<div className="drop-menu bg-white ">
+      <Dropdown.Item href="#" className="bg-blue text-light">All Notification</Dropdown.Item>
               <Dropdown.Item href="#" className="border-bottom border-secondary py-1" >
                <div className=""> <strong>Support</strong></div>
-                <div >Hi {firstName}, Welcome to findroomy</div>
+                <div ><p>Hi {firstName}, Welcome to findroomy
+                </p></div>
               </Dropdown.Item>
               {/* <Dropdown.Item href="#" className="border-bottom border-secondary py-1"  >
                <div> <strong>Google Drive</strong></div>
@@ -73,7 +74,7 @@ const show =()=>{
               </div>
               : ""
               }
-{/* {not && ( */}
+
 
       <Dropdown.Menu className="py-0" >
        
@@ -81,8 +82,7 @@ const show =()=>{
               
             
       </Dropdown.Menu>
-{/* //       ) */}
-{/* // } */}
+
     </Dropdown>
   
 
